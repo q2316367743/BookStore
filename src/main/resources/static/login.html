@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		<link rel="stylesheet" href="layui/css/layui.css">
+		<script src="layui/layui.js"></script>
+		<script src="layui/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.login{
+				margin-top: 50px;
+				height: 300px;
+				border:1px solid #000;
+			}
+			.item{
+				font-size: 25px;
+				margin: 20px;
+			}
+			.input{
+				margin: 10px;
+			}
+			.img{
+				margin: 20px;
+				height: 450px;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="layui-layout layui-layout-admin">
+		    <div class="layui-bg-green layui-header layui-row">
+		        <div class="layui-logo"><a style="color: white;" href="/index.html">人生艰难书店</a></div>
+				<div class="layui-col-xs-offset3 layui-col-xs4 layui-row" style="margin-top: 11px;">
+					<div class="layui-col-xs10">
+						<input type="text" placeholder="请输入商品名称" class="layui-input">
+					</div>
+					<button type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
+				</div>
+				<ul class="layui-nav layui-col-xs-offset8">
+				  <li class="layui-nav-item"><a href="">请登录</a></li>
+				  <li class="layui-nav-item">
+				    <a href="javascript:;">我的订单</a>
+				    <dl class="layui-nav-child">
+				      <dd><a href="">移动模块</a></dd>
+				      <dd><a href="">后台模版</a></dd>
+				      <dd><a href="">电商平台</a></dd>
+				    </dl>
+				  </li>
+				  <li class="layui-nav-item"><a href="">留言</a></li>
+				</ul> 
+		    </div>
+		    <div class="" style="margin-top: 50px;">
+		        <div class="layui-col-xs7">
+					<img class="img" src="images/da9300f15d01365a94b1474b7f2e378a.jpg" >
+		        </div>
+				<div class="layui-col-xs3 layui-col-xs-offset1 login">
+					<div class="item">密码登陆</div>
+					<form class="input">
+						<input id="username" type="text" style="margin-top: 20px;" placeholder="用户名" class="layui-input">
+						<input id="password" type="password" style="margin-top: 20px;" placeholder="密码" class="layui-input">
+						<div style="margin-top: 20px;text-align: center;">
+							<button type="button" onclick="login()" class="layui-btn" >登录</button>
+							<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						</div>
+						<div style="width: 100%;height: 100%;">
+							<span style="float: right;margin-top: 20px;">没有账号？<a href="register.html">立即注册</a></span>
+						</div>
+					</form>
+				</div>
+		    </div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function login(){
+			//alert("username:" + $('#username').val() + ",password:" + $('#password').val())
+			$.getJSON(
+				'user/login', 
+				{username: $('#username').val(), password: $('#password').val()}, 
+				function(result){
+					if(result.code == 200){
+						window.location.href = 'index.html'
+					}
+			});
+		}
+	</script>
+</html>

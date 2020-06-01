@@ -1,0 +1,31 @@
+# server配置
+server:
+  port: 8055
+# SpringBoot配置
+spring:
+  application:
+    name: BookStore
+  datasource:
+    url: jdbc:mysql://192.168.0.105:3306/bookstore?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化大小、最小、最大连接数
+    druid:
+      initial-size: 3
+      min-idle: 3
+      max-active: 10
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 监控后台账号和密码
+      stat-view-servlet.login-username: pi
+      stat-view-servlet.login-password: rsrzcxj521
+      # 配置 StatFilter
+      filter.stat.log-slow-sql: true
+      filter.stat.slow-sql-millis: 2000
+      
+# MyBatis配置
+mybatis:
+  type-aliases-package: com.qsd.bookstore.po
+  mapper-locations: classpath:mapper/*.xml
