@@ -15,7 +15,13 @@ public interface CommodityDao {
 
 	/**
 	 * 查询全部商品根据销售量排序
+	 * @param condition 
+	 * @return 全部商品
 	 * */
 	List<Commodity> queryAllByNum(Map<String, Object> condition);
+	/**
+	 * 根据书名查询图书
+	 * */
+	List<Commodity> queryCommodityByName(String name);
 	
 }

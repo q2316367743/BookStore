@@ -18,5 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by number asc 
 		limit #{currIndex}, #{pageSize}
 	</select>
+	
+	<select id="queryCommodityByName" resultMap="commodityMap">
+		select * from commodity
+		where name like '%${name}%'
+		order by number asc 
+	</select>
 
 </mapper>

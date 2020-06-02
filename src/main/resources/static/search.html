@@ -12,13 +12,7 @@
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-bg-green layui-header layui-row">
 				<div class="layui-logo"><a style="color: white;" href="">人生艰难书店</a></div>
-				<div class="layui-col-xs-offset3 layui-col-xs4 layui-row" style="margin-top: 11px;">
-					<div class="layui-col-xs10">
-						<input type="text" placeholder="请输入商品名称" class="layui-input">
-					</div>
-					<button onclick="search()" type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
-				</div>
-				<ul class="layui-nav layui-col-xs-offset8" id="nav">
+				<ul class="layui-nav layui-col-xs-offset9" id="nav">
 					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item">
 						<a href="javascript:;">欢迎您，{{nickname}}</a>
@@ -37,8 +31,42 @@
 					<li class="layui-nav-item"><a href="">留言</a></li>
 				</ul>
 			</div>
-			<div style="margin-top: 50px;">
-
+			<div style="margin-top: 30px;">
+				<div class="layui-col-xs-offset3 layui-col-xs6 layui-row" style="margin-top: 5px;">
+					<div class="layui-col-xs10">
+						<input type="text" placeholder="请输入商品名称" id="commodityName" class="layui-input">
+					</div>
+					<button onclick="search()" type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
+				</div>
+				<div class="layui-col-xs8 layui-col-xs-offset2" style="margin-top: 30px;">
+					<div class="layui-col-xs12" style="border:1px solid #cfcdcc;padding: 5px;background-color: #F2F2F2;">
+						搜索条件：
+						￥<input type="text" id="min" style="width: 25px;" oninput = "value=value.replace(/[^\d]/g,'')" />
+						&nbsp;&nbsp;-&nbsp;
+						￥<input type="text" id="max" style="width: 25px;" oninput = "value=value.replace(/[^\d]/g,'')" />&nbsp;&nbsp;
+						<button type="button" class="layui-btn layui-btn-xs" onclick="cf()">确定</button>
+						<button onclick="cl()" type="button" class="layui-btn layui-btn-primary layui-btn-xs" >清除</button>
+					</div>
+					<div id="content" class="layui-col-xs12" style="margin-top: 20px;padding: 10px; height: 360px;">
+						
+						<div class='layui-card layui-col-xs4' style='height: 170px;padding: 10px;background-color: #F2F2F2;' v-for="commodity in commoditys">
+							<div class='layui-col-xs8'>
+								<img v-bind:src="'http://192.168.0.104:8054/bookstore/commodity/' + commodity.imageName + '.jpg'">
+							</div>
+							<div class='layui-col-xs4'>
+								<div style='height: 40px;margin-top: 20px;'>
+									<a href=''>{{commodity.name}}</a>
+								</div>
+								<div style='height: 50px;color: red;'>
+									<b>￥{{commodity.price}}</b>
+								</div>
+								<button type="button" class="layui-btn layui-bg-red" onclick="window.location.href = 'index.html'">购买</button>
+							</div>
+						</div>
+						
+					</div>
+					<div id="page" class="layui-col-xs12"></div>
+				</div>
 			</div>
 		</div>
 		<script>
@@ -46,17 +74,25 @@
 				var variable = window.location.search.substring(1);
 				if (variable !== null || variable !== undefined || variable !== '') {
 					var temp = variable.split("=");
-					if (temp[0] == 'identify') {
-						identify = temp[1];
+					if (temp[0] == 'commodityName') {
+						var commodityName = temp[1];
+						$("#commodityName").val(commodityName);
+						search();
 					}
 				}
 			}
-			vue = new Vue({
+			var vue = new Vue({
 				el: '#nav',
 				data: {
 					isLogin: false,
 					nickname: '',
 					username: ''
+				}
+			});
+			var content = new Vue({
+				el: '#content',
+				data: {
+					commoditys: []
 				}
 			});
 			$.getJSON('user/isLogin', function(result) {
@@ -66,9 +102,48 @@
 					vue.isLogin = true;
 				}
 			})
-			layui.use('element', function() {
+			layui.use(['element', 'laypage', 'layer'], function() {
 				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+				
 			});
+			//点击搜索
+			function search(){
+				var commodityName = $("#commodityName").val();
+				$.getJSON('search/base', {commodityName: commodityName, page: 1, limit: 9}, function(result){
+					if(result.code = 200){
+						//绑定数据
+						content.commoditys = result.data;
+						//渲染分页
+						layui.use(['laypage', 'layer'], function(){
+							var laypage = layui.laypage;
+							var layer = layui.layer;
+							//总页数低于页码总数
+							  laypage.render({
+							    elem: 'page',
+								limit: 9,
+							    count: result.count ,//数据总数
+								jump: function(obj, first){
+								    //obj包含了当前分页的所有参数，比如：
+								    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+								    console.log(obj.limit); //得到每页显示的条数
+								    
+								    //首次不执行
+								    if(!first){
+								      //do something
+								    }
+								  }
+							  });
+						})
+					}
+				})
+			}
+			function cf(){
+				
+			}
+			function cl(){
+				$("#max").val("")
+				$("#min").val("")
+			}
 		</script>
 	</body>
 </html>
