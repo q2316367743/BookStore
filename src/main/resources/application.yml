@@ -19,7 +19,7 @@ spring:
       # 配置获取连接等待超时的时间
       max-wait: 60000
       # 监控后台账号和密码
-      stat-view-servlet.login-username: pi
+      stat-view-servlet.login-username: 17762618644
       stat-view-servlet.login-password: rsrzcxj521
       # 配置 StatFilter
       filter.stat.log-slow-sql: true

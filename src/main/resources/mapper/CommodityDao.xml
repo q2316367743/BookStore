@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsd.bookstore.dao.CommodityDao">
+
+	<resultMap type="commodity" id="commodityMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="imageName" column="image_name"/>
+		<result property="fileName" column="file_name"/>
+		<result property="number" column="number"/>
+		<result property="price" column="price"/>
+	</resultMap>
+
+	<select id="queryAllByNum" parameterType="hashMap" resultMap="commodityMap">
+		select * from commodity 
+		order by number asc 
+		limit #{currIndex}, #{pageSize}
+	</select>
+
+</mapper>

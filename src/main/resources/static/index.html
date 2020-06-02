@@ -1,68 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>主页</title>
-    <link rel="stylesheet" href="layui/css/layui.css">
-    <script src="layui/layui.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-	<script src="layui/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-bg-green layui-header layui-row">
-            <div class="layui-logo"><a style="color: white;" href="">人生艰难书店</a></div>
-			<div class="layui-col-xs-offset3 layui-col-xs4 layui-row" style="margin-top: 11px;">
-				<div class="layui-col-xs10">
-					<input type="text" placeholder="请输入商品名称" class="layui-input">
+	<head>
+		<meta charset="UTF-8">
+		<title>主页</title>
+		<link rel="stylesheet" href="layui/css/layui.css">
+		<script src="layui/layui.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="layui/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.img {
+				max-width: 700;
+				max-height: 450;
+			}
+
+			.side {
+				margin-top: 10px;
+			}
+
+			.item {
+				text-align: center;
+			}
+
+			.notice {
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+	<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-bg-green layui-header layui-row">
+				<div class="layui-logo"><a style="color: white;" href="">人生艰难书店</a></div>
+				<div class="layui-col-xs-offset3 layui-col-xs4 layui-row" style="margin-top: 11px;">
+					<div class="layui-col-xs10">
+						<input type="text" placeholder="请输入商品名称" class="layui-input">
+					</div>
+					<button type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
 				</div>
-				<button type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
+				<ul class="layui-nav layui-col-xs-offset8" id="nav">
+					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
+					<li v-else class="layui-nav-item">
+						<a href="javascript:;">欢迎您，{{nickname}}</a>
+						<dl class="layui-nav-child">
+							<dd><a href="">我的图书</a></dd>
+							<dd><a href="">购物车</a></dd>
+							<dd><a href="user/exit">退出</a></dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">我的订单</a>
+						<dl class="layui-nav-child">
+							<dd><a href="">移动模块</a></dd>
+							<dd><a href="">后台模版</a></dd>
+							<dd><a href="">电商平台</a></dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item"><a href="">留言</a></li>
+				</ul>
 			</div>
-			<ul class="layui-nav layui-col-xs-offset8" id="nav">
-			  <li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
-			  <li v-else class="layui-nav-item">
-				  <a href="javascript:;">欢迎您，{{nickname}}</a>
-				  <dl class="layui-nav-child">
-				    <dd><a href="user/exit">退出</a></dd>
-				  </dl>
-			  </li>
-			  <li class="layui-nav-item">
-			    <a href="javascript:;">我的订单</a>
-			    <dl class="layui-nav-child">
-			      <dd><a href="">移动模块</a></dd>
-			      <dd><a href="">后台模版</a></dd>
-			      <dd><a href="">电商平台</a></dd>
-			    </dl>
-			  </li>
-			  <li class="layui-nav-item"><a href="">留言</a></li>
-			</ul> 
-        </div>
-        <div class="layui-body" style="margin-top: 50px;">
-            <blockquote class="layui-elem-quote layui-quote-nm"><a href="taskBySingle/index.html">shudian</a></blockquote>
-        </div>
-    </div>
-    <script>
-		window.onload = function(){
-			vue = new Vue({
-				el: '#nav',
-				data: {
-					isLogin: false,
-					nickname: '',
-					username: ''
-				}
-			});
-			$.getJSON('user/isLogin', function(result){
-				if(result.code == 200){
-					vue.nickname = result.userInfo.nickname;
-					vue.username = result.userInfo.username;
-					vue.isLogin = true;
-				}
-			})
-			layui.use('element', function(){
-				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-			});
-		}
-		
-    </script>
-</body>
+			<div class="layui-side">
+				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
+					<li class="layui-nav-item layui-this"><a href="">首页</a></li>
+				</ul>
+				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
+					<li class="layui-nav-item">
+						<a href="javascript:;">分类</a>
+						<dl class="layui-nav-child">
+							<dd><a href="javascript:;">java</a></dd>
+							<dd><a href="javascript:;">python</a></dd>
+							<dd><a href="javascript:;">c</a></dd>
+						</dl>
+					</li>
+				</ul>
+				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
+					<li class="layui-nav-item"><a href="">排行榜</a></li>
+				</ul>
+				<div class="notice">
+					<blockquote class="layui-elem-quote" style="margin-top: 10px;">公告栏</blockquote>
+					<div style="margin: 10px;" id="notice">
+
+					</div>
+				</div>
+			</div>
+			<div class="layui-body" style="margin-top: 10px;">
+				<div class="layui-col-xs-offset1 layui-col-xs4 layui-carousel">
+					<div class="layui-carousel" id="test1" lay-filter="test1">
+						<div carousel-item="">
+							<div><img class="img" src="images/index/促销0.jpg"></div>
+							<div><img class="img" src="images/index/促销1.jpg"></div>
+							<div><img class="img" src="images/index/促销2.jpg"></div>
+							<div><img class="img" src="images/index/促销3.jpg"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-xs3 layui-col-xs-offset4">
+					<blockquote class="layui-elem-quote layui-col-xs12" style="margin-top: 10px;">畅销书排行榜</blockquote>
+					<div class="layui-col-xs12" style="padding: 20px; background-color: #F2F2F2;">
+						<div class="layui-row layui-col-space15">
+							<div class="flow-default layui-col-md12" style="height: 300px;" id="order"></div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script>
+			window.onload = function() {
+				vue = new Vue({
+					el: '#nav',
+					data: {
+						isLogin: false,
+						nickname: '',
+						username: ''
+					}
+				});
+				$.getJSON('user/isLogin', function(result) {
+					if (result.code == 200) {
+						vue.nickname = result.userInfo.nickname;
+						vue.username = result.userInfo.username;
+						vue.isLogin = true;
+					}
+				})
+				$.get('index/notice', function(result) {
+					$("#notice").html(result)
+				})
+				layui.use(['carousel', 'form', 'element', 'flow'], function() {
+					var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+					var carousel = layui.carousel;
+					var form = layui.form;
+					var flow = layui.flow;
+					//排行榜
+					flow.load({
+						elem: '#order', //流加载容器
+						done: function(page, next) { //执行下一页的回调
+						
+							$.getJSON('commodity/order', {page: page, limit: 10}, function(result){
+								if(result.code == 0){
+									var lis = [];
+									var commoditys = result.data;
+									for(var i = 0; i < commoditys.length; i++){
+										var commodity = commoditys[i];
+										lis.push(
+											"<div class='layui-card' style='height: 150px;padding: 10px;'>"+
+											"	<div class='layui-col-xs8'>"+
+											"		<img src='images/commodity/"+commodity.imageName+".jpg'>"+
+											"	</div>"+
+											"	<div class='layui-col-xs4'>"+
+											"		<div style='height: 80px;margin-top: 20px;'>"+
+											"			<a href=''>"+commodity.name+"</a>"+
+											"		</div>"+
+											"		<div style='height: 50px;color: red;'>"+
+											"			<b>￥"+commodity.price+"</b>"+
+											"		</div>"+
+											"	</div>"+
+											"</div>"
+										);
+									}
+									next(lis.join(''), page < result.count);
+								}
+							})
+						}
+					});
+					//轮播图
+					carousel.render({
+						elem: '#test1',
+						interval: 2000,
+						width: '700px',
+						anim: 'fade',
+						height: '450px'
+					});
+				});
+			}
+		</script>
+	</body>
 </html>
