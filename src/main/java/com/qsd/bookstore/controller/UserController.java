@@ -44,9 +44,11 @@ public class UserController {
 	}
 	
 	@PostMapping("register")
-	public UserVo register(User user) {
+	public UserVo register(User user, HttpServletRequest request) {
 		Integer register = userService.register(user);
 		if (register > 1) {
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
 			return new UserVo(200, "注册成功");
 		}else {
 			return new UserVo(400, "账户重复");

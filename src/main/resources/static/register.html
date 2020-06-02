@@ -141,8 +141,12 @@
 				form.on('submit(demo1)', function(data) {
 					var data = JSON.parse(JSON.stringify(data.field))
 					$.post('user/register', data, function(data){
-						
-					})
+						if (data.code == 200){
+							window.location.href = "index.html";
+						}else if(data.code == 400){
+							alert("注册失败，" + data.message)
+						}
+					}, "json")
 					return false;
 				});
 
