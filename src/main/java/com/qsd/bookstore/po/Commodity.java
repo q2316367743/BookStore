@@ -12,8 +12,12 @@ public class Commodity {
     private String name;
     private String imageName;
     private String fileName;
+    //销售量
     private Integer number;
     private Double price;
+    private String category;
+    //浏览量
+    private Integer view;
 	public Integer getId() {
 		return id;
 	}
@@ -50,5 +54,18 @@ public class Commodity {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public Integer getView() {
+		return view;
+	}
+	public void setView(Integer view) {
+		this.view = view;
+	}
+
 	
 }

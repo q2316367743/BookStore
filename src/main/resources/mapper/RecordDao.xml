@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsd.bookstore.dao.RecordDao">
+
+	<resultMap type="record" id="recordMap">
+		<id property="id" column="id"/>
+		<result property="commodityId" column="commodity_id"/>
+		<result property="count" column="count"/>
+		<result property="shopTime" column="shop_time"/>
+	</resultMap>
+
+	<update id="createRecordTable">
+		create table ${recordName}(
+			id int primary key auto_increment,
+			commodity_id int ,
+			count int,
+			shop_time datetime
+		)
+	</update>
+
+</mapper>

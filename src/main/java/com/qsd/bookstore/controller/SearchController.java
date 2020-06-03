@@ -36,4 +36,16 @@ public class SearchController {
 		}
 	}
 	
+	@GetMapping("category")
+	public CommodityVo category(String category, int page, int limit) {
+		Map<String, Object> baseSearch = searchService.searchByCategory(category, page, limit);
+		if (baseSearch != null) {
+			int count = (int) baseSearch.get("count");
+			List<Commodity> commodities = (List<Commodity>) baseSearch.get("commoditys");
+			return new CommodityVo(200, "搜索" + category + "成功", count, commodities);
+		}else {
+			return new CommodityVo(400, "搜索" + category + "错误");
+		}
+	}
+	
 }

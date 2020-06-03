@@ -11,6 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="fileName" column="file_name"/>
 		<result property="number" column="number"/>
 		<result property="price" column="price"/>
+		<result property="category" column="category"/>
+		<result property="view" column="view"/>
 	</resultMap>
 
 	<select id="queryAllByNum" parameterType="hashMap" resultMap="commodityMap">
@@ -23,6 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from commodity
 		where name like '%${name}%'
 		order by number asc 
+	</select>
+	
+	<select id="queryCommodityByCategory" resultMap="commodityMap">
+		select * from commodity where category = #{category}
 	</select>
 
 </mapper>

@@ -23,5 +23,11 @@ public interface CommodityDao {
 	 * 根据书名查询图书
 	 * */
 	List<Commodity> queryCommodityByName(String name);
+	/**
+	 * 根据类别搜索
+	 * @param category 类别
+	 * @return 所有图书
+	 * */
+	List<Commodity> queryCommodityByCategory(String category);
 	
 }

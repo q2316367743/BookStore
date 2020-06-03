@@ -40,4 +40,22 @@ public class SearchServiceImpl implements SearchService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> searchByCategory(String category, int page, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		List<Commodity> commodities = commodityDao.queryCommodityByCategory(category);
+		int count = commodities.size();
+		int fromIndex = (page - 1) * limit;
+		int toIndex = fromIndex;
+		if (count - fromIndex > limit) {
+			toIndex = fromIndex + limit;
+		}else {
+			toIndex = count;
+		}
+		List<Commodity> subList = commodities.subList(fromIndex, toIndex);
+		map.put("count", count);
+		map.put("commoditys", subList);
+		return map;
+	}
+
 }

@@ -1,0 +1,16 @@
+.img {
+	max-width: 700;
+	max-height: 450;
+}
+
+.side {
+	margin-top: 10px;
+}
+
+.item {
+	text-align: center;
+}
+
+.notice {
+	margin-top: 20px;
+}
