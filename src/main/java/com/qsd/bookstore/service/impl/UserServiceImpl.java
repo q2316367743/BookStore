@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.register(user);
 	}
 
+	@Override
+	public Integer update(User user) {
+		// TODO Auto-generated method stub
+		return userDao.update(user);
+	}
+
 }

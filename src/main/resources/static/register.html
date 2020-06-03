@@ -19,13 +19,7 @@
 					<button onclick="search()" type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
-					<li v-else class="layui-nav-item">
-						<a href="javascript:;">欢迎您，{{nickname}}</a>
-						<dl class="layui-nav-child">
-							<dd><a href="user/exit">退出</a></dd>
-						</dl>
-					</li>
+					<li class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li class="layui-nav-item">
 						<a href="javascript:;">我的订单</a>
 						<dl class="layui-nav-child">
@@ -87,21 +81,6 @@
 		</div>
 		<script>
 			window.onload = function() {
-				vue = new Vue({
-					el: '#nav',
-					data: {
-						isLogin: false,
-						nickname: '',
-						username: ''
-					}
-				});
-				$.getJSON('user/isLogin', function(result) {
-					if (result.code == 200) {
-						vue.nickname = result.userInfo.nickname;
-						vue.username = result.userInfo.username;
-						vue.isLogin = true;
-					}
-				})
 				layui.use('element', function() {
 					var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 				});

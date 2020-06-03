@@ -10,6 +10,15 @@ public class UserByLogin {
 	
 	private String username;
 	private String password;
+	public UserByLogin() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public UserByLogin(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
 	public String getUsername() {
 		return username;
 	}

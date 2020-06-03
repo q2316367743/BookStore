@@ -24,5 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into user(username, password, nickname, gender, age, shop_name, record_name)
 		values(#{username}, #{password}, #{nickname}, #{gender}, #{age}, #{shopName}, #{recordName})
 	</insert>
+	
+	<update id="update" parameterType="user">
+		update user 
+		set age = #{age}, gender = #{gender}, username = #{username}
+		where username = #{username}
+	</update>
 
 </mapper>

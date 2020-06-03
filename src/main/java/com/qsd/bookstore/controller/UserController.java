@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.UserService;
+import com.qsd.bookstore.vo.UserInfoVo;
 import com.qsd.bookstore.vo.UserVo;
 
 /**
@@ -77,6 +78,40 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@GetMapping("getInfo")
+	public UserInfoVo getInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			return new UserInfoVo(200, "登录成功", user);
+		}else {
+			return new UserInfoVo(400, "帐户或密码错误", null);
+		}
+	}
+	
+	@PostMapping("update")
+	public UserVo update(User user,HttpServletRequest request) {
+		//修改数据库
+		Integer update = userService.update(user);
+		if (update > 0) {
+			HttpSession session = request.getSession();
+			//修改成功
+			//获取购物车表名，记录表名
+			User oldUser = (User) session.getAttribute("user");
+			//设置
+			user.setPassword(oldUser.getPassword());
+			user.setShopName(oldUser.getShopName());
+			user.setRecordName(oldUser.getRecordName());
+			//重新加入session
+			session.setAttribute("user", user);
+			return new UserVo(200, "成功");
+		}else {
+			//修改失败
+			return new UserVo(400, "失败");
+		}
+		
 	}
 	
 }
