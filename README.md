@@ -27,7 +27,11 @@
 3. mvn clean
 4. mvn package
 5. cd target
-6. java -jar xxx.jar
+6. java -jar bookstore-1.0.0.jar
+
+## 数据库说明
+
+数据库名称bookstore，[建表文件](database/mysql.sql)
 
 ## 进度说明
 
