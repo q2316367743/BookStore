@@ -51,9 +51,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public Integer logout(User user) {
-		// TODO Auto-generated method stub
-		return userDao.delete(user.getUsername());
+		String shopName = user.getShopName();
+		String recordName = user.getRecordName();
+		//删除购物车表
+		int shop = shopDao.deleteShopTable(shopName);
+		//删除记录表
+		int record = recordDao.deleteRecordTable(recordName);
+		//删除用户表
+		int delete = userDao.delete(user.getUsername());
+		return shop + record + delete;
 	}
 
 }

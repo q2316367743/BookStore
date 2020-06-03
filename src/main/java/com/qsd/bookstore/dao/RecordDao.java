@@ -9,5 +9,6 @@ package com.qsd.bookstore.dao;
 public interface RecordDao {
 
 	void createRecordTable(String recordName);
+	Integer deleteRecordTable(String recordName);
 	
 }

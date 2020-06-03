@@ -9,9 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qsd.bookstore.dto.UserByLogin;
@@ -120,6 +118,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		Integer logout = userService.logout(user);
+		System.out.println(logout);
 		if (logout > 0) {
 			session.removeAttribute("user");
 			return new UserVo(200, "注销成功");

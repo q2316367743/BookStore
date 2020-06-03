@@ -9,5 +9,6 @@ package com.qsd.bookstore.dao;
 public interface ShopDao {
 	
 	void createShopTable(String shopName);
+	Integer deleteShopTable(String shopName);
 
 }

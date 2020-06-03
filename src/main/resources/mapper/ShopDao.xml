@@ -17,5 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			count int
 		)
 	</update>
+	
+	<update id="deleteShopTable">
+		drop table ${shopName}
+	</update>
 
 </mapper>

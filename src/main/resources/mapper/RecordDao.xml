@@ -19,5 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			shop_time datetime
 		)
 	</update>
+	
+	<update id="deleteRecordTable">
+		drop table ${recordName}
+	</update>
 
 </mapper>

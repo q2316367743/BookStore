@@ -19,11 +19,17 @@ spring:
       # 配置获取连接等待超时的时间
       max-wait: 60000
       # 监控后台账号和密码
-      stat-view-servlet.login-username: 17762618644
-      stat-view-servlet.login-password: rsrzcxj521
+      stat-view-servlet:
+        enabled: true
+        reset-enable: true
+        login-username: admin
+        login-password: 123456
+        url-pattern: /druid/*
       # 配置 StatFilter
-      filter.stat.log-slow-sql: true
-      filter.stat.slow-sql-millis: 2000
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
       
 # MyBatis配置
 mybatis:
