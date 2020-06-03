@@ -96,6 +96,7 @@ public class UserController {
 		//获取账户名
 		User oldUser = (User) session.getAttribute("user");
 		user.setUsername(oldUser.getUsername());
+		user.setBalance(oldUser.getBalance());
 		//修改数据库
 		Integer update = userService.update(user);
 		if (update > 0) {
