@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="age" column="age"/>
 		<result property="shopName" column="shop_name"/>
 		<result property="recordName" column="record_name"/>
+		<result property="balance" column="balance"/>
 	</resultMap>
 
 	<select id="login" resultMap="userMap" parameterType="com.qsd.bookstore.dto.UserByLogin">
@@ -30,5 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set age = #{age}, gender = #{gender}, username = #{username}
 		where username = #{username}
 	</update>
+	
+	<delete id="delete">
+		delete from user 
+		where username = #{username}
+	</delete>
 
 </mapper>

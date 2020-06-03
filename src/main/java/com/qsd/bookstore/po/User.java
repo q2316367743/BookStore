@@ -15,6 +15,7 @@ public class User {
 	private Integer age;
 	private String shopName;
 	private String recordName;
+	private Double balance;
 	public String getUsername() {
 		return username;
 	}
@@ -57,11 +58,17 @@ public class User {
 	public void setRecordName(String recordName) {
 		this.recordName = recordName;
 	}
+	public Double getBalance() {
+		return balance;
+	}
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", nickname=" + nickname + ", gender=" + gender
-				+ ", age=" + age + ", shopName=" + shopName + ", recordName=" + recordName + "]";
+				+ ", age=" + age + ", shopName=" + shopName + ", recordName=" + recordName + ", balance=" + balance
+				+ "]";
 	}
-	
 
 }

@@ -1,5 +1,7 @@
 package com.qsd.bookstore.dto;
 
+import com.qsd.bookstore.po.User;
+
 /**
  * @Description 
  * @Author Esion
@@ -18,6 +20,10 @@ public class UserByLogin {
 		super();
 		this.username = username;
 		this.password = password;
+	}
+	public UserByLogin(User user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
 	}
 	public String getUsername() {
 		return username;

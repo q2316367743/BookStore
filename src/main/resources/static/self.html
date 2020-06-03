@@ -90,6 +90,11 @@
 									<div class="layui-input-block"><input id="age" class="layui-input" type="text" v-model="age" /></div>
 								</div>
 								<div class="item">
+									<label class="layui-form-label">余额：</label>
+									<div class="layui-input-block"><input disabled="disabled" id="balance" class="layui-input" type="text"
+										 v-bind:value="balance" /></div>
+								</div>
+								<div class="item">
 									<label class="layui-form-label">操作：</label>
 									<div class="layui-input-block"><button type="button" class="layui-btn layui-btn-radius layui-btn-warm" onclick="update()">修改</button>&nbsp;&nbsp;
 										<button type="button" class="layui-btn layui-btn-radius layui-btn-danger" onclick="removeUser()">注销</button></div>
@@ -150,7 +155,6 @@
 				console.log("username:" + vue.username + ",nickname:" + vue.nickname + ",gender:" +
 					vue.gender + ",age:" + vue.age);
 				$.post('user/update', {
-					username: vue.username,
 					nickname: vue.nickname,
 					gender: vue.gender,
 					age: vue.age
@@ -179,7 +183,16 @@
 							console.log("我再想想")
 						}
 					}, function(index, layero) {
-						console.log("想好了，注销")
+						$.getJSON('user/logout', function(result){
+							layer.open({
+								title: '注销结果',
+								content: result.code == 200 ? '注销成功' : '注销失败，原因：' + result.message,
+								btm: ["确定"],
+								yes: function(index, layero) {
+									window.location.href = 'index.html';
+								}
+							})
+						})
 					});
 				});
 			}
@@ -197,7 +210,8 @@
 						gender: '0',
 						age: '',
 						commoditys: [],
-						records: []
+						records: [],
+						balance: 0.0
 					},
 					created: function() {
 						//获取用户信息
@@ -207,6 +221,7 @@
 								vue.username = result.userInfo.username;
 								vue.gender = result.userInfo.gender ? 1 : 0;
 								vue.age = result.userInfo.age;
+								vue.balance = result.userInfo.balance;
 								vue.isLogin = true;
 								//获取购物车信息
 								//获取购买记录信息

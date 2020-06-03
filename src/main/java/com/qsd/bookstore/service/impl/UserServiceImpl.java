@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.update(user);
 	}
 
+	@Override
+	public Integer logout(User user) {
+		// TODO Auto-generated method stub
+		return userDao.delete(user.getUsername());
+	}
+
 }

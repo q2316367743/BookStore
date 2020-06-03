@@ -48,8 +48,9 @@ public class UserController {
 	public UserVo register(User user, HttpServletRequest request) {
 		Integer register = userService.register(user);
 		if (register > 0) {
+			User login = userService.login(new UserByLogin(user));
 			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
+			session.setAttribute("user", login);
 			return new UserVo(200, "注册成功");
 		}else {
 			return new UserVo(400, "账户重复");
@@ -93,13 +94,14 @@ public class UserController {
 	
 	@PostMapping("update")
 	public UserVo update(User user,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		//获取账户名
+		User oldUser = (User) session.getAttribute("user");
+		user.setUsername(oldUser.getUsername());
 		//修改数据库
 		Integer update = userService.update(user);
 		if (update > 0) {
-			HttpSession session = request.getSession();
 			//修改成功
-			//获取购物车表名，记录表名
-			User oldUser = (User) session.getAttribute("user");
 			//设置
 			user.setPassword(oldUser.getPassword());
 			user.setShopName(oldUser.getShopName());
@@ -111,7 +113,19 @@ public class UserController {
 			//修改失败
 			return new UserVo(400, "失败");
 		}
-		
+	}
+	
+	@GetMapping("logout")
+	public UserVo logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		Integer logout = userService.logout(user);
+		if (logout > 0) {
+			session.removeAttribute("user");
+			return new UserVo(200, "注销成功");
+		}else {
+			return new UserVo(400, "注销失败");
+		}
 	}
 	
 }
