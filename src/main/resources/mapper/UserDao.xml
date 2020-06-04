@@ -46,5 +46,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryUser" resultMap="userMap">
 		select * from user where username = #{username}
 	</select>
+	
+	<update id="updateBalance">
+		update user
+		set balance = #{balance}
+		where username = #{username}
+	</update>
 
 </mapper>

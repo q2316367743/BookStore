@@ -1,19 +1,25 @@
 package com.qsd.bookstore.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.qsd.bookstore.dao.CommodityDao;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
+import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ShopService;
+import com.qsd.bookstore.service.UserService;
 import com.qsd.bookstore.vo.CommodityVo;
 
 /**
@@ -27,6 +33,10 @@ public class ShopController {
 	
 	@Autowired
 	private ShopService shopService;
+	@Autowired
+	private CommodityService commodityService;
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * 加入购物车
@@ -73,6 +83,46 @@ public class ShopController {
 			return new CommodityVo<Boolean>(200, "成功移除商品" + commodityId, -1, b);
 		}else {
 			return new CommodityVo<Boolean>(404, "用户信息不存在，请重新登陆");
+		}
+	}
+	
+	@GetMapping("buy")
+	public CommodityVo<Integer> buy(int commodityId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			User buyCommodity = shopService.buyCommodity(user, commodityId);
+			if (buyCommodity != null) {
+				session.setAttribute("user", buyCommodity);
+				return new CommodityVo<Integer>(200, "成功购买商品" + commodityId);
+			}else {
+				return new CommodityVo<Integer>(400, "账户余额不足" + commodityId);
+			}
+		}else {
+			return new CommodityVo<Integer>(404, "用户信息不存在，请重新登陆");
+		}
+	}
+	
+	@GetMapping("pay")
+	public ModelAndView pay(int commodityId, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("pay");
+		//1. 查询个人信息
+		User user = (User)request.getSession().getAttribute("user");
+		if (user != null) {
+			//2. 查询商品全部信息
+			Commodity commodity = commodityService.queryCommodityById(commodityId);
+			//3. 赋值、跳转页面
+			modelAndView.addObject("commodity", commodity);
+			modelAndView.addObject("user", user);
+			return modelAndView;
+		}else {
+			//如果没有登录，则重定向到登陆页面
+			try {
+				response.sendRedirect("../login.html");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return modelAndView;
 		}
 	}
 	

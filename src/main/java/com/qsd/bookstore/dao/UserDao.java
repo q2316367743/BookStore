@@ -1,5 +1,7 @@
 package com.qsd.bookstore.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
@@ -18,5 +20,6 @@ public interface UserDao {
 	Integer delete(String username);
 	Integer alterpwd(UserByPwd user);
 	User queryUser(String username);
+	Integer updateBalance(@Param("username")String username, @Param("balance")Double balance);
 
 }

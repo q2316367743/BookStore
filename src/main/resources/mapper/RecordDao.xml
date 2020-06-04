@@ -7,7 +7,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="record" id="recordMap">
 		<id property="id" column="id"/>
 		<result property="commodityId" column="commodity_id"/>
-		<result property="count" column="count"/>
 		<result property="shopTime" column="shop_time"/>
 	</resultMap>
 
@@ -15,7 +14,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		create table ${recordName}(
 			id int primary key auto_increment,
 			commodity_id int ,
-			count int,
 			shop_time datetime
 		)
 	</update>
@@ -23,5 +21,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="deleteRecordTable">
 		drop table ${recordName}
 	</update>
+	
+	<insert id="addRecord" parameterType="record">
+		insert into ${recordName}(commodity_id, shop_time)
+		values(#{commodityId}, #{shopTime})
+	</insert>
 
 </mapper>

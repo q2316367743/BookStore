@@ -35,5 +35,6 @@ public interface CommodityDao {
 	 * @return 商品信息
 	 * */
 	Commodity queryCommodityById(int id);
+	Double queryPriceById(int id);
 	
 }

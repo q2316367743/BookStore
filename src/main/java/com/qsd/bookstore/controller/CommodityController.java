@@ -40,10 +40,12 @@ public class CommodityController {
 	}
 	
 	@GetMapping("info")
-	public ModelAndView info(Integer commodityId) {
+	public ModelAndView info(Integer commodityId, HttpServletRequest request) {
 		Commodity commodity = commodityService.queryCommodityById(commodityId);
 		ModelAndView modelAndView = new ModelAndView("commodity");
+		Object user = request.getSession().getAttribute("user");
 		modelAndView.addObject("commodity", commodity);
+		modelAndView.addObject("user", user);
 		return modelAndView;
 	}
 	

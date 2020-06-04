@@ -36,5 +36,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from commodity
 		where id = #{id}
 	</select>
+	
+	<select id="queryPriceById" resultType="double">
+		select price from commodity where id = #{id}
+	</select>
 
 </mapper>

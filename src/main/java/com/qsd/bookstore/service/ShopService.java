@@ -34,5 +34,12 @@ public interface ShopService {
 	 * @return 结果
 	 * */
 	boolean removeCommodity(User user, int commodityId);
+	/**
+	 * 购买商品
+	 * @param user 用户
+	 * @param commodityId 商品ID
+	 * @return 更新后的user
+	 * */
+	User buyCommodity(User user, int commodityId);
 	
 }

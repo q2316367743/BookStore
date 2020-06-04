@@ -1,5 +1,7 @@
 package com.qsd.bookstore.dao;
 
+import com.qsd.bookstore.po.Record;
+
 /**
  * @Description 
  * @Author Esion
@@ -10,5 +12,6 @@ public interface RecordDao {
 
 	void createRecordTable(String recordName);
 	Integer deleteRecordTable(String recordName);
+	Integer addRecord(Record record);
 	
 }
