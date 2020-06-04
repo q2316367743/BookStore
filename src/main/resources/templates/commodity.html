@@ -69,8 +69,8 @@
 						<div style='height: 90px;'>
 							<span th:text="${commodity.content}"></span>
 						</div>
-						<div style='height: 30px;'>
-							<b>作者</b><b th:text="${commodity.author}"></b>
+						<div style='height: 30px;font-size: 18px'>
+							<b>作者：</b><b th:text="${commodity.author}"></b>
 						</div>
 						<div style='height: 30px;color: red;'>
 							<b>￥</b><b th:text="${commodity.price}"></b>
@@ -84,7 +84,25 @@
 		<script>
 						
 			function addShop(){
-				alert("加入购物车")
+				if(vue.isLogin){
+					$.getJSON('../shop/addShop?commodityId=[[${commodity.id}]]', function(result){
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							if(result.code == 200){
+								layer.msg('加入购物车成功');
+							}else if(result.code == 404){
+								alert("用户信息失效，请重新登录");
+								window.location.href = '../login.html';
+							}else {
+								layer.msg(result.msg)
+							}
+						})
+					})
+				}else{
+					alert("请去登录");
+					window.location.href = '../login.html';
+				}
+				
 			}
 			
 			function buy(){

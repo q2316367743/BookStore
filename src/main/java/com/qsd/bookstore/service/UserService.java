@@ -14,7 +14,7 @@ public interface UserService {
 	
 	User login(UserByLogin user);
 	Integer register(User user);
-	Integer update(User user);
+	User update(User oldUserm, User newUser);
 	Integer logout(User user);
 	Integer alterpwd(UserByPwd user);
 

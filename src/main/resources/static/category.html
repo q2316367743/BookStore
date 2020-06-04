@@ -84,7 +84,7 @@
 							<div style='height: 50px;color: red;'>
 								<b>￥{{commodity.price}}</b>
 							</div>
-							<button type="button" class="layui-btn layui-bg-red" onclick="window.location.href = 'index.html'">购买</button>
+							<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity/info?commodityId=' + commodity.id">详情</button>
 						</div>
 					</div>
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qsd.bookstore.dao.CommodityDao;
+import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.service.CommodityService;
 
@@ -21,6 +22,8 @@ public class CommodityServiceImpl implements CommodityService {
 	
 	@Autowired
 	private CommodityDao commodityDao;
+	@Autowired
+	private ShopDao shopDao;
 
 	@Override
 	public Map<String, Object> queryAllByNum(int page, int limit) {

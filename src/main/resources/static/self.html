@@ -110,12 +110,14 @@
 								</div>
 								<div class='layui-col-xs4'>
 									<div style='height: 40px;margin-top: 20px;'>
-										<a href=''>{{commodity.name}}</a>
+										<a v-bind:href="'commodity/info?commodityId=' + commodity.id">{{commodity.name}}</a>
 									</div>
 									<div style='height: 50px;color: red;'>
 										<b>￥{{commodity.price}}</b>
 									</div>
-									<button type="button" class="layui-btn layui-bg-red" onclick="window.location.href = 'index.html'">购买</button>
+									<button type="button" class="layui-btn layui-btn-warm" v-on:click="window.location.href = 'commodity/info?commodityId=' + commodity.id">详情</button>
+									<button type="button" class="layui-btn" onclick="window.location.href = 'index.html'">购买</button>
+									<button type="button" class="layui-btn layui-btn-danger" v-on:click="remove(commodity.id)">移除</button>
 								</div>
 							</div>
 							<div v-if="commoditys.length == 0">
@@ -339,6 +341,27 @@
 						records: [],
 						balance: 0.0
 					},
+					methods: {
+						remove: function(event){
+							$.getJSON('shop/remove?commodityId=' + event, function(result){
+								if(result.code == 200){
+									layer.msg('购物车删除成功');
+									//重新获取购物车列表
+									$.getJSON('shop/all', function(result){
+										if(result.code == 200){
+											vue.commoditys = result.data;
+										}else if(result.code == 404){
+											alert("请先登录," + result.message);
+											window.location.href = "login.html"
+										}
+									})
+								}else if(result.code == 404){
+									alert("请先登录," + result.message);
+									window.location.href = "login.html"
+								}
+							});
+						}
+					},
 					created: function() {
 						//获取用户信息
 						$.getJSON('user/getInfo', function(result) {
@@ -352,6 +375,15 @@
 								//获取购物车信息
 								//获取购买记录信息
 							} else if (result.code == 400) {
+								alert("请先登录," + result.message);
+								window.location.href = "login.html"
+							}
+						});
+						//获取购物车列表
+						$.getJSON('shop/all', function(result){
+							if(result.code == 200){
+								vue.commoditys = result.data;
+							}else if(result.code == 404){
 								alert("请先登录," + result.message);
 								window.location.href = "login.html"
 							}

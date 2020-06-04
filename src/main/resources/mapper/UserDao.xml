@@ -42,5 +42,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set password = #{newpwd} 
 		where username = #{username} and password = #{oldpwd}
 	</update>
+	
+	<select id="queryUser" resultMap="userMap">
+		select * from user where username = #{username}
+	</select>
 
 </mapper>

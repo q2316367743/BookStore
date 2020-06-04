@@ -47,9 +47,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Integer update(User user) {
-		// TODO Auto-generated method stub
-		return userDao.update(user);
+	@Transactional
+	public User update(User oldUserm, User newUser) {
+		//1. 获取用户名
+		String username = oldUserm.getUsername();
+		//2. 修改数据库
+		newUser.setUsername(username);
+		userDao.update(newUser);
+		//3. 查询新信息
+		return userDao.queryUser(username);
 	}
 
 	@Override

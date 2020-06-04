@@ -94,26 +94,18 @@ public class UserController {
 	
 	@PostMapping("update")
 	public UserVo update(User user,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		//获取账户名
-		User oldUser = (User) session.getAttribute("user");
-		user.setUsername(oldUser.getUsername());
-		user.setBalance(oldUser.getBalance());
-		//修改数据库
-		Integer update = userService.update(user);
-		if (update > 0) {
-			//修改成功
-			//设置
-			user.setPassword(oldUser.getPassword());
-			user.setShopName(oldUser.getShopName());
-			user.setRecordName(oldUser.getRecordName());
-			//重新加入session
-			session.setAttribute("user", user);
+		try {
+			HttpSession session = request.getSession();
+			//获取账户名
+			User oldUser = (User) session.getAttribute("user");
+			//修改数据库
+			User newUser = userService.update(oldUser, user);
+			session.setAttribute("user", newUser);
 			return new UserVo(200, "成功");
-		}else {
-			//修改失败
+		} catch (Exception e) {
 			return new UserVo(400, "失败");
 		}
+		
 	}
 	
 	@GetMapping("logout")

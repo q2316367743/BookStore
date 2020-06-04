@@ -17,5 +17,6 @@ public interface UserDao {
 	Integer update(User user);
 	Integer delete(String username);
 	Integer alterpwd(UserByPwd user);
+	User queryUser(String username);
 
 }
