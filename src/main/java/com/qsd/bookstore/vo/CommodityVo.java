@@ -10,12 +10,12 @@ import com.qsd.bookstore.po.Commodity;
  * @Data 2020年6月2日
  */
 
-public class CommodityVo {
+public class CommodityVo<T> {
 
 	private Integer code;
 	private String msg;
 	private Integer count;
-	private List<Commodity> data;
+	private T data;
 	public CommodityVo() {
 	}
 	public CommodityVo(Integer code, String msg) {
@@ -23,7 +23,8 @@ public class CommodityVo {
 		this.code = code;
 		this.msg = msg;
 	}
-	public CommodityVo(Integer code, String msg, Integer count, List<Commodity> data) {
+	public CommodityVo(Integer code, String msg, Integer count, T data) {
+		super();
 		this.code = code;
 		this.msg = msg;
 		this.count = count;
@@ -47,11 +48,12 @@ public class CommodityVo {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
-	public List<Commodity> getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(List<Commodity> data) {
+	public void setData(T data) {
 		this.data = data;
 	}
+	
 	
 }

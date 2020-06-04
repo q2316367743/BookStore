@@ -18,7 +18,7 @@ public interface CommodityDao {
 	 * @param condition 
 	 * @return 全部商品
 	 * */
-	List<Commodity> queryAllByNum(Map<String, Object> condition);
+	List<Commodity> queryAllByNum();
 	/**
 	 * 根据书名查询图书
 	 * */
@@ -29,5 +29,11 @@ public interface CommodityDao {
 	 * @return 所有图书
 	 * */
 	List<Commodity> queryCommodityByCategory(String category);
+	/**
+	 * 根据ID搜索商品
+	 * @param id 商品id
+	 * @return 商品信息
+	 * */
+	Commodity queryCommodityById(int id);
 	
 }

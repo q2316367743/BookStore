@@ -13,12 +13,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="price" column="price"/>
 		<result property="category" column="category"/>
 		<result property="view" column="view"/>
+		<result property="author" column="author"/>
+		<result property="content" column="content" javaType="string" jdbcType="BLOB"/>
 	</resultMap>
 
-	<select id="queryAllByNum" parameterType="hashMap" resultMap="commodityMap">
+	<select id="queryAllByNum" resultMap="commodityMap">
 		select * from commodity 
 		order by number asc 
-		limit #{currIndex}, #{pageSize}
 	</select>
 	
 	<select id="queryCommodityByName" resultMap="commodityMap">
@@ -29,6 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="queryCommodityByCategory" resultMap="commodityMap">
 		select * from commodity where category = #{category}
+	</select>
+	
+	<select id="queryCommodityById" resultMap="commodityMap">
+		select * from commodity
+		where id = #{id}
 	</select>
 
 </mapper>

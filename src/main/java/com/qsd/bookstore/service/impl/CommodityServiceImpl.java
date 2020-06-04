@@ -23,12 +23,27 @@ public class CommodityServiceImpl implements CommodityService {
 	private CommodityDao commodityDao;
 
 	@Override
-	public List<Commodity> queryAllByNum(int page, int limit) {
-		Map<String, Object> condition = new HashMap<>();
-		condition.put("currIndex", ((page - 1) * limit));
-		condition.put("pageSize", limit);
-		List<Commodity> commoditys = commodityDao.queryAllByNum(condition);
-		return commoditys;
+	public Map<String, Object> queryAllByNum(int page, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		List<Commodity> commodities = commodityDao.queryAllByNum();
+		int count = commodities.size();
+		int fromIndex = (page - 1) * limit;
+		int toIndex = fromIndex;
+		if (count - fromIndex > limit) {
+			toIndex = fromIndex + limit;
+		}else {
+			toIndex = count;
+		}
+		List<Commodity> subList = commodities.subList(fromIndex, toIndex);
+		map.put("count", count);
+		map.put("commoditys", subList);
+		return map;
+	}
+
+	@Override
+	public Commodity queryCommodityById(Integer id) {
+		// TODO Auto-generated method stub
+		return commodityDao.queryCommodityById(id);
 	}
 
 }

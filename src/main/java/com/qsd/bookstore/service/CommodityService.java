@@ -1,6 +1,7 @@
 package com.qsd.bookstore.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.qsd.bookstore.po.Commodity;
 
@@ -12,6 +13,7 @@ import com.qsd.bookstore.po.Commodity;
 
 public interface CommodityService {
 
-	List<Commodity> queryAllByNum(int page, int limit);
+	Map<String, Object> queryAllByNum(int page, int limit);
+	Commodity queryCommodityById(Integer id);
 	
 }

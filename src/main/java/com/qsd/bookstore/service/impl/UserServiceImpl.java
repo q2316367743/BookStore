@@ -8,9 +8,11 @@ import com.qsd.bookstore.dao.RecordDao;
 import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.dao.UserDao;
 import com.qsd.bookstore.dto.UserByLogin;
+import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.UserService;
-import com.qsd.bookstore.util.SimpleUtil;
+
+import cn.hutool.crypto.SecureUtil;
 
 /**
  * @Description 
@@ -35,8 +37,8 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public Integer register(User user) {
-		String shopName = SimpleUtil.generateUUID();
-		String recordName = SimpleUtil.generateUUID();
+		String shopName = SecureUtil.simpleUUID();
+		String recordName = SecureUtil.simpleUUID();
 		shopDao.createShopTable(shopName);
 		recordDao.createRecordTable(recordName);
 		user.setShopName(shopName);
@@ -62,6 +64,12 @@ public class UserServiceImpl implements UserService {
 		//删除用户表
 		int delete = userDao.delete(user.getUsername());
 		return shop + record + delete;
+	}
+
+	@Override
+	public Integer alterpwd(UserByPwd user) {
+		// TODO Auto-generated method stub
+		return userDao.alterpwd(user);
 	}
 
 }

@@ -50,7 +50,7 @@
 							</div>
 							<div class='layui-col-xs4'>
 								<div style='height: 40px;margin-top: 20px;'>
-									<a href=''>{{commodity.name}}</a>
+									<a v-bind:href="'commodity/info?commodityId=' + commodity.id">{{commodity.name}}</a>
 								</div>
 								<div style='height: 50px;color: red;'>
 									<b>￥{{commodity.price}}</b>

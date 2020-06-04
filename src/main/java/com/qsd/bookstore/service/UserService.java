@@ -1,6 +1,7 @@
 package com.qsd.bookstore.service;
 
 import com.qsd.bookstore.dto.UserByLogin;
+import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
 
 /**
@@ -15,5 +16,6 @@ public interface UserService {
 	Integer register(User user);
 	Integer update(User user);
 	Integer logout(User user);
+	Integer alterpwd(UserByPwd user);
 
 }

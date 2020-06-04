@@ -36,5 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from user 
 		where username = #{username}
 	</delete>
+	
+	<update id="alterpwd" parameterType="com.qsd.bookstore.dto.UserByPwd">
+		update user 
+		set password = #{newpwd} 
+		where username = #{username} and password = #{oldpwd}
+	</update>
 
 </mapper>

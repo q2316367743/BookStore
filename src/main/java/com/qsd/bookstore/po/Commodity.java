@@ -18,6 +18,8 @@ public class Commodity {
     private String category;
     //浏览量
     private Integer view;
+    private String content;
+    private String author;
 	public Integer getId() {
 		return id;
 	}
@@ -65,6 +67,18 @@ public class Commodity {
 	}
 	public void setView(Integer view) {
 		this.view = view;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	

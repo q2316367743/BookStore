@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qsd.bookstore.dto.UserByLogin;
+import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.UserService;
 import com.qsd.bookstore.vo.UserInfoVo;
@@ -125,6 +127,23 @@ public class UserController {
 			return new UserVo(200, "注销成功");
 		}else {
 			return new UserVo(400, "注销失败");
+		}
+	}
+	
+	@GetMapping("alterpwd")
+	public UserVo alterpwd(String oldpwd, String newpwd, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			Integer alterpwd = userService.alterpwd(new UserByPwd(user.getUsername(), oldpwd, newpwd));
+			if (alterpwd > 0) {
+				session.removeAttribute("user");
+				return new UserVo(200, "修改成功，请登录");
+			}else {
+				return new UserVo(400, "旧密码错误");
+			}
+		}else {
+			return new UserVo(400, "请先登录");
 		}
 	}
 	

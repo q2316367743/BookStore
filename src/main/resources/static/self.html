@@ -58,13 +58,15 @@
 					<li class="layui-nav-item"><a href="">留言</a></li>
 				</ul>
 			</div>
-			<div style="font-size: 20px" class="layui-col-xs-offset3 layui-col-xs6">
+			<div style="font-size: 20px" class="layui-col-xs-offset2 layui-col-xs8">
 
 				<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
 					<ul class="layui-tab-title">
 						<li class="layui-this">个人信息</li>
 						<li class="layui-col-xs-offset1">购物车</li>
 						<li class="layui-col-xs-offset1">购买记录</li>
+						<li class="layui-col-xs-offset1">密保设置</li>
+						<li class="layui-col-xs-offset1">修改密码</li>
 					</ul>
 					<div class="layui-tab-content" style="height: 100px;">
 						<div class="layui-tab-item layui-show">
@@ -140,12 +142,136 @@
 								没有购买记录
 							</div>
 						</div>
+						<div class="layui-tab-item layui-form layui-form-pane layui-col-xs-offset1 layui-col-xs10" style="overflow:auto;height: 450px;">
+								<div class="item">
+									<label class="layui-form-label">问题1：</label>
+									<div class="layui-input-block">
+										<select name="question1" id="question1">
+											<option value="">请选择一个问题</option>
+										</select>
+									</div>
+								</div>
+								<div class="item">
+									<label class="layui-form-label">答案1：</label>
+									<div class="layui-input-block">
+										<input id="answer1" class="layui-input" type="text" />
+									</div>
+								</div>
+								<div class="item">
+									<label class="layui-form-label">问题2：</label>
+									<div class="layui-input-block">
+										<select name="question2" id="question2">
+											<option value="">请选择一个问题</option>
+										</select>
+									</div>
+								</div>
+								<div class="item">
+									<label class="layui-form-label">答案2：</label>
+									<div class="layui-input-block">
+										<input id="answer2" class="layui-input" type="text" />
+									</div>
+								</div>
+								<div class="item">
+									<label class="layui-form-label">问题3：</label>
+									<div class="layui-input-block">
+										<select name="question3" id="question3">
+											<option value="">请选择一个问题</option>
+										</select>
+									</div>
+								</div>
+								<div class="item">
+									<label class="layui-form-label">答案3：</label>
+									<div class="layui-input-block">
+										<input id="answer3" class="layui-input" type="text" />
+									</div>
+								</div>
+								<div class="layui-form-item" style="margin-top: 20px;">
+									<div class="layui-input-block">
+										<button class="layui-btn" type="button">立即设置</button>
+										<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+									</div>
+								</div>
+						</div>
+						<div class="layui-tab-item layui-form layui-form-pane layui-col-xs-offset1 layui-col-xs10">
+								<div class="item">
+									<label class="layui-form-label">旧密码</label>
+									<div class="layui-input-block">
+										<input id="oldpwd" class="layui-input" type="text" />
+									</div>
+								</div>
+								<div class="item">
+									<label class="layui-form-label">新密码</label>
+									<div class="layui-input-block">
+										<input id="newpwd" class="layui-input" type="text" />
+									</div>
+								</div>
+								<div class="layui-form-item" style="margin-top: 20px;">
+									<div class="layui-input-block">
+										<button class="layui-btn" type="button" onclick="alterpwd()">立即修改</button>
+										<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+									</div>
+								</div>
+						</div>
 					</div>
 				</div>
-
 			</div>
+
+		</div>
 		</div>
 		<script>
+			var sstatus = false;
+			var password = false;
+
+			function showAndhide() {
+				var security = $("#security")
+				var icon = document.getElementById("icon");
+				if (sstatus) {
+					sstatus = false;
+					security.hide()
+					icon.classList.remove("layui-icon-up");
+					icon.classList.add("layui-icon-down");
+				} else {
+					sstatus = true;
+					security.show();
+					icon.classList.remove("layui-icon-down");
+					icon.classList.add("layui-icon-up");
+				}
+			}
+
+			function showPassword() {
+				var security = $("#pwd")
+				var icon = document.getElementById("picon");
+				if (sstatus) {
+					sstatus = false;
+					security.hide()
+					icon.classList.remove("layui-icon-up");
+					icon.classList.add("layui-icon-down");
+				} else {
+					sstatus = true;
+					security.show();
+					icon.classList.remove("layui-icon-down");
+					icon.classList.add("layui-icon-up");
+				}
+			}
+			
+			function alterpwd(){
+				var oldpwd = $("#oldpwd").val();
+				var newpwd = $("#newpwd").val();
+				$.getJSON('user/alterpwd', {oldpwd: oldpwd, newpwd: newpwd}, function(result){
+					layui.use('layer', function(){
+						var layer = layui.layer;
+						layer.open({
+							title: '结果',
+							content: result.code == 200 ? '修改成功，请重新登陆' : '修改错误，原因：' + result.message,
+							btm: ["确定"],
+							yes: function(index, layero) {
+								result.code == 200 ? window.location.href = "login.html" : location.reload();
+							}
+						})
+					})
+				})
+			}
+
 			function search() {
 				var commodityName = $("#commodityName").val();
 				window.location.href = "search.html?commodityName=" + commodityName;
@@ -183,7 +309,7 @@
 							console.log("我再想想")
 						}
 					}, function(index, layero) {
-						$.getJSON('user/logout', function(result){
+						$.getJSON('user/logout', function(result) {
 							layer.open({
 								title: '注销结果',
 								content: result.code == 200 ? '注销成功' : '注销失败，原因：' + result.message,
