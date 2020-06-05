@@ -1,0 +1,8 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<h1>错误</h1>
+<div>原因
+	<a href="/login.html" th:if="${result.code} eq -1" th:text="${result.message}"></a>
+	<a href="/index.html" th:if="${result.code} eq 0" th:text="${result.message}"></a>
+		<a href="/user/self" th:if="${result.code} eq 2" th:text="${result.message}"></a>
+</div>
+</html>

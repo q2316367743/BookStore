@@ -1,6 +1,10 @@
 package com.qsd.bookstore.service;
 
+import java.io.FileInputStream;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
@@ -14,5 +18,12 @@ import com.qsd.bookstore.po.User;
 public interface RecordService {
 
 	List<Commodity> getAllRecord(User user);
+	/**
+	 * @param response 
+	 * @param request 
+	 * @param commodityId 商品ID
+	 * @return 结果
+	 * */
+	int getCommodityFile(HttpServletRequest request, HttpServletResponse response, int commodityId);
 	
 }
