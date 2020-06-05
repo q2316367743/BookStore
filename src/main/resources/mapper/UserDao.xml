@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="shopName" column="shop_name"/>
 		<result property="recordName" column="record_name"/>
 		<result property="balance" column="balance"/>
+		<result property="isSafe" column="is_safe"/>
 	</resultMap>
 
 	<select id="login" resultMap="userMap" parameterType="com.qsd.bookstore.dto.UserByLogin">

@@ -16,6 +16,7 @@ public class User {
 	private String shopName;
 	private String recordName;
 	private Double balance;
+	private Boolean isSafe;
 	public String getUsername() {
 		return username;
 	}
@@ -63,6 +64,12 @@ public class User {
 	}
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+	public Boolean getIsSafe() {
+		return isSafe;
+	}
+	public void setIsSafe(Boolean isSafe) {
+		this.isSafe = isSafe;
 	}
 	@Override
 	public String toString() {
