@@ -118,7 +118,7 @@ public class ShopController {
 		}else {
 			//如果没有登录，则重定向到登陆页面
 			try {
-				response.sendRedirect("../login.html");
+				response.sendRedirect("../login.html?commodityId=" + commodityId);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

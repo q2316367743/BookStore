@@ -37,16 +37,9 @@
 					<button type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9">
-				  <li class="layui-nav-item"><a href="">请登录</a></li>
-				  <li class="layui-nav-item">
-				    <a href="javascript:;">我的订单</a>
-				    <dl class="layui-nav-child">
-				      <dd><a href="">移动模块</a></dd>
-				      <dd><a href="">后台模版</a></dd>
-				      <dd><a href="">电商平台</a></dd>
-				    </dl>
-				  </li>
-				  <li class="layui-nav-item"><a href="">留言</a></li>
+					<li class="layui-nav-item"><a href="/index.html">主页</a></li>
+					<li class="layui-nav-item"><a href="">留言</a></li>
+				  	<li class="layui-nav-item"><a href="">请登录</a></li>
 				</ul> 
 		    </div>
 		    <div class="" style="margin-top: 50px;">
@@ -71,6 +64,16 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+		var commodityId = -1
+		window.onload = function() {
+			var variable = window.location.search.substring(1);
+			if (variable !== null || variable !== undefined || variable !== '') {
+				var temp = variable.split("=");
+				if (temp[0] == 'commodityId') {
+					commodityId = temp[1];
+				}
+			}
+		}
 		function login(){
 			//alert("username:" + $('#username').val() + ",password:" + $('#password').val())
 			$.getJSON(
@@ -78,7 +81,11 @@
 				{username: $('#username').val(), password: $('#password').val()}, 
 				function(result){
 					if(result.code == 200){
-						window.location.href = 'index.html'
+						if(commodityId == -1){
+							window.location.href = 'index.html'
+						}else {
+							window.location.href = 'commodity/info?commodityId='+commodityId;
+						}
 					}else {
 						alert("账户或密码错误")
 					}

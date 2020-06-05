@@ -30,6 +30,9 @@ spring:
         stat:
           log-slow-sql: true
           slow-sql-millis: 2000
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
       
 # MyBatis配置
 mybatis:

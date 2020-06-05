@@ -20,27 +20,18 @@
 					<button type="button" onclick="search()" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
+					<li class="layui-nav-item"><a href="">主页</a></li>
+					<li class="layui-nav-item"><a href="">留言</a></li>
 					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item">
 						<a href="javascript:;">欢迎您，{{nickname}}</a>
 						<dl class="layui-nav-child">
-						<dd>
-							<a href="self.html">我的信息</a>
-						</dd>
-							<dd><a href="">我的图书</a></dd>
-							<dd><a href="">购物车</a></dd>
-							<dd><a href="user/exit">退出</a></dd>
-						</dl>
+								<dd><a href="user/self#my">我的信息</a></dd>
+								<dd><a href="user/self#record">我的图书</a></dd>
+								<dd><a href="user/self#shop">购物车</a></dd>
+								<dd><a href="user/exit">退出</a></dd>
+							</dl>
 					</li>
-					<li class="layui-nav-item">
-						<a href="javascript:;">我的订单</a>
-						<dl class="layui-nav-child">
-							<dd><a href="">移动模块</a></dd>
-							<dd><a href="">后台模版</a></dd>
-							<dd><a href="">电商平台</a></dd>
-						</dl>
-					</li>
-					<li class="layui-nav-item"><a href="">留言</a></li>
 				</ul>
 			</div>
 			<div class="layui-side">
@@ -141,9 +132,9 @@
 					content.category = temp[1];
 				}
 			}
-			
+
 			//获取内容
-			function getContent(category){
+			function getContent(category) {
 				content.category = category
 				$.getJSON('search/category', {
 					category: category,
@@ -165,7 +156,7 @@
 									//obj包含了当前分页的所有参数，比如：
 									console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
 									console.log(obj.limit); //得到每页显示的条数
-				
+
 									//首次不执行
 									if (!first) {
 										$.getJSON('search/category', {

@@ -1,6 +1,7 @@
 package com.qsd.bookstore.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
+import com.qsd.bookstore.po.Commodity;
+import com.qsd.bookstore.po.Record;
 import com.qsd.bookstore.po.User;
+import com.qsd.bookstore.service.RecordService;
+import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
 import com.qsd.bookstore.vo.UserInfoVo;
 import com.qsd.bookstore.vo.UserVo;
@@ -31,6 +38,10 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ShopService shopService;
+	@Autowired
+	private RecordService recordService;
 
 	@GetMapping("login")
 	public UserVo login(UserByLogin user, HttpServletRequest request) {
@@ -81,17 +92,6 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("getInfo")
-	public UserInfoVo getInfo(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			return new UserInfoVo(200, "登录成功", user);
-		}else {
-			return new UserInfoVo(400, "帐户或密码错误", null);
-		}
-	}
-	
 	@PostMapping("update")
 	public UserVo update(User user,HttpServletRequest request) {
 		try {
@@ -137,6 +137,31 @@ public class UserController {
 		}else {
 			return new UserVo(400, "请先登录");
 		}
+	}
+	
+	@GetMapping("self")
+	public ModelAndView self(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView("self");
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			try {
+				response.sendRedirect("../login.html");
+				return null;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		//个人信息
+		modelAndView.addObject("user", user);
+		//购物车信息
+		List<Commodity> commodities = shopService.getAll(user);
+		modelAndView.addObject("commodities", commodities);
+		//购买记录
+		List<Commodity> records = recordService.getAllRecord(user);
+		modelAndView.addObject("records", records);
+		return modelAndView;
 	}
 	
 }
