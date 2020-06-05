@@ -13,6 +13,7 @@ import com.qsd.bookstore.po.Commodity;
 public interface CommodityService {
 
 	Map<String, Object> queryAllByNum(int page, int limit);
+	Map<String, Object> queryAllByView(int page, int limit);
 	Commodity queryCommodityById(Integer id);
 	
 }

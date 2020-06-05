@@ -29,9 +29,19 @@ public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 	
-	@GetMapping("order")
-	public CommodityVo<List<Commodity>> order(int page, int limit) {
+	@GetMapping("orderByNumber")
+	public CommodityVo<List<Commodity>> orderByNumber(int page, int limit) {
 		Map<String, Object> commodities = commodityService.queryAllByNum(page, limit);
+		if (commodities != null) {
+			return new CommodityVo<List<Commodity>>(0, "成功", (int)commodities.get("count"), (List<Commodity>)commodities.get("commoditys"));
+		}else {
+			return new CommodityVo<List<Commodity>>(1, "结果为空");
+		}
+	}
+	
+	@GetMapping("orderByView")
+	public CommodityVo<List<Commodity>> orderByView(int page, int limit) {
+		Map<String, Object> commodities = commodityService.queryAllByView(page, limit);
 		if (commodities != null) {
 			return new CommodityVo<List<Commodity>>(0, "成功", (int)commodities.get("count"), (List<Commodity>)commodities.get("commoditys"));
 		}else {

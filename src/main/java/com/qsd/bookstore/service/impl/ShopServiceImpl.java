@@ -77,6 +77,8 @@ public class ShopServiceImpl implements ShopService {
 			recordDao.addRecord(record);
 			//6. 更新余额
 			User queryUser = userDao.queryUser(username);
+			//7. 商品销售额加一
+			commodityDao.addNumber(commodityId);
 			return queryUser;
 		}else {
 			return null;			

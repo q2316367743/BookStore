@@ -19,13 +19,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="queryAllByNum" resultMap="commodityMap">
 		select * from commodity 
-		order by number asc 
+		order by number desc 
+	</select>
+	
+	<select id="queryAllByView" resultMap="commodityMap">
+		select * from commodity 
+		order by view desc 
 	</select>
 	
 	<select id="queryCommodityByName" resultMap="commodityMap">
 		select * from commodity
 		where name like '%${name}%'
-		order by number asc 
+		order by number desc 
 	</select>
 	
 	<select id="queryCommodityByCategory" resultMap="commodityMap">
@@ -40,5 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryPriceById" resultType="double">
 		select price from commodity where id = #{id}
 	</select>
+	
+	<update id="addNumber">
+		update commodity 
+		set number = number + '1' 
+		where id= #{id}
+	</update>
+	
+	<update id="addView">
+		update commodity 
+		set view = view + '1' 
+		where id= #{id}
+	</update>
 
 </mapper>

@@ -29,13 +29,33 @@ public class CommodityServiceImpl implements CommodityService {
 	public Map<String, Object> queryAllByNum(int page, int limit) {
 		Map<String, Object> map = new HashMap<>();
 		List<Commodity> commodities = commodityDao.queryAllByNum();
-		int count = commodities.size();
+		int size = commodities.size();
+		int count = size / limit + 1;
 		int fromIndex = (page - 1) * limit;
 		int toIndex = fromIndex;
-		if (count - fromIndex > limit) {
+		if (size - fromIndex > limit) {
 			toIndex = fromIndex + limit;
 		}else {
-			toIndex = count;
+			toIndex = size;
+		}
+		List<Commodity> subList = commodities.subList(fromIndex, toIndex);
+		map.put("count", count);
+		map.put("commoditys", subList);
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> queryAllByView(int page, int limit) {
+		Map<String, Object> map = new HashMap<>();
+		List<Commodity> commodities = commodityDao.queryAllByView();
+		int size = commodities.size();
+		int count = size / limit + 1;
+		int fromIndex = (page - 1) * limit;
+		int toIndex = fromIndex;
+		if (size - fromIndex > limit) {
+			toIndex = fromIndex + limit;
+		}else {
+			toIndex = size;
 		}
 		List<Commodity> subList = commodities.subList(fromIndex, toIndex);
 		map.put("count", count);
@@ -45,8 +65,11 @@ public class CommodityServiceImpl implements CommodityService {
 
 	@Override
 	public Commodity queryCommodityById(Integer id) {
-		// TODO Auto-generated method stub
-		return commodityDao.queryCommodityById(id);
+		//1. 查询商品信息
+		Commodity commodity = commodityDao.queryCommodityById(id);
+		//2. 浏览量加一
+		commodityDao.addView(id);
+		return commodity;
 	}
 
 }

@@ -19,6 +19,7 @@ public interface CommodityDao {
 	 * @return 全部商品
 	 * */
 	List<Commodity> queryAllByNum();
+	List<Commodity> queryAllByView();
 	/**
 	 * 根据书名查询图书
 	 * */
@@ -36,5 +37,13 @@ public interface CommodityDao {
 	 * */
 	Commodity queryCommodityById(int id);
 	Double queryPriceById(int id);
+	/**
+	 * 销售量+1
+	 * */
+	Integer addNumber(int id);
+	/**
+	 * 浏览量+1
+	 * */
+	Integer addView(int id);
 	
 }
