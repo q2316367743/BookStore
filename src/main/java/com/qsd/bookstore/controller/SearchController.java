@@ -24,6 +24,7 @@ public class SearchController {
 	@Autowired
 	private SearchService searchService;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("base")
 	public CommodityVo baseSearch(String commodityName, int page, int limit) {
 		Map<String, Object> baseSearch = searchService.baseSearch(commodityName, page, limit);
@@ -36,6 +37,7 @@ public class SearchController {
 		}
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("category")
 	public CommodityVo category(String category, int page, int limit) {
 		Map<String, Object> baseSearch = searchService.searchByCategory(category, page, limit);

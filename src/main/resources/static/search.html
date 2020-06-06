@@ -49,16 +49,16 @@
 						
 						<div class='layui-card layui-col-xs4' style='height: 170px;padding: 10px;background-color: #F2F2F2;' v-for="commodity in commoditys">
 							<div class='layui-col-xs8'>
-								<img v-bind:src="'http://192.168.0.104:8054/bookstore/commodity/' + commodity.imageName + '.jpg'">
+								<img v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
 							</div>
 							<div class='layui-col-xs4'>
 								<div style='height: 40px;margin-top: 20px;'>
-									<a v-bind:href="'commodity/info?commodityId=' + commodity.id">{{commodity.name}}</a>
+									<a v-bind:href="'commodity/info/' + commodity.id">{{commodity.name}}</a>
 								</div>
 								<div style='height: 50px;color: red;'>
 									<b>￥{{commodity.price}}</b>
 								</div>
-								<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity/info?commodityId=' + commodity.id">详情</button>
+								<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity/info/' + commodity.id">详情</button>
 							</div>
 						</div>
 						

@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.po.Commodity;
-import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.vo.CommodityVo;
 
@@ -29,6 +28,7 @@ public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("orderByNumber")
 	public CommodityVo<List<Commodity>> orderByNumber(int page, int limit) {
 		Map<String, Object> commodities = commodityService.queryAllByNum(page, limit);
@@ -39,6 +39,7 @@ public class CommodityController {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("orderByView")
 	public CommodityVo<List<Commodity>> orderByView(int page, int limit) {
 		Map<String, Object> commodities = commodityService.queryAllByView(page, limit);
@@ -49,8 +50,8 @@ public class CommodityController {
 		}
 	}
 	
-	@GetMapping("info")
-	public ModelAndView info(Integer commodityId, HttpServletRequest request) {
+	@GetMapping("info/{commodityId}")
+	public ModelAndView info(@PathVariable("commodityId") Integer commodityId, HttpServletRequest request) {
 		Commodity commodity = commodityService.queryCommodityById(commodityId);
 		ModelAndView modelAndView = new ModelAndView("commodity");
 		Object user = request.getSession().getAttribute("user");

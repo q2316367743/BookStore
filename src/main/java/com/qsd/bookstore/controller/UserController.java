@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.Commodity;
-import com.qsd.bookstore.po.Record;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
-import com.qsd.bookstore.vo.UserInfoVo;
 import com.qsd.bookstore.vo.UserVo;
 
 /**
@@ -83,7 +79,6 @@ public class UserController {
 	public void exit(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("user");
-		Object result = session.getAttribute("user");
 		try {
 			response.sendRedirect("/index.html");
 		} catch (IOException e) {

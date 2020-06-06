@@ -1,7 +1,6 @@
 package com.qsd.bookstore.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.qsd.bookstore.po.Commodity;
 

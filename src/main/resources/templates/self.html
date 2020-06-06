@@ -152,12 +152,12 @@
 							th:each="commodity: ${commodities}">
 							<div class='layui-col-xs4'>
 								<img
-									th:src="@{'http://192.168.0.104:8054/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
+									th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
 							</div>
 							<div class='layui-col-xs4'>
 								<div style='height: 40px; margin-top: 20px;'>
 									<a
-										th:href="@{'../commodity/info?commodityId=' + ${commodity.id}}">[[${commodity.name}]]</a>
+										th:href="@{'../commodity/info/' + ${commodity.id}}">[[${commodity.name}]]</a>
 								</div>
 								<div style='height: 50px; color: red;'>
 									<b>￥[[${commodity.price}]]</b>
@@ -178,11 +178,11 @@
 							th:each="record: ${records}">
 							<div class='layui-col-xs4'>
 								<img
-									th:src="@{'http://192.168.0.104:8054/bookstore/commodity/' + ${record.imageName} + '.jpg'}">
+									th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${record.imageName} + '.jpg'}">
 							</div>
 							<div class='layui-col-xs4'>
 								<div style='height: 40px; margin-top: 20px;'>
-									<a th:href="@{'../commodity/info?commodityId=' + ${record.id}}">[[${record.name}]]</a>
+									<a th:href="@{'../commodity/info/' + ${record.id}}">[[${record.name}]]</a>
 								</div>
 								<div style='height: 50px; color: red;'>
 									<b>￥[[${record.price}]]</b>
@@ -243,7 +243,7 @@
 		}
 
 		function info(commodityId) {
-			window.location.href = "../commodity/info?commodityId="
+			window.location.href = "../commodity/info/"
 					+ commodityId;
 		}
 

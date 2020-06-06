@@ -22,6 +22,8 @@
 
 ## 软件安装
 
+### 软件部署
+
 1. git clone https://gitee.com/qiaoshengda/BookStore.git
 2. cd BookStore
 3. mvn clean
@@ -29,9 +31,17 @@
 5. cd target
 6. java -jar bookstore-1.0.0.jar
 
-## 数据库说明
+### 数据库部署
 
 数据库名称bookstore，[建表文件](database/mysql.sql)
+
+### 服务器部署
+
+部署服务器ip为192.168.0.105，服务器上配置图片资源服务器nginx，端口80
+
+nginx说明：
+
+服务器资源地址：/var/share/nginx/html
 
 ## 进度说明
 

@@ -70,12 +70,12 @@
 						</div>
 						<div class='layui-col-xs4'>
 							<div style='height: 40px;margin-top: 20px;'>
-								<a v-bind:href="'commodity/info?commodityId=' + commodity.id">{{commodity.name}}</a>
+								<a v-bind:href="'commodity/info/' + commodity.id">{{commodity.name}}</a>
 							</div>
 							<div style='height: 50px;color: red;'>
 								<b>￥{{commodity.price}}</b>
 							</div>
-							<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity/info?commodityId=' + commodity.id">详情</button>
+							<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity/info/' + commodity.id">详情</button>
 						</div>
 					</div>
 
