@@ -44,6 +44,9 @@ public class RecordServiceImpl implements RecordService {
 	@Override
 	public int getCommodityFile(HttpServletRequest request, HttpServletResponse response, int commodityId) {
 		// 资源目录
+		//linux
+		//String path = "/home/pi/Documents/book";
+		//window
 		String path = "E:/Documents/book";
 		File file = new File(path);
 		// 1. 获取记录表名
