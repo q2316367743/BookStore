@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qsd.bookstore.pojo.Notice;
+import com.qsd.bookstore.pojo.Global;
 
 /**
  * @Description 
@@ -13,15 +13,20 @@ import com.qsd.bookstore.pojo.Notice;
  * @Data 2020年6月2日
  */
 @RestController
-@RequestMapping("index")
+@RequestMapping("global")
 public class IndexController {
 	
 	@Autowired
-	private Notice notice;
+	private Global global;
 	
 	@GetMapping("notice")
 	public String notice() {
-		return notice.getMessage();
+		return global.getNotice();
+	}
+	
+	@GetMapping("list")
+	public Global list() {
+		return global;
 	}
 	
 }

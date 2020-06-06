@@ -94,52 +94,50 @@
 		</div>
 	</div>
 	<script>
-						
-			
-			
-			function buy(){
-				$.getJSON('buy', {commodityId: [[${commodity.id}]]},function(result){
-					layui.use('layer', function(){
-				var layer = layui.layer;
-				if(result.code == 200){
-					layer.open({
-						title: '购买结果',
-						content: '购买成功',
-						btm: ["确定"],
-						yes: function(index, layero) {
-							window.location.href = "/user/self#record";
-						}
-					})
-				}else if(result.code == 400){
-					layer.mag(result.msg);
-				}else if(result.code == 404){
-					layer.open({
-						title: '警告',
-						content: '未登录，请先登录',
-						btm: ["确定"],
-						yes: function(index, layero) {
-							window.location.href = "/login.html";
-						}
-					})
-				}
-					})
+		function buy(){
+			$.getJSON('buy', {commodityId: [[${commodity.id}]]},function(result){
+				layui.use('layer', function(){
+					var layer = layui.layer;
+					if(result.code == 200){
+						layer.open({
+							title: '购买结果',
+							content: '购买成功',
+							btm: ["确定"],
+							yes: function(index, layero) {
+								window.location.href = "/user/self#record";
+							}
+						})
+					}else if(result.code == 400){
+						layer.mag(result.msg);
+					}else if(result.code == 404){
+						layer.open({
+							title: '警告',
+							content: '未登录，请先登录',
+							btm: ["确定"],
+							yes: function(index, layero) {
+								window.location.href = "/login.html";
+							}
+						})
+					}else if(result.code == 500){
+						layer.msg(result.msg);
+					}
 				})
-			}
+			})
+		}
 			
-			if([[${user.balance} - ${commodity.price}]] < 0){
-				$("#isBuy").attr({"disabled":"disabled"});
-			}
-			
-			layui.use(['element', 'laypage', 'layer'], function() {
-				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+		if([[${user.balance} - ${commodity.price}]] < 0){
+			$("#isBuy").attr({"disabled":"disabled"});
+		}
+		
+		layui.use(['element', 'laypage', 'layer'], function() {
+			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
-			});
-			//点击搜索
-			function search() {
-				var commodityName = $("#commodityName").val();
-				window.location.href = "/search.html?commodityName=" + commodityName;
-			}
-
-		</script>
+		});
+		//点击搜索
+		function search() {
+			var commodityName = $("#commodityName").val();
+			window.location.href = "/search.html?commodityName=" + commodityName;
+		}
+	</script>
 </body>
 </html>

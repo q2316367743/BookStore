@@ -2,6 +2,8 @@ package com.qsd.bookstore.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
 
@@ -35,10 +37,10 @@ public interface ShopService {
 	boolean removeCommodity(User user, int commodityId);
 	/**
 	 * 购买商品
-	 * @param user 用户
+	 * @param request 请求参数
 	 * @param commodityId 商品ID
-	 * @return 更新后的user
+	 * @return 结果
 	 * */
-	User buyCommodity(User user, int commodityId);
+	int buyCommodity(HttpServletRequest request, int commodityId);
 	
 }

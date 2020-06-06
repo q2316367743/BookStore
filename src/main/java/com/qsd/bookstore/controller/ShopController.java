@@ -84,18 +84,15 @@ public class ShopController {
 
 	@GetMapping("buy")
 	public CommodityVo<Integer> buy(int commodityId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			User buyCommodity = shopService.buyCommodity(user, commodityId);
-			if (buyCommodity != null) {
-				session.setAttribute("user", buyCommodity);
+		int result = shopService.buyCommodity(request, commodityId);
+		if (result == 1) {
 				return new CommodityVo<Integer>(200, "成功购买商品" + commodityId);
-			} else {
-				return new CommodityVo<Integer>(400, "账户余额不足" + commodityId);
-			}
-		} else {
+		} else if (result == 0) {
+			return new CommodityVo<Integer>(400, "账户余额不足");
+		} else if (result == -1) {
 			return new CommodityVo<Integer>(404, "用户信息不存在，请重新登陆");
+		} else {
+			return new CommodityVo<Integer>(500, "您以购买过商品，请勿重复购买");
 		}
 	}
 

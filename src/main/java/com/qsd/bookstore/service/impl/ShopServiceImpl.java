@@ -3,6 +3,9 @@ package com.qsd.bookstore.service.impl;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,30 +58,49 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	@Transactional
-	public User buyCommodity(User user, int commodityId) {
-		String username = user.getUsername();
-		String shopName = user.getShopName();
-		String recordName = user.getRecordName();
-		Double balance = user.getBalance();
-		//1. 查询图书价格
-		Double price = commodityDao.queryPriceById(commodityId);
-		//2. 从余额中扣除价格
-		balance = balance - price;
-		if (balance > 0) {
-			//3. 更新余额
-			userDao.updateBalance(username, balance);
-			//4. 从购物车中删除商品
-			shopDao.removeCommodityById(shopName, commodityId);
-			//5. 加入到记录表中
-			Record record = new Record(recordName, commodityId, new Timestamp(System.currentTimeMillis()));
-			recordDao.addRecord(record);
-			//6. 更新余额
-			User queryUser = userDao.queryUser(username);
-			//7. 商品销售额加一
-			commodityDao.addNumber(commodityId);
-			return queryUser;
+	public int buyCommodity(HttpServletRequest request, int commodityId) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			String username = user.getUsername();
+			String shopName = user.getShopName();
+			String recordName = user.getRecordName();
+			Double balance = user.getBalance();
+			//1. 查询图书价格
+			Double price = commodityDao.queryPriceById(commodityId);
+			//2. 从余额中扣除价格
+			balance = balance - price;
+			if (balance > 0) {
+				//获取记录表，查看是否购买过
+				List<Commodity> commodities = recordDao.queryAllRecord(recordName);
+				boolean isBuy = false;
+				for(Commodity commodity : commodities) {
+					if (commodity.getId() == commodityId) {
+						isBuy = true;
+					}
+				}
+				if (!isBuy) {
+					//3. 更新余额
+					userDao.updateBalance(username, balance);
+					//4. 从购物车中删除商品
+					shopDao.removeCommodityById(shopName, commodityId);
+					//5. 加入到记录表中
+					Record record = new Record(recordName, commodityId, new Timestamp(System.currentTimeMillis()));
+					recordDao.addRecord(record);
+					//6. 更新余额
+					User queryUser = userDao.queryUser(username);
+					//7. 商品销售额加一
+					commodityDao.addNumber(commodityId);
+					session.setAttribute("user", queryUser);
+					return 1;
+				}else {
+					return 2;
+				}
+			}else {
+				return 0;			
+			}
 		}else {
-			return null;			
+			return -1;
 		}
 	}
 	
