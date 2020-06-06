@@ -32,51 +32,71 @@
 							<label class="layui-form-label">用户名：</label>
 							<div class="layui-input-block">
 								<div class="layui-col-xs10">
-								<input type="text" v-model="username" name="username" class="layui-input"></div>
+									<input type="text" v-model="username" name="username" class="layui-input"></div>
 								<button v-on:click="query()" type="button" class="layui-btn" style="margin-left: 15px;">查询</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div v-if="isShow" v-for="question in safeQuestion" style="margin-top: 30px;border:1px solid #F2F2F2;height: 330px;overflow: auto;" class="layui-col-xs-offset3 layui-col-xs6">
+				<div v-if="isShow" style="margin-top: 30px;border:1px solid #F2F2F2;height: 330px;overflow: auto;" class="layui-col-xs-offset3 layui-col-xs6">
 					<h1 style="margin: 20px;">密保信息：</h1>
 					<div style="margin: 20px;" class="layui-form layui-form-pane">
-						<div class="layui-form-item">
-							<label class="layui-form-label">问题1：</label>
-							<div class="layui-input-block">
-								<input disabled="disabled" type="text" name="question1" class="layui-input">
+						<form>
+							<div class="layui-form-item">
+								<label class="layui-form-label">问题1：</label>
+								<div class="layui-input-block">
+									<div class="layui-input">
+										<div style="margin-top: 10px" v-text="question.question1"></div>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">答案1：</label>
-							<div class="layui-input-block">
-								<input type="text" name="answer1" class="layui-input">
+							<div class="layui-form-item">
+								<label class="layui-form-label">答案1：</label>
+								<div class="layui-input-block">
+									<input type="text" id="answer1" class="layui-input">
+								</div>
 							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">问题2：</label>
-							<div class="layui-input-block">
-								<input disabled="disabled" type="text" name="question2" class="layui-input">
+							<div class="layui-form-item">
+								<label class="layui-form-label">问题2：</label>
+								<div class="layui-input-block">
+									<div class="layui-input">
+										<div style="margin-top: 10px" v-text="question.question2"></div>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">答案2：</label>
-							<div class="layui-input-block">
-								<input type="text" name="answer2" class="layui-input">
+							<div class="layui-form-item">
+								<label class="layui-form-label">答案2：</label>
+								<div class="layui-input-block">
+									<input type="text" id="answer2" class="layui-input">
+								</div>
 							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">问题3：</label>
-							<div class="layui-input-block">
-								<input disabled="disabled" type="text" name="question3" class="layui-input">
+							<div class="layui-form-item">
+								<label class="layui-form-label">问题3：</label>
+								<div class="layui-input-block">
+									<div class="layui-input">
+										<div style="margin-top: 10px" v-text="question.question3"></div>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="layui-form-item">
-							<label class="layui-form-label">答案3：</label>
-							<div class="layui-input-block">
-								<input type="text" name="answer3" class="layui-input">
+							<div class="layui-form-item">
+								<label class="layui-form-label">答案3：</label>
+								<div class="layui-input-block">
+									<input type="text" id="answer3" class="layui-input">
+								</div>
 							</div>
-						</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label" style="color: red">新密码：</label>
+								<div class="layui-input-block">
+									<input type="password" id="password" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<div class="layui-col-xs4 layui-col-xs-offset4">
+									<button type="button" class="layui-btn" onclick="su()">确定</button>
+									<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -91,62 +111,57 @@
 				el: '#security',
 				data: {
 					isShow: false,
-					safeQuestion: [],
-					username: ''
+					username: '',
+					question: {}
 				},
-				methods:{
-					query: function(){
-						$.getJSON('user/safe', {username: this.username}, function(result){
-							
+				methods: {
+					query: function() {
+						$.getJSON('safe/userExist', {
+							username: this.username
+						}, function(result) {
+							if (result.code == 200) {
+								$.getJSON('safe/getQuestion',{username: vue.username}, function(result) {
+									if (result.code == 200) {
+										vue.isShow = true;
+										vue.question = result.question;
+									}
+								})
+							} else if (result.code == 400) {
+								layer.alert(result.message)
+							} else {
+								layer.msg("用户不存在，请检查用户名是否正确")
+							}
 						})
 					}
 				}
 			})
-			layui.use(['form', 'layedit', 'laydate'], function() {
-				var form = layui.form,
-					layer = layui.layer,
-					layedit = layui.layedit,
-					laydate = layui.laydate;
-
-
-				//创建一个编辑器
-				var editIndex = layedit.build('LAY_demo_editor');
-
-				//自定义验证规则
-				form.verify({
-					username: function(value) {
-						if (value.length < 9) {
-							return '用户名至少得9个字符啊';
-						}
-					},
-					password: [
-						/^[\S]{9,18}$/, '密码必须9到18位，且不能出现空格'
-					],
-					content: function(value) {
-						layedit.sync(editIndex);
-					},
-					age: function(value) {
-						var age = parseInt(value)
-						if (age > 200 || age < 0) {
-							return '年龄错误'
-						}
-					}
-				});
-
-				//监听提交
-				form.on('submit(demo1)', function(data) {
-					var data = JSON.parse(JSON.stringify(data.field))
-					$.post('user/register', data, function(data) {
-						if (data.code == 200) {
-							window.location.href = "index.html";
-						} else if (data.code == 400) {
-							alert("注册失败，" + data.message)
-						}
-					}, "json")
-					return false;
-				});
-
-			});
+			function su(){
+				var answer1 = $("#answer1").val();
+				var answer2 = $("#answer2").val();
+				var answer3 = $("#answer3").val();
+				var password = $("#password").val();
+				$.getJSON('safe/setNewPwd', {
+					password: password, 
+					answer1: answer1, 
+					answer2: answer2, 
+					answer3: answer3}, function(result){
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							if(result.code == 200){
+								layer.open({
+									title: '结果',
+									content: result.message,
+									btn: ['确定'],
+									yes: function(){
+										window.location.href = 'login.html';
+									}
+								})
+							}else{
+								layer.msg(result.message);
+							}
+						})
+					})
+			}
 		</script>
 	</body>
 </html>

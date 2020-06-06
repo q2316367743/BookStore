@@ -2,8 +2,6 @@ package com.qsd.bookstore.service.impl;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import com.qsd.bookstore.dao.RecordDao;
 import com.qsd.bookstore.po.Commodity;
-import com.qsd.bookstore.po.Record;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.RecordService;
 

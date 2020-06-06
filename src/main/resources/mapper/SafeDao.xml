@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qsd.bookstore.dao.SafeDao">
+
+	<insert id="addSafe" parameterType="safe">
+		insert into safe 
+		values(#{username}, #{question1}, #{answer1}, #{question2}, #{answer2}, #{question3}, #{answer3})
+	</insert>
+	
+	<update id="updateSafe" parameterType="safe">
+		update safe
+		set question1 = #{question1}, answer1 = #{amswer1}, 
+		question2 = #{question2}, answer2 = #{amswer2}, 
+		question3 = #{question3}, answer3 = #{amswer3}
+		where username = #{username}
+	</update>
+	
+	<select id="querySafeByUsername" resultType="safe">
+		select *
+		from safe
+		where username = #{username}
+	</select>
+
+</mapper>

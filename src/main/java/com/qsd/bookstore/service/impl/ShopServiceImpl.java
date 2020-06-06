@@ -1,9 +1,7 @@
 package com.qsd.bookstore.service.impl;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.dao.UserDao;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.Record;
-import com.qsd.bookstore.po.Shop;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.ShopService;
 

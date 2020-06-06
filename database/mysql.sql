@@ -7,7 +7,18 @@ create table user(
     age int,
     shop_name varchar(32) not null ,
     record_name varchar(32) not null,
-    balance double default 100.0
+    balance double default 100.0,
+    is_safe boolean default false
+);
+# 床建密保问题表
+create table safe(
+    username varchar(11) primary key ,
+    question1 varchar(20),
+    answer1 varchar(10),
+    question2 varchar(20),
+    answer2 varchar(10),
+    question3 varchar(20),
+    answer3 varchar(10)
 );
 # 创建图书分类表
 create table category(
@@ -37,6 +48,7 @@ insert into commodity(name, image_name, file_name, price, category, content, aut
 
 # 测试查询
 select * from user;
-select * from commodity;
+select * from commodity
+order by number desc ;
 
 show tables;

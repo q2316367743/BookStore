@@ -21,5 +21,7 @@ public interface UserDao {
 	Integer alterpwd(UserByPwd user);
 	User queryUser(String username);
 	Integer updateBalance(@Param("username")String username, @Param("balance")Double balance);
+	Integer updateSafe(String username);
+	Integer setPassword(UserByLogin user);
 
 }

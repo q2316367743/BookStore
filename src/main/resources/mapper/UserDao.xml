@@ -53,5 +53,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set balance = #{balance}
 		where username = #{username}
 	</update>
+	
+	<update id="updateSafe">
+		update user
+		set is_safe = true
+		where username = #{username}
+	</update>
+	
+	<update id="setPassword" parameterType="com.qsd.bookstore.dto.UserByLogin">
+		update user
+		set password = #{password}
+		where username = #{username}
+	</update>
 
 </mapper>

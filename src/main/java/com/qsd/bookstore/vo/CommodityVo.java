@@ -1,9 +1,5 @@
 package com.qsd.bookstore.vo;
 
-import java.util.List;
-
-import com.qsd.bookstore.po.Commodity;
-
 /**
  * @Description 
  * @Author Esion

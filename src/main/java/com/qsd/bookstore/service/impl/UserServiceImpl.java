@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 		return userDao.login(user);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Transactional
 	@Override
 	public Integer register(User user) {

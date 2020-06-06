@@ -24,8 +24,8 @@
 					</button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-				<li class="layui-nav-item"><a href="">主页</a></li>
-				<li class="layui-nav-item"><a href="">留言</a></li>
+					<li class="layui-nav-item"><a href="">主页</a></li>
+					<li class="layui-nav-item"><a href="">留言</a></li>
 					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 						<dl class="layui-nav-child">
@@ -35,7 +35,7 @@
 							<dd><a href="user/exit">退出</a></dd>
 						</dl>
 					</li>
-					
+
 				</ul>
 			</div>
 			<div class="layui-side">
@@ -117,68 +117,58 @@
 				$.get('index/notice', function(result) {
 					$("#notice").html(result)
 				})
-				layui
-					.use(
-						['carousel', 'form', 'element', 'flow'],
-						function() {
-							var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-							var carousel = layui.carousel;
-							var form = layui.form;
-							var flow = layui.flow;
-							//排行榜
-							flow
-								.load({
-									elem: '#order', //流加载容器
-									done: function(page, next) { //执行下一页的回调
-
-										$
-											.getJSON(
-												'commodity/orderByNumber', {
-													page: page,
-													limit: 10
-												},
-												function(result) {
-													if (result.code == 0) {
-														var lis = [];
-														var commoditys = result.data;
-														for (var i = 0; i < commoditys.length; i++) {
-															var commodity = commoditys[i];
-															lis
-																.push("<div class='layui-card' style='height: 150px;padding: 10px;'>" +
-																	"	<div class='layui-col-xs8'>" +
-																	"		<img src='http://192.168.0.105/image/bookstore/commodity/" + commodity.imageName + ".jpg'>" +
-																	"	</div>" +
-																	"	<div class='layui-col-xs4'>" +
-																	"		<div style='height: 80px;margin-top: 20px;'>" +
-																	"			<a href='commodity/info/" + commodity.id + "'>" +
-																	commodity.name +
-																	"</a>" +
-																	"		</div>" +
-																	"		<div style='height: 50px;color: red;'>" +
-																	"			<b>￥" +
-																	commodity.price +
-																	"</b>" +
-																	"		</div>" +
-																	"	</div>" +
-																	"</div>");
-														}
-														next(
-															lis
-															.join(''),
-															page < result.count);
-													}
-												})
-									}
-								});
-							//轮播图
-							carousel.render({
-								elem: '#test1',
-								interval: 2000,
-								width: '700px',
-								anim: 'fade',
-								height: '450px'
-							});
+				layui.use(['carousel', 'form', 'element', 'flow'],
+					function() {
+						var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+						var carousel = layui.carousel;
+						var form = layui.form;
+						var flow = layui.flow;
+						//排行榜
+						flow.load({
+							elem: '#order', //流加载容器
+							done: function(page, next) { //执行下一页的回调
+								$.getJSON('commodity/orderByNumber', {
+										page: page,
+										limit: 10
+									},
+									function(result) {
+										if (result.code == 0) {
+											var lis = [];
+											var commoditys = result.data;
+											for (var i = 0; i < commoditys.length; i++) {
+												var commodity = commoditys[i];
+												lis.push("<div class='layui-card' style='height: 150px;padding: 10px;'>" +
+													"	<div class='layui-col-xs8'>" +
+													"		<img src='http://192.168.0.105/image/bookstore/commodity/" + commodity.imageName + ".jpg'>" +
+													"	</div>" +
+													"	<div class='layui-col-xs4'>" +
+													"		<div style='height: 80px;margin-top: 20px;'>" +
+													"			<a href='commodity/info/" + commodity.id + "'>" +
+													commodity.name +
+													"</a>" +
+													"		</div>" +
+													"		<div style='height: 50px;color: red;'>" +
+													"			<b>￥" +
+													commodity.price +
+													"</b>" +
+													"		</div>" +
+													"	</div>" +
+													"</div>");
+											}
+											next(lis.join(''), page < result.count);
+										}
+									})
+							}
 						});
+						//轮播图
+						carousel.render({
+							elem: '#test1',
+							interval: 2000,
+							width: '700px',
+							anim: 'fade',
+							height: '450px'
+						});
+					});
 			}
 		</script>
 	</body>
