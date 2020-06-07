@@ -20,7 +20,7 @@
 					<button type="button" onclick="search()" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-					<li class="layui-nav-item"><a href="">主页</a></li>
+					<li class="layui-nav-item"><a href="index.html">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
 					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item">
@@ -66,7 +66,7 @@
 
 					<div class='layui-card layui-col-xs4' style='height: 170px;padding: 10px;background-color: #F2F2F2;' v-for="commodity in commoditys">
 						<div class='layui-col-xs8'>
-							<img v-bind:src="'http://192.168.0.104:8054/bookstore/commodity/' + commodity.imageName + '.jpg'">
+							<img v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
 						</div>
 						<div class='layui-col-xs4'>
 							<div style='height: 40px;margin-top: 20px;'>

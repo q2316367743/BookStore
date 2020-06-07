@@ -37,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select 1 
 		from ${recordName}
 		where commodity_id = #{commodityId}
+		limit 1
 	</select>
 
 </mapper>

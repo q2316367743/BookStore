@@ -77,7 +77,7 @@ public class ShopServiceImpl implements ShopService {
 			if (balance > 0) {
 				//获取记录表，查看是否购买过
 				Integer isBuy = recordDao.queryRecordByCommodityId(recordName, commodityId);
-				if (isBuy != null) {
+				if (isBuy == null) {
 					//3. 更新余额
 					userDao.updateBalance(username, balance);
 					//4. 从购物车中删除商品

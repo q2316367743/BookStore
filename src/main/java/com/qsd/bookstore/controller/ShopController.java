@@ -117,7 +117,7 @@ public class ShopController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return modelAndView;
+			return null;
 		}
 	}
 
