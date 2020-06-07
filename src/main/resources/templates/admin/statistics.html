@@ -51,31 +51,30 @@
 			<ul class="layui-nav layui-nav-tree layui-inline"
 				style="height: 100%">
 				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
-				<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;">商品</a>
+				<li class="layui-nav-item"><a href="javascript:;">商品</a>
 					<dl class="layui-nav-child">
-						<dd class="layui-this">
+						<dd>
 							<a href="commodity">上架商品</a>
 						</dd>
 						<dd>
 							<a href="operation">全部商品</a>
 						</dd>
 					</dl></li>
-				<li class="layui-nav-item"><a href="statistics">网站统计</a></li>
+				<li class="layui-nav-item layui-this"><a href="statistics">网站统计</a></li>
 				<li class="layui-nav-item"><a href="setting">全局设置</a></li>
 			</ul>
 		</div>
 		<div class="layui-body" style="background-color: #F2F2F2;">
-			商品修改<br>
-			商品上架
+			网站统计<br>
+			近五日的数据折线图
 		</div>
 		<div class="layui-footer">
 			版权所有：浅梦凉城
 		</div>
-	</div>
-	<script>
-		layui.use('element', function() {
-			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-		});
-	</script>
+		<script>
+			layui.use('element', function() {
+				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+			});
+		</script>
 </body>
 </html>

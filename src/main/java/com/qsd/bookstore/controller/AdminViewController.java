@@ -24,43 +24,40 @@ public class AdminViewController {
 
 	@Autowired
 	private AdminService adminService;
-
-	@GetMapping("")
-	public String index(HttpServletRequest request) {
-		Admin admin = (Admin) request.getSession().getAttribute("admin");
-		if (admin != null) {
-			return "redirect:dashboard";
-		}else {
-			return "redirect:../login.html";
-		}
-	}
 	
 	@GetMapping("dashboard")
 	public String dashboard(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("admin");
-		if (admin != null) {
-			adminService.getWebInfo(model);
-			model.addAttribute("admin", admin);
-			return "admin/dashboard";
-		}else {
-			return "redirect:../login.html";
-		}
-		
+		adminService.getWebInfo(model);
+		model.addAttribute("admin", admin);
+		return "admin/dashboard";
 	}
 	
 	@GetMapping("commodity")
-	public String commodity() {
+	public String commodity(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", admin);
 		return "admin/commodity";
 	}
 	
 	@GetMapping("operation")
-	public String operation() {
+	public String operation(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", admin);
 		return "admin/operation";
 	}
 	
 	@GetMapping("setting")
-	public String setting() {
+	public String setting(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", admin);
 		return "admin/setting";
 	}
 	
+	@GetMapping("statistics")
+	public String statistics(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", admin);
+		return "admin/statistics";
+	}
 }
