@@ -1,5 +1,7 @@
 package com.qsd.bookstore.pojo;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -35,6 +37,11 @@ public class Global {
 	private int userNum;
 	//上架图书数量
 	private int commodityNum;
+	@PostConstruct
+	public void init() {
+		this.commodityNum = commodityDao.getCOmmodityNum();
+		this.userNum = userDao.getUserNum();
+	}
 	public String getNotice() {
 		return this.notice;
 	}
@@ -69,17 +76,15 @@ public class Global {
 		this.turnover += money;
 	}
 	public void updateUserNum() {
-		this.userNum = userDao.getUserNum();
+		userNum += 1;
 	}
 	public int getUserNum() {
-		updateUserNum();
 		return userNum;
 	}
 	public void updateCommodityNum() {
-		this.commodityNum = commodityDao.getCOmmodityNum();
+		commodityNum += 1;
 	}
 	public int getCommodityNum() {
-		updateCommodityNum();
 		return commodityNum;
 	}
 

@@ -59,9 +59,11 @@
 								<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity/info/' + commodity.id">详情</button>
 							</div>
 						</div>
-						
+						<div align="center" v-if="commoditys.length == 0" style="font-size: 30px">
+						您搜索的图书名不存在
+						</div>
 					</div>
-					<div id="page" class="layui-col-xs-offset4"></div>
+					<div id="page" align="center" class="" style=""></div>
 				</div>
 			</div>
 		</div>

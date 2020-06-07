@@ -19,6 +19,7 @@ import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
+import com.qsd.bookstore.pojo.Global;
 import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
@@ -42,6 +43,8 @@ public class UserController {
 	private RecordService recordService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private Global global;
 
 	@GetMapping("login")
 	public UserVo login(UserByLogin user, HttpServletRequest request) {
@@ -69,6 +72,7 @@ public class UserController {
 			User login = userService.login(new UserByLogin(user));
 			HttpSession session = request.getSession();
 			session.setAttribute("user", login);
+			global.updateUserNum();
 			return new UserVo(200, "注册成功");
 		}else {
 			return new UserVo(400, "账户重复");

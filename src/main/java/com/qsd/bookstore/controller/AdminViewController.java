@@ -60,4 +60,10 @@ public class AdminViewController {
 		model.addAttribute("admin", admin);
 		return "admin/statistics";
 	}
+	
+	@GetMapping("exit")
+	public String exit(HttpServletRequest request) {
+		request.getSession().removeAttribute("admin");
+		return "redirect:/index.html";
+	}
 }
