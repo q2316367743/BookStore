@@ -65,5 +65,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set password = #{password}
 		where username = #{username}
 	</update>
+	
+	<select id="getUserNum" resultType="INTEGER">
+		select count(*)
+		from user
+	</select>
 
 </mapper>

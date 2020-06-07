@@ -87,6 +87,9 @@
 						}else {
 							window.location.href = 'commodity/info/'+commodityId;
 						}
+					}else if (result.code == 101){
+						//管理员登录
+						window.location.href = 'admin/dashboard';
 					}else {
 						alert("账户或密码错误")
 					}

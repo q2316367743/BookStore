@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
+import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
+import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
@@ -38,6 +40,8 @@ public class UserController {
 	private ShopService shopService;
 	@Autowired
 	private RecordService recordService;
+	@Autowired
+	private AdminService adminService;
 
 	@GetMapping("login")
 	public UserVo login(UserByLogin user, HttpServletRequest request) {
@@ -47,6 +51,13 @@ public class UserController {
 			session.setAttribute("user", login);
 			return new UserVo(200, "登录成功");
 		}else {
+			//管理员验证
+			Admin admin = new Admin(user);
+			boolean result = adminService.login(admin);
+			if (result) {
+				session.setAttribute("admin", admin);
+				return new UserVo(101, "管理员登录成功");
+			}
 			return new UserVo(400, "帐户或密码错误");
 		}
 	}

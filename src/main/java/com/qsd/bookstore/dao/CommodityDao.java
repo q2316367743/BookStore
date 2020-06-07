@@ -52,5 +52,9 @@ public interface CommodityDao {
 	 * 浏览量+1
 	 * */
 	Integer addView(int id);
+	/**
+	 * 获取商品数量
+	 * */
+	Integer getCOmmodityNum();
 	
 }

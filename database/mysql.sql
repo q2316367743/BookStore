@@ -46,9 +46,18 @@ create table commodity(
 insert into commodity(name, image_name, file_name, price, category, content, author) VALUES ('Java开发手册（泰山版）', '000001', 'Java开发手册（泰山版）', 22, 'java', 'alibaba出品的java开发手册', 'alibaba');
 insert into commodity(name, image_name, file_name, price, category, content, author) VALUES ('Python基础入门到精通', 'Python基础入门到精通', 'Python基础入门到精通', 10, 'python', 'Python基础入门到精通,陈强编著', '陈强');
 
+# 创建管理员表
+create table admin(
+    username varchar(11) primary key ,
+    password varchar(18)
+);
+
+insert into admin values ('admin', '123456');
+
 # 测试查询
 select * from user;
 select * from commodity
 order by number desc ;
+select * from safe;
 
 show tables;

@@ -1,4 +1,4 @@
-package com.qsd.bookstore.interceptor;
+package com.qsd.bookstore.component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

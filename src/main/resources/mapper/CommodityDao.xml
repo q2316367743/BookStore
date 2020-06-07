@@ -57,5 +57,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set view = view + '1' 
 		where id= #{id}
 	</update>
+	
+	<select id="getCOmmodityNum" resultType="INTEGER">
+		select count(*)
+		from commodity
+	</select>
 
 </mapper>

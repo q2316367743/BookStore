@@ -1,0 +1,27 @@
+package com.qsd.bookstore.service;
+
+import org.springframework.ui.Model;
+
+import com.qsd.bookstore.po.Admin;
+
+/**
+ * @Description 
+ * @Author Esion
+ * @Data 2020年6月7日
+ */
+
+public interface AdminService {
+	
+	/**
+	 * 登录
+	 * @param admin 账户，密码
+	 * @return 是否存在账户
+	 * */
+	boolean login(Admin admin);
+	/**
+	 * 获取网站全部信息
+	 * @param model 存放信息
+	 * */
+	void getWebInfo(Model model);
+
+}
