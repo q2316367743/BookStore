@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qsd.bookstore.dao.CommodityDao;
 import com.qsd.bookstore.dao.RecordDao;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
@@ -33,6 +34,8 @@ public class RecordServiceImpl implements RecordService {
 
 	@Autowired
 	private RecordDao recordDao;
+	@Autowired
+	private CommodityDao commodityDao;
 
 	@Override
 	public List<Commodity> getAllRecord(User user) {
@@ -55,11 +58,11 @@ public class RecordServiceImpl implements RecordService {
 		if (user != null) {
 			// 2. 获取全部记录
 			String recordName = user.getRecordName();
-			List<Commodity> commodities = recordDao.queryAllRecord(recordName);
-			for (Commodity commodity : commodities) {
-				if (commodity.getId() == commodityId) {
+			Integer result = recordDao.queryRecordByCommodityId(recordName, commodityId);
+				if (result != null) {
+					// 如果存在记录，则获取商品信息
+					Commodity commodity = commodityDao.queryCommodityById(commodityId);
 					String fileName = commodity.getFileName() + ".pdf";
-					
 					// 配置文件下载
 	                response.setHeader("content-type", "application/octet-stream");
 	                response.setContentType("application/octet-stream");
@@ -95,7 +98,6 @@ public class RecordServiceImpl implements RecordService {
 						}
 					}
 				}
-			}
 			// 没有购买图书
 			return 0;
 		} else {

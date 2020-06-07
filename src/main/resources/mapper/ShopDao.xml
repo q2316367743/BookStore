@@ -34,5 +34,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from ${shopName}
 		where commodity_id = #{commodityId}
 	</delete>
+	
+	<select id="queryShopByCommodityId" resultType="INTEGER">
+		select 1
+		from ${shopName}
+		where commodity_id = #{commodityId}
+	</select>
 
 </mapper>

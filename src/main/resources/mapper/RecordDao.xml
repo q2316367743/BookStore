@@ -32,5 +32,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id in (select commodity_id from ${recordName}
 		group by commodity_id);
 	</select>
+	
+	<select id="queryRecordByCommodityId" resultType="INTEGER">
+		select 1 
+		from ${recordName}
+		where commodity_id = #{commodityId}
+	</select>
 
 </mapper>

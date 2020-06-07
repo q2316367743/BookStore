@@ -19,5 +19,6 @@ public interface ShopDao {
 	Integer addShop(@Param("shopName") String shopName, @Param("commodityId") int commodityId);
 	List<Commodity> queryAll(String shopName);
 	int removeCommodityById(@Param("shopName") String shopName, @Param("commodityId") int commodityId);
+	Integer queryShopByCommodityId(@Param("shopName") String shopName, @Param("commodityId") int commodityId);
 
 }

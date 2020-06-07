@@ -16,8 +16,14 @@ import com.qsd.bookstore.po.User;
 
 public interface RecordService {
 
+	/**
+	 * 获取全部的购买记录
+	 * @param user 用户信息
+	 * @return 全部商品列表
+	 * */
 	List<Commodity> getAllRecord(User user);
 	/**
+	 * 获取商品文件
 	 * @param response 
 	 * @param request 
 	 * @param commodityId 商品ID

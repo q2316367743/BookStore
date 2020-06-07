@@ -50,8 +50,10 @@ public class ShopController {
 			int addShop = shopService.addShop(shopName, commodityId);
 			if (addShop > 0) {
 				return new CommodityVo<String>(200, "加入购物车成功");
-			} else {
+			} else if (addShop == 0) {
 				return new CommodityVo<String>(400, "未加入购物车");
+			} else {
+				return new CommodityVo<String>(500, "已经加入购物车，请勿重复添加");
 			}
 		} else {
 			return new CommodityVo<String>(404, "用户信息不存在");

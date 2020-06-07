@@ -14,10 +14,13 @@ public interface CommodityDao {
 
 	/**
 	 * 查询全部商品根据销售量排序
-	 * @param condition 
 	 * @return 全部商品
 	 * */
 	List<Commodity> queryAllByNum();
+	/**
+	 * 查询全部商品根据查看量排序
+	 * @return 全部商品
+	 * */
 	List<Commodity> queryAllByView();
 	/**
 	 * 根据书名查询图书
@@ -35,6 +38,11 @@ public interface CommodityDao {
 	 * @return 商品信息
 	 * */
 	Commodity queryCommodityById(int id);
+	/**
+	 * 查询商品价格根据商品ID
+	 * @param id 商品ID
+	 * @return 商品价格
+	 * */
 	Double queryPriceById(int id);
 	/**
 	 * 销售量+1

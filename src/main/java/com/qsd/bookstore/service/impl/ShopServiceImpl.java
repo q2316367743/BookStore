@@ -38,8 +38,12 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public int addShop(String shopName, int commodity_id) {
-		// TODO Auto-generated method stub
-		return shopDao.addShop(shopName, commodity_id);
+		Integer result = shopDao.queryShopByCommodityId(shopName, commodity_id);
+		if (result != null) {
+			return -1;
+		}else {
+			return shopDao.addShop(shopName, commodity_id);
+		}
 	}
 
 	@Override
@@ -72,14 +76,8 @@ public class ShopServiceImpl implements ShopService {
 			balance = balance - price;
 			if (balance > 0) {
 				//获取记录表，查看是否购买过
-				List<Commodity> commodities = recordDao.queryAllRecord(recordName);
-				boolean isBuy = false;
-				for(Commodity commodity : commodities) {
-					if (commodity.getId() == commodityId) {
-						isBuy = true;
-					}
-				}
-				if (!isBuy) {
+				Integer isBuy = recordDao.queryRecordByCommodityId(recordName, commodityId);
+				if (isBuy != null) {
 					//3. 更新余额
 					userDao.updateBalance(username, balance);
 					//4. 从购物车中删除商品

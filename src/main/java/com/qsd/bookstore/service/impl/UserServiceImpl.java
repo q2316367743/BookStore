@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qsd.bookstore.dao.RecordDao;
+import com.qsd.bookstore.dao.SafeDao;
 import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.dao.UserDao;
 import com.qsd.bookstore.dto.UserByLogin;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
 	private RecordDao recordDao;
 	@Autowired
 	private ShopDao shopDao;
+	@Autowired
+	private SafeDao safeDao;
 
 	@Override
 	public User login(UserByLogin user) {
@@ -49,9 +52,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public User update(User oldUserm, User newUser) {
+	public User update(User oldUser, User newUser) {
 		//1. 获取用户名
-		String username = oldUserm.getUsername();
+		String username = oldUser.getUsername();
 		//2. 修改数据库
 		newUser.setUsername(username);
 		userDao.update(newUser);
@@ -62,6 +65,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public Integer logout(User user) {
+		String username = user.getUsername();
 		String shopName = user.getShopName();
 		String recordName = user.getRecordName();
 		//删除购物车表
@@ -69,8 +73,10 @@ public class UserServiceImpl implements UserService {
 		//删除记录表
 		int record = recordDao.deleteRecordTable(recordName);
 		//删除用户表
-		int delete = userDao.delete(user.getUsername());
-		return shop + record + delete;
+		int delete = userDao.delete(username);
+		//删除密保记录
+		int safe = safeDao.deleteSafeByUsername(username);
+		return shop + record + delete +safe;
 	}
 
 	@Override
