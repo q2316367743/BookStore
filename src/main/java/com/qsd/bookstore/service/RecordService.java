@@ -2,9 +2,6 @@ package com.qsd.bookstore.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
 

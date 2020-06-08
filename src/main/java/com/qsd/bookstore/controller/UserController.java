@@ -124,7 +124,6 @@ public class UserController {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		Integer logout = userService.logout(user);
-		System.out.println(logout);
 		if (logout > 0) {
 			session.removeAttribute("user");
 			return new UserVo(200, "注销成功");

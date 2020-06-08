@@ -22,5 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from safe
 		where username = #{username}
 	</select>
+	
+	<delete id="deleteSafeByUsername">
+		delete from safe where username = #{username}
+	</delete>
 
 </mapper>

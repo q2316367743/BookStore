@@ -1,5 +1,7 @@
 package com.qsd.bookstore.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +43,8 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public Integer register(User user) {
-		String shopName = SecureUtil.simpleUUID();
-		String recordName = SecureUtil.simpleUUID();
+		String shopName = "s" + markName();
+		String recordName = "r" + markName();
 		shopDao.createShopTable(shopName);
 		recordDao.createRecordTable(recordName);
 		user.setShopName(shopName);
@@ -68,21 +70,65 @@ public class UserServiceImpl implements UserService {
 		String username = user.getUsername();
 		String shopName = user.getShopName();
 		String recordName = user.getRecordName();
+		Boolean isSafe = user.getIsSafe();
 		//删除购物车表
-		int shop = shopDao.deleteShopTable(shopName);
+		shopDao.deleteShopTable(shopName);
 		//删除记录表
-		int record = recordDao.deleteRecordTable(recordName);
+		recordDao.deleteRecordTable(recordName);
 		//删除用户表
-		int delete = userDao.delete(username);
-		//删除密保记录
-		int safe = safeDao.deleteSafeByUsername(username);
-		return shop + record + delete +safe;
+		userDao.delete(username);
+		if (isSafe) {
+			//删除密保记录
+			safeDao.deleteSafeByUsername(username);
+		}
+		return 1;
 	}
 
 	@Override
 	public Integer alterpwd(UserByPwd user) {
 		// TODO Auto-generated method stub
 		return userDao.alterpwd(user);
+	}
+	
+	public static String markName(){
+		LocalDateTime now = LocalDateTime.now();
+		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
+		int minute = now.getMinute();
+		int second = now.getSecond();
+		int hour = now.getHour();
+		String m = "";
+		String d = "";
+		String mi = "";
+		String s = "";
+		String h = "";
+		if (month<10) {
+			m = "0" + month;
+		}else {
+			m = month + "";
+		}
+		if (day < 10) {
+			d = "0" + day;
+		}else {
+			d = day + "";
+		}
+		if (minute < 10) {
+			mi = "0" + minute;
+		}else {
+			mi = "" + minute;
+		}
+		if (second < 10) {
+			s = "0" + second;
+		}else {
+			s = "" + second;
+		}
+		if (hour < 10) {
+			h = "0" + hour;
+		}else {
+			h = "" + hour;
+		}
+		Integer random = (int) (Math.random() * 90 + 10);
+		return now.getYear()+m+d+h+mi+s+random.toString();
 	}
 
 }

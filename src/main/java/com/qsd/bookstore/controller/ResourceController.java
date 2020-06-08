@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ResourceService;
 import com.qsd.bookstore.vo.ShopVo;
 
@@ -24,8 +23,6 @@ import com.qsd.bookstore.vo.ShopVo;
 @RequestMapping("resource")
 public class ResourceController {
 	
-	@Autowired
-	private RecordService recordService;
 	@Autowired
 	private ResourceService resourceService;
 	

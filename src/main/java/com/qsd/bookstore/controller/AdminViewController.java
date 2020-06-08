@@ -9,11 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Category;
-import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.AdminService;
 
