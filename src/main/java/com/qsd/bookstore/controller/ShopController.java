@@ -18,6 +18,7 @@ import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.vo.CommodityVo;
+import com.qsd.bookstore.vo.ShopVo;
 
 /**
  * @Description 处理购物车获取，购买，移除
@@ -52,8 +53,12 @@ public class ShopController {
 				return new CommodityVo<String>(200, "加入购物车成功");
 			} else if (addShop == 0) {
 				return new CommodityVo<String>(400, "未加入购物车");
-			} else {
+			} else if (addShop == -1) {
 				return new CommodityVo<String>(500, "已经加入购物车，请勿重复添加");
+			} else if (addShop == -2) {
+				return new CommodityVo<String>(401, "商品已下架，无法加入购物车");
+			} else {
+				return new CommodityVo<String>(402, "商品不存在，无法加入购物车");
 			}
 		} else {
 			return new CommodityVo<String>(404, "用户信息不存在");
@@ -93,8 +98,12 @@ public class ShopController {
 			return new CommodityVo<Integer>(400, "账户余额不足");
 		} else if (result == -1) {
 			return new CommodityVo<Integer>(404, "用户信息不存在，请重新登陆");
-		} else {
+		} else if (result == 2) {
 			return new CommodityVo<Integer>(500, "您以购买过商品，请勿重复购买");
+		} else if (result == -2) {
+			return new CommodityVo<Integer>(402, "商品不存在");
+		} else {
+			return new CommodityVo<Integer>(401, "商品以下架");
 		}
 	}
 
@@ -106,10 +115,22 @@ public class ShopController {
 		if (user != null) {
 			// 2. 查询商品全部信息
 			Commodity commodity = commodityService.queryCommodityById(commodityId);
-			// 3. 赋值、跳转页面
-			modelAndView.addObject("commodity", commodity);
-			modelAndView.addObject("user", user);
-			return modelAndView;
+			if (commodity != null) {
+				if (commodity.getStatus()) {
+					// 3. 赋值、跳转页面
+					modelAndView.addObject("commodity", commodity);
+					modelAndView.addObject("user", user);
+					return modelAndView;
+				}else {
+					modelAndView.setViewName("read");
+					modelAndView.addObject("result", new ShopVo(0, "商品已下架，无法购买"));
+					return modelAndView;
+				}
+			}else {
+				modelAndView.setViewName("read");
+				modelAndView.addObject("result", new ShopVo(0, "商品不存在"));
+				return modelAndView;
+			}
 		} else {
 			// 如果没有登录，则重定向到登陆页面
 			try {

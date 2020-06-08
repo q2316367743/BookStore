@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>商品详情页</title>
+		<title>[[${commodity.name}]]</title>
 		<link rel="stylesheet" href="/layui/css/layui.css">
 		<script src="/layui/layui.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -57,8 +57,15 @@
 						<div style='height: 30px;color: red;'>
 							<b>￥</b><b th:text="${commodity.price}"></b>
 						</div>
-						<button type="button" class="layui-btn" onclick="addShop()">加入购物车</button>
-						<button type="button" class="layui-btn layui-bg-red" onclick="buy()">购买</button>
+						<div th:if="${commodity.status}">
+							<button type="button" class="layui-btn" onclick="addShop()">加入购物车</button>
+							<button type="button" class="layui-btn layui-bg-red" onclick="buy()">购买</button>
+						</div>
+						<div th:if="!${commodity.status}">
+							<button type="button" class="layui-btn layui-btn-disabled" >加入购物车</button>
+							<button type="button" class="layui-btn layui-btn-disabled">购买</button>
+							<span style="color: red;">该商品已下架，无法购买</span>
+						</div>
 					</div>
 				</div>
 			</div>

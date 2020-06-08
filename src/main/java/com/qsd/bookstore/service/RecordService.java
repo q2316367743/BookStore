@@ -22,13 +22,6 @@ public interface RecordService {
 	 * @return 全部商品列表
 	 * */
 	List<Commodity> getAllRecord(User user);
-	/**
-	 * 获取商品文件
-	 * @param response 
-	 * @param request 
-	 * @param commodityId 商品ID
-	 * @return 结果
-	 * */
-	int getCommodityFile(HttpServletRequest request, HttpServletResponse response, int commodityId);
+	
 	
 }

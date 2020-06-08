@@ -41,7 +41,8 @@ create table commodity(
     content blob,
     author varchar(10),
     view int default 0,
-    constraint fk_comm_cate foreign key (category) references category(name)
+    status boolean default true,
+    constraint fk_com_cate foreign key (category) references category(name)
 );
 insert into commodity(name, image_name, file_name, price, category, content, author) VALUES ('Java开发手册（泰山版）', '000001', 'Java开发手册（泰山版）', 22, 'java', 'alibaba出品的java开发手册', 'alibaba');
 insert into commodity(name, image_name, file_name, price, category, content, author) VALUES ('Python基础入门到精通', 'Python基础入门到精通', 'Python基础入门到精通', 10, 'python', 'Python基础入门到精通,陈强编著', '陈强');

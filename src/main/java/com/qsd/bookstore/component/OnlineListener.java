@@ -23,13 +23,11 @@ public class OnlineListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		System.err.println("session创建");
 		global.addOnline();
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		System.err.println("session销毁");
 		global.reduceOnline();
 	}
 

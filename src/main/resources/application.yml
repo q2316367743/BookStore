@@ -33,8 +33,6 @@ spring:
   thymeleaf:
     cache: false
     encoding: UTF-8
-  jackson:
-    date-format: yyyy:MM:dd HH:mm:ss
       
 # MyBatis配置
 mybatis:

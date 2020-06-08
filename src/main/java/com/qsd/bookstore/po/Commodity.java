@@ -20,6 +20,8 @@ public class Commodity {
     private Integer view;
     private String content;
     private String author;
+    //上架状态
+    private Boolean status;
 	public Integer getId() {
 		return id;
 	}
@@ -79,6 +81,18 @@ public class Commodity {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	public Boolean getStatus() {
+		return status;
+	}
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+	@Override
+	public String toString() {
+		return "Commodity [id=" + id + ", name=" + name + ", imageName=" + imageName + ", fileName=" + fileName
+				+ ", number=" + number + ", price=" + price + ", category=" + category + ", view=" + view + ", content="
+				+ content + ", author=" + author + ", status=" + status + "]";
 	}
 
 	

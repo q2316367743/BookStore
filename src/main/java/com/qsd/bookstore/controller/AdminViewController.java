@@ -1,5 +1,7 @@
 package com.qsd.bookstore.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.po.Admin;
+import com.qsd.bookstore.po.Category;
+import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.pojo.Global;
 import com.qsd.bookstore.service.AdminService;
 
@@ -37,14 +41,17 @@ public class AdminViewController {
 	public String commodity(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("admin");
 		model.addAttribute("admin", admin);
+		adminService.getAllCommodity(model);
 		return "admin/commodity";
 	}
 	
-	@GetMapping("operation")
+	@GetMapping("new")
 	public String operation(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("admin");
 		model.addAttribute("admin", admin);
-		return "admin/operation";
+		List<Category> categories = adminService.getAllCategories();
+		model.addAttribute("categories", categories);
+		return "admin/new";
 	}
 	
 	@GetMapping("setting")
@@ -66,4 +73,21 @@ public class AdminViewController {
 		request.getSession().removeAttribute("admin");
 		return "redirect:/index.html";
 	}
+	
+	@GetMapping("message")
+	public String message(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", admin);
+		return "admin/message";
+	}
+	
+	@GetMapping("user")
+	public String user(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		model.addAttribute("admin", admin);
+		List<User> users = adminService.getAllUserInfo();
+		model.addAttribute("users", users);
+		return "admin/user";
+	}
+	
 }

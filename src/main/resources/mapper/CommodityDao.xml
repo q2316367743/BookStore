@@ -15,26 +15,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="view" column="view"/>
 		<result property="author" column="author"/>
 		<result property="content" column="content" javaType="string" jdbcType="BLOB"/>
+		<result property="status" column="status"></result>
 	</resultMap>
 
 	<select id="queryAllByNum" resultMap="commodityMap">
 		select * from commodity 
+		where status = true
 		order by number desc 
 	</select>
 	
 	<select id="queryAllByView" resultMap="commodityMap">
 		select * from commodity 
+		where status = true
 		order by view desc 
 	</select>
 	
 	<select id="queryCommodityByName" resultMap="commodityMap">
 		select * from commodity
-		where name like '%${name}%'
+		where name like '%${name}%' and status = true
 		order by number desc 
 	</select>
 	
 	<select id="queryCommodityByCategory" resultMap="commodityMap">
-		select * from commodity where category = #{category}
+		select * from commodity 
+		where category = #{category} and status = true
 	</select>
 	
 	<select id="queryCommodityById" resultMap="commodityMap">
@@ -49,18 +53,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="addNumber">
 		update commodity 
 		set number = number + '1' 
-		where id= #{id}
+		where id= #{id} and status = true
 	</update>
 	
 	<update id="addView">
 		update commodity 
 		set view = view + '1' 
-		where id= #{id}
+		where id= #{id} and status = true
 	</update>
 	
-	<select id="getCOmmodityNum" resultType="INTEGER">
+	<select id="getCommodityNum" resultType="INTEGER">
 		select count(*)
 		from commodity
+		where status = true
 	</select>
+	
+	<select id="queryCommodityStatus" resultType="BOOLEAN">
+		select status
+		from commodity
+		where id = #{id}
+	</select>
+	
+	<select id="queryAllCommodity" resultMap="commodityMap">
+		select *
+		from commodity
+	</select>
+	
+	<select id="commodityExist" resultType="INTEGER">
+		select 1 
+		from commodity
+		where id = #{id}
+	</select>
+	
+	<update id="updateStatus">
+		update commodity
+		set status = #{status}
+		where id = #{id}
+	</update>
+	
+	<insert id="newCommodity" parameterType="commodity">
+		insert into 
+		commodity(name, image_name, file_name, price, category, content, author) 
+		VALUES (#{name}, #{imageName}, #{fileName}, #{price}, #{category}, #{content}, #{author});
+	</insert>
 
 </mapper>

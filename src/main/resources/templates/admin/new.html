@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>后台管理</title>
+<link rel="stylesheet" href="../layui/css/layui.css">
+<script src="../layui/layui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="../layui/jquery-3.5.1.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<style type="text/css">
+.side {
+	margin-top: 10px;
+}
+
+.item-body {
+	text-align: center;
+	height: 50px;
+	font-size: 30px;
+}
+</style>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header layui-row">
+			<div class="layui-logo">
+				<a style="color: white;" href="/index.html">人生艰难书店</a>
+			</div>
+			<ul class="layui-nav layui-col-xs-offset9" id="nav">
+				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
+				<li class="layui-nav-item"><a href="/index.html">商城</a></li>
+				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${admin.username}]]</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="new">上架商品</a>
+						</dd>
+						<dd>
+							<a href="commodity">全部商品</a>
+						</dd>
+						<dd>
+							<a href="setting">全局设置</a>
+						</dd>
+						<dd>
+							<a href="exit">退出</a>
+						</dd>
+					</dl></li>
+
+			</ul>
+		</div>
+		<div class="layui-side">
+			<ul class="layui-nav layui-nav-tree layui-inline"
+				style="height: 100%">
+				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
+				<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;">商品管理</a>
+					<dl class="layui-nav-child">
+						<dd class="layui-this">
+							<a href="new">上架商品</a>
+						</dd>
+						<dd>
+							<a href="commodity">全部商品</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item"><a href="statistics">网站统计</a></li>
+				<li class="layui-nav-item"><a href="user">用户管理</a></li>
+				<li class="layui-nav-item"><a href="message">留言管理</a></li>
+				<li class="layui-nav-item"><a href="setting">全局设置</a></li>
+			</ul>
+		</div>
+		<div class="layui-body" style="background-color: #F2F2F2;">
+			<div style="padding: 20px;">
+				<fieldset class="layui-elem-field layui-field-title">
+					<legend>商品上架</legend>
+				</fieldset>
+				<div class="layui-form layui-form-pane layui-col-xs6">
+					<div class="layui-form-item">
+						<label class="layui-form-label">商品图片：</label>
+						<div class="layui-input-block">
+							<button type="button" class="layui-btn layui-btn-normal" id="image">选择文件</button>
+							<span id="imageName"></span>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">商品名称：</label>
+						<div class="layui-input-block">
+							<input type="text" id="name" autocomplete="off" placeholder="请输入商品名称" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">作者：</label>
+						<div class="layui-input-block">
+							<input type="text" id="author" autocomplete="off" placeholder="请输入作者" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">商品类别：</label>
+						<div class="layui-input-block">
+							<select id="category">
+								<option>请选择商品类别</option>
+								<option th:each="category: ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">商品描述：</label>
+						<div class="layui-input-block">
+							 <textarea id="content" placeholder="请输入商品描述" class="layui-textarea"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">商品价格：</label>
+						<div class="layui-input-block">
+							<input type="text" id="price" autocomplete="off" placeholder="请输入商品价格" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">商品文件：</label>
+						<div class="layui-input-block">
+							<button type="button" class="layui-btn layui-btn-normal" id="file">选择文件</button>
+							<span id="fileName"></span>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" id="over" onclick="complete()" type="button">上架</button>
+							<button class="layui-btn layui-btn-primary" type="reset">重置</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-footer">
+			版权所有：浅梦凉城
+		</div>
+	</div>
+	<script>
+		var imageName = '';
+		var fileName = '';
+		var category = '';
+		function complete(){
+			var name = $("#name").val();
+			var author = $("#author").val();
+			var content = $("#content").val();
+			var price = $("#price").val();
+			$.post('opera/newCommodityWithfeild', 
+					{
+						name: name, 
+						imageName: imageName, 
+						author: author,
+						category: category,
+						content: content,
+						price: price,
+						fileName: fileName
+					}, 
+					function(result){
+						if(result.code == 200){
+							layer.msg("创建商品成功")
+						}
+					},'json')
+		}
+		layui.use(['element', 'upload', 'form'], function() {
+			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+			var upload = layui.upload;
+			var form = layui.form;
+			form.on('select', function(data){
+				category = data.value;
+				});  
+			//选完文件后不自动上传
+			upload.render({
+				elem: '#image',
+				url: 'opera/newCommodityWithImage', //改成您自己的上传接口
+				field: 'image',
+				choose: function(obj){
+					obj.preview(function(index, file, result){
+					      $("#imageName").text(file.name);
+					      imageName = file.name;
+					      var temp = imageName.split(".");
+					      imageName = temp[0];
+					})
+				},
+				done: function(res){
+					layer.msg('图片上传成功');
+					console.log(res)
+				},
+				error: function(){
+					layer.msg('图片上传失败');
+				}
+			});
+			//选完文件后不自动上传
+			upload.render({
+				elem: '#file',
+				url: 'opera/newCommodityWithFile', //改成您自己的上传接口
+				field: 'file',
+				accept: 'file',
+				choose: function(obj){
+					obj.preview(function(index, file, result){
+					      $("#fileName").text(file.name);
+					      fileName = file.name;
+					      var temp = fileName.split(".");
+					      fileName = temp[0];
+					})
+				},
+				done: function(res){
+					layer.msg('文件上传成功');
+					console.log(res)
+				},
+				error: function(){
+					layer.msg('文件上传失败');
+				}
+			});
+		});
+	</script>
+</body>
+</html>

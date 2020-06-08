@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.service.RecordService;
+import com.qsd.bookstore.service.ResourceService;
 import com.qsd.bookstore.vo.ShopVo;
 
 /**
@@ -25,13 +26,15 @@ public class ResourceController {
 	
 	@Autowired
 	private RecordService recordService;
+	@Autowired
+	private ResourceService resourceService;
 	
 	@GetMapping("read/{commodityId}")
 	@ResponseBody
 	public ModelAndView read(@PathVariable("commodityId") int commodityId, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("read");
-		int result = recordService.getCommodityFile(request, response, commodityId);
+		int result = resourceService.getCommodityFile(request, response, commodityId);
 		System.err.println(result);
 		switch (result) {
 		case -1:

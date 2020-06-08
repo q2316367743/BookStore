@@ -70,5 +70,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*)
 		from user
 	</select>
+	
+	<select id="queryAllUser" resultMap="userMap">
+		select *
+		from user
+	</select>
 
 </mapper>

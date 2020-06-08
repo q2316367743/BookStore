@@ -69,4 +69,10 @@ public class CommodityServiceImpl implements CommodityService {
 		return commodity;
 	}
 
+	@Override
+	public int newCommodity(Commodity commodity) {
+		// TODO Auto-generated method stub
+		return commodityDao.newCommodity(commodity);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.qsd.bookstore.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.qsd.bookstore.dto.UserByLogin;
@@ -54,5 +56,9 @@ public interface UserDao {
 	 * 获取注册用户数量
 	 * */
 	Integer getUserNum();
+	/**
+	 * 查询全部的用户信息
+	 * */
+	List<User> queryAllUser();
 
 }

@@ -120,6 +120,8 @@
 						})
 					}else if(result.code == 500){
 						layer.msg(result.msg);
+					}else{
+						layer.alert(result.msg);
 					}
 				})
 			})

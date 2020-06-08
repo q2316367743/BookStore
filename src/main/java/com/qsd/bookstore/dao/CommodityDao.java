@@ -2,6 +2,8 @@ package com.qsd.bookstore.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.qsd.bookstore.po.Commodity;
 
 /**
@@ -53,8 +55,27 @@ public interface CommodityDao {
 	 * */
 	Integer addView(int id);
 	/**
-	 * 获取商品数量
+	 * 获取上架商品数量
 	 * */
-	Integer getCOmmodityNum();
-	
+	Integer getCommodityNum();
+	/**
+	 * 查询商品状态
+	 * */
+	Boolean queryCommodityStatus(int id);
+	/**
+	 * 查询全部商品
+	 * */
+	List<Commodity> queryAllCommodity();
+	/**
+	 * 判断商品是否存在
+	 * */
+	Integer commodityExist(int id);
+	/**
+	 * 设置商品状态
+	 * */
+	Integer updateStatus(@Param("id") int id, @Param("status") boolean status);
+	/**
+	 * 插入一条图书记录
+	 * */
+	int newCommodity(Commodity commodity);
 }

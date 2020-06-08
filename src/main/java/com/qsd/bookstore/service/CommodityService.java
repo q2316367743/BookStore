@@ -24,5 +24,9 @@ public interface CommodityService {
 	 * 查询商品信息根据商品ID
 	 * */
 	Commodity queryCommodityById(Integer id);
+	/**
+	 * 上架商品
+	 * */
+	int newCommodity(Commodity commodity);
 	
 }

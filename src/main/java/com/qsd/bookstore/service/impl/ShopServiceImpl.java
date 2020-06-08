@@ -41,11 +41,22 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public int addShop(String shopName, int commodity_id) {
-		Integer result = shopDao.queryShopByCommodityId(shopName, commodity_id);
-		if (result != null) {
-			return -1;
+		Boolean status = commodityDao.queryCommodityStatus(commodity_id);
+		if (status != null) {
+			if (status) {
+				Integer result = shopDao.queryShopByCommodityId(shopName, commodity_id);
+				if (result != null) {
+					return -1;
+				}else {
+					return shopDao.addShop(shopName, commodity_id);
+				}
+			}else {
+				//商品下架
+				return -2;
+			}
 		}else {
-			return shopDao.addShop(shopName, commodity_id);
+			//没有商品
+			return -3;
 		}
 	}
 
@@ -69,38 +80,47 @@ public class ShopServiceImpl implements ShopService {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user != null) {
-			String username = user.getUsername();
-			String shopName = user.getShopName();
-			String recordName = user.getRecordName();
-			Double balance = user.getBalance();
-			//1. 查询图书价格
-			Double price = commodityDao.queryPriceById(commodityId);
-			//2. 从余额中扣除价格
-			balance = balance - price;
-			if (balance > 0) {
-				//获取记录表，查看是否购买过
-				Integer isBuy = recordDao.queryRecordByCommodityId(recordName, commodityId);
-				if (isBuy == null) {
-					//3. 更新余额
-					userDao.updateBalance(username, balance);
-					//4. 从购物车中删除商品
-					shopDao.removeCommodityById(shopName, commodityId);
-					//5. 加入到记录表中
-					Record record = new Record(recordName, commodityId, new Timestamp(System.currentTimeMillis()));
-					recordDao.addRecord(record);
-					//6. 更新余额
-					User queryUser = userDao.queryUser(username);
-					//7. 商品销售额加一
-					commodityDao.addNumber(commodityId);
-					session.setAttribute("user", queryUser);
-					//书籍销售量加一
-					global.addCommoditySellNum();
-					return 1;
+			Boolean status = commodityDao.queryCommodityStatus(commodityId);
+			if (status != null && status) {
+				String username = user.getUsername();
+				String shopName = user.getShopName();
+				String recordName = user.getRecordName();
+				Double balance = user.getBalance();
+				//1. 查询图书价格
+				Double price = commodityDao.queryPriceById(commodityId);
+				//2. 从余额中扣除价格
+				balance = balance - price;
+				if (balance > 0) {
+					//获取记录表，查看是否购买过
+					Integer isBuy = recordDao.queryRecordByCommodityId(recordName, commodityId);
+					if (isBuy == null) {
+						//3. 更新余额
+						userDao.updateBalance(username, balance);
+						//4. 从购物车中删除商品
+						shopDao.removeCommodityById(shopName, commodityId);
+						//5. 加入到记录表中
+						Record record = new Record(recordName, commodityId, new Timestamp(System.currentTimeMillis()));
+						recordDao.addRecord(record);
+						//6. 更新余额
+						User queryUser = userDao.queryUser(username);
+						//7. 商品销售额加一
+						commodityDao.addNumber(commodityId);
+						session.setAttribute("user", queryUser);
+						//书籍销售量加一
+						global.addCommoditySellNum();
+						return 1;
+					}else {
+						return 2;
+					}
 				}else {
-					return 2;
+					return 0;			
 				}
-			}else {
-				return 0;			
+			} else if (status == null) {
+				//商品不存在
+				return -2;
+			} else {
+				//商品已下架
+				return -3;
 			}
 		}else {
 			return -1;

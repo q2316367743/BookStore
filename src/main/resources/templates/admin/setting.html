@@ -37,10 +37,10 @@
 				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${admin.username}]]</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="commodity">上架商品</a>
+							<a href="new">上架商品</a>
 						</dd>
 						<dd>
-							<a href="operation">全部商品</a>
+							<a href="commodity">全部商品</a>
 						</dd>
 						<dd>
 							<a href="setting">全局设置</a>
@@ -56,16 +56,18 @@
 			<ul class="layui-nav layui-nav-tree layui-inline"
 				style="height: 100%">
 				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">商品</a>
+				<li class="layui-nav-item"><a href="javascript:;">商品管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="commodity">上架商品</a>
+							<a href="new">上架商品</a>
 						</dd>
 						<dd>
-							<a href="operation">全部商品</a>
+							<a href="commodity">全部商品</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="statistics">网站统计</a></li>
+				<li class="layui-nav-item"><a href="user">用户管理</a></li>
+				<li class="layui-nav-item"><a href="message">留言管理</a></li>
 				<li class="layui-nav-item layui-this"><a href="setting">全局设置</a></li>
 			</ul>
 		</div>
@@ -92,7 +94,7 @@
 		 	</div>
 		 	<div class="layui-col-xs5" style="margin-left: 40px">
 		 		<blockquote class="layui-elem-quote layui-text" style="background-color: white;">
-					网站首页轮播图设置
+					网站首页轮播图设置<span style="color: red;">(暂不支持，仅作演示)</span>
 				</blockquote>
 				<div class="layui-upload">
 				  <div class="layui-upload-list">
@@ -134,12 +136,14 @@
 				  var demoListView = $('#demoList');
 				  var uploadListIns = upload.render({
 				    elem: '#testList',
-				    url: '', //改成您自己的上传接口
+				    url: 'opera/setIndexImage', //改成您自己的上传接口
 				    accept: 'images',
 				    acceptMime: 'image/*',
 				    field: 'images',
+				    number: 4,
 				    multiple: true,
 				    auto: false,
+				    size: 10240,
 				    bindAction: '#testListAction',
 				    choose: function(obj){   
 					      var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
@@ -171,7 +175,7 @@
 					      });
 					    },
 				    done: function(res, index, upload){
-					      if(res.files.file){ //上传成功
+					      if(res.code == 200){ //上传成功
 					        var tr = demoListView.find('tr#upload-'+ index);
 					        var tds = tr.children();
 					        tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');

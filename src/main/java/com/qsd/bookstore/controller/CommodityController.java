@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.vo.CommodityVo;
+import com.qsd.bookstore.vo.ShopVo;
 
 /**
  * @Description 
@@ -53,11 +54,17 @@ public class CommodityController {
 	@GetMapping("info/{commodityId}")
 	public ModelAndView info(@PathVariable("commodityId") Integer commodityId, HttpServletRequest request) {
 		Commodity commodity = commodityService.queryCommodityById(commodityId);
-		ModelAndView modelAndView = new ModelAndView("commodity");
-		Object user = request.getSession().getAttribute("user");
-		modelAndView.addObject("commodity", commodity);
-		modelAndView.addObject("user", user);
-		return modelAndView;
+		if (commodity != null) {
+			ModelAndView modelAndView = new ModelAndView("commodity");
+			Object user = request.getSession().getAttribute("user");
+			modelAndView.addObject("commodity", commodity);
+			modelAndView.addObject("user", user);
+			return modelAndView;
+		}else {
+			ModelAndView modelAndView = new ModelAndView("read");
+			modelAndView.addObject("result", new ShopVo(0, "商品不存在"));
+			return modelAndView;
+		}
 	}
 	
 	

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>后台管理</title>
@@ -32,10 +32,10 @@
 				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${admin.username}]]</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="commodity">上架商品</a>
+							<a href="new">上架商品</a>
 						</dd>
 						<dd>
-							<a href="operation">全部商品</a>
+							<a href="commodity">全部商品</a>
 						</dd>
 						<dd>
 							<a href="setting">全局设置</a>
@@ -51,16 +51,18 @@
 			<ul class="layui-nav layui-nav-tree layui-inline"
 				style="height: 100%">
 				<li class="layui-nav-item layui-this"><a href="">仪表盘</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">商品</a>
+				<li class="layui-nav-item"><a href="javascript:;">商品管理</a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="commodity">上架商品</a>
+							<a href="new">上架商品</a>
 						</dd>
 						<dd>
-							<a href="operation">全部商品</a>
+							<a href="commodity">全部商品</a>
 						</dd>
 					</dl></li>
 				<li class="layui-nav-item"><a href="statistics">网站统计</a></li>
+				<li class="layui-nav-item"><a href="user">用户管理</a></li>
+				<li class="layui-nav-item"><a href="message">留言管理</a></li>
 				<li class="layui-nav-item"><a href="setting">全局设置</a></li>
 			</ul>
 		</div>

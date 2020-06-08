@@ -39,7 +39,7 @@ public class Global {
 	private int commodityNum;
 	@PostConstruct
 	public void init() {
-		this.commodityNum = commodityDao.getCOmmodityNum();
+		this.commodityNum = commodityDao.getCommodityNum();
 		this.userNum = userDao.getUserNum();
 	}
 	public String getNotice() {
