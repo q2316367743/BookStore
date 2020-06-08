@@ -1,4 +1,4 @@
-package com.qsd.bookstore.pojo;
+package com.qsd.bookstore.po;
 
 import javax.annotation.PostConstruct;
 
@@ -23,6 +23,7 @@ public class Global {
 	@Autowired
 	private CommodityDao commodityDao;
 	
+	private Integer id;
 	//网站的公告栏
 	private String notice = "尊敬的用户，您好<br />&nbsp;&nbsp;&nbsp;&nbsp;从6月15日起，本书店盛大开业，欢迎您的光临。";
 	//网站访问量
@@ -38,9 +39,15 @@ public class Global {
 	//上架图书数量
 	private int commodityNum;
 	@PostConstruct
-	public void init() {
+	public void update() {
 		this.commodityNum = commodityDao.getCommodityNum();
 		this.userNum = userDao.getUserNum();
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getNotice() {
 		return this.notice;
@@ -86,6 +93,36 @@ public class Global {
 	}
 	public int getCommodityNum() {
 		return commodityNum;
+	}
+	public UserDao getUserDao() {
+		return userDao;
+	}
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
+	public CommodityDao getCommodityDao() {
+		return commodityDao;
+	}
+	public void setCommodityDao(CommodityDao commodityDao) {
+		this.commodityDao = commodityDao;
+	}
+	public void setView(int view) {
+		this.view = view;
+	}
+	public void setOnline(int online) {
+		this.online = online;
+	}
+	public void setCommoditySellNum(int commoditySellNum) {
+		this.commoditySellNum = commoditySellNum;
+	}
+	public void setTurnover(int turnover) {
+		this.turnover = turnover;
+	}
+	public void setUserNum(int userNum) {
+		this.userNum = userNum;
+	}
+	public void setCommodityNum(int commodityNum) {
+		this.commodityNum = commodityNum;
 	}
 
 }

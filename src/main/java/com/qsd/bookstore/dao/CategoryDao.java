@@ -13,5 +13,7 @@ import com.qsd.bookstore.po.Category;
 public interface CategoryDao {
 	
 	List<Category> queryAllCategory();
+	int newCategory(Category category);
+	int deleteCategoryByName(String name);
 
 }

@@ -1,17 +1,13 @@
 package com.qsd.bookstore.config;
 
-import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.qsd.bookstore.component.AdminInterceptor;
-import com.qsd.bookstore.component.OnlineListener;
 import com.qsd.bookstore.component.ViewInterceptor;
 
 
@@ -27,8 +23,6 @@ public class WebConfig implements WebMvcConfigurer {
 	private ViewInterceptor viewInterceptor;
 	@Autowired
 	private AdminInterceptor adminInterceptor;
-	@Autowired
-	private OnlineListener onlineListener;
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -44,13 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
 		//管理员登录
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns("/admin/**");
-	}
-	
-	@Bean
-	public ServletListenerRegistrationBean<HttpSessionListener> listenerRegister(){
-		ServletListenerRegistrationBean<HttpSessionListener> register = new ServletListenerRegistrationBean<HttpSessionListener>();
-		register.setListener(onlineListener);
-		return register;
 	}
 	
 }

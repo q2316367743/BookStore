@@ -68,10 +68,10 @@
 		</div>
 		<div class="layui-body" style="background-color: #F2F2F2;">
 			<div style="padding: 20px;">
-				<fieldset class="layui-elem-field layui-field-title">
-					<legend>商品上架</legend>
-				</fieldset>
 				<div class="layui-form layui-form-pane layui-col-xs6">
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>商品上架</legend>
+					</fieldset>
 					<div class="layui-form-item">
 						<label class="layui-form-label">商品图片：</label>
 						<div class="layui-input-block">
@@ -94,7 +94,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">商品类别：</label>
 						<div class="layui-input-block">
-							<select id="category">
+							<select lay-filter="category" id="category">
 								<option>请选择商品类别</option>
 								<option th:each="category: ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
 							</select>
@@ -126,6 +126,50 @@
 						</div>
 					</div>
 				</div>
+				<div class="layui-col-xs6">
+					<fieldset class="layui-elem-field layui-field-title">
+						<legend>商品类别操作</legend>
+					</fieldset>
+					<div class="layui-col-xs10 layui-col-xs-offset2">
+						<fieldset class="layui-elem-field">
+							<legend>新建图书类别</legend>
+							<div class="layui-field-box v">
+									<div class="layui-form-item">
+										<label class="layui-form-label">类别：</label>
+										<div class="layui-input-block">
+											<input class="layui-input" placeholder="请输入类别" type="text" id="ncategory">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">描述：</label>
+										<div class="layui-input-block">
+											<textarea id="description" placeholder="请输入类别描述" class="layui-textarea"></textarea>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<div align="right">
+											<button class="layui-btn layui-btn-radius" onclick="newCategory()" type="button">创建</button>
+										</div>
+									</div>
+							</div>
+						</fieldset>
+						<fieldset class="layui-elem-field">
+							<legend>删除图书类别</legend>
+							<div class="layui-field-box layui-form layui-form-pane">
+								<div class="layui-col-xs9">
+									<select lay-filter="cate" id="category">
+										<option>请选择商品类别</option>
+										<option th:each="category: ${categories}" th:value="${category.name}" th:text="${category.name}"></option>
+									</select>
+								</div>
+								<div class="layui-col-xs2 layui-col-xs-offset1">
+									<button type="button" class="layui-btn" onclick="deleteCategory()">删除</button>
+								</div>
+								<div style="height: 48px"></div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="layui-footer">
@@ -136,6 +180,7 @@
 		var imageName = '';
 		var fileName = '';
 		var category = '';
+		var cate = '';
 		function complete(){
 			var name = $("#name").val();
 			var author = $("#author").val();
@@ -157,13 +202,38 @@
 						}
 					},'json')
 		}
+		function newCategory(){
+			var ncategory = $("#ncategory").val();
+			var description = $("#description").val();
+			$.getJSON('opera/newCategory', {name: ncategory, description: description}, function(result){
+				if(result.code == 200){
+					layer.msg("增加类别成功");
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				}
+			})
+		}
+		function deleteCategory(){
+			$.getJSON('opera/deleteCategory', {name: cate}, function(result){
+				if(result.code == 200){
+					layer.msg("删除类别成功");
+					setTimeout(function () {
+						location.reload();
+					}, 2000);
+				}
+			})
+		}
 		layui.use(['element', 'upload', 'form'], function() {
 			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 			var upload = layui.upload;
 			var form = layui.form;
-			form.on('select', function(data){
+			form.on('select(category)', function(data){
 				category = data.value;
-				});  
+			});
+			form.on('select(cate)', function(data){
+				cate = data.value;
+			});
 			//选完文件后不自动上传
 			upload.render({
 				elem: '#image',

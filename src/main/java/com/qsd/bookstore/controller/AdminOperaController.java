@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.qsd.bookstore.po.Category;
 import com.qsd.bookstore.po.Commodity;
-import com.qsd.bookstore.pojo.Global;
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ResourceService;
@@ -92,6 +93,18 @@ public class AdminOperaController {
 		}else {
 			return new ShopVo(400, "error");
 		}
+	}
+	
+	@GetMapping("newCategory")
+	public ShopVo newCategory(Category category) {
+		adminService.addCategory(category);
+		return new ShopVo(200, "success");
+	}
+	
+	@GetMapping("deleteCategory")
+	public ShopVo deleteCategory(String name) {
+		adminService.deleteCategory(name);
+		return new ShopVo(200, "success");
 	}
 
 }

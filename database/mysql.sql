@@ -55,6 +55,21 @@ create table admin(
 
 insert into admin values ('admin', '123456');
 
+# 创建网站信息表
+create table global(
+    id int primary key auto_increment,
+    notice blob,
+    view int,
+    online int,
+    commodity_sell_num int,
+    turnover int,
+    user_num int,
+    commodity_num int
+);
+
+insert into global(notice, view, online, commodity_sell_num, turnover, user_num, commodity_num)
+VALUES('尊敬的用户，您好<br />&nbsp;&nbsp;&nbsp;&nbsp;从6月15日起，本书店盛大开业，欢迎您的光临。', 2, 2, 3, 10, 1, 3);
+
 # 测试查询
 select * from user;
 select * from commodity

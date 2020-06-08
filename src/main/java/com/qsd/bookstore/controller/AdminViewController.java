@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Category;
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.User;
-import com.qsd.bookstore.pojo.Global;
 import com.qsd.bookstore.service.AdminService;
 
 /**

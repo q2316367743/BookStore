@@ -43,5 +43,13 @@ public interface AdminService {
 	 * 获取全部分类
 	 * */
 	List<Category> getAllCategories();
+	/**
+	 * 增加类别
+	 * */
+	int addCategory(Category category);
+	/**
+	 * 删除类别
+	 * */
+	int deleteCategory(String name);
 
 }

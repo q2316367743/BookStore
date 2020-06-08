@@ -44,15 +44,9 @@
 				</ul>
 				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
 					<li class="layui-nav-item"><a href="javascript:;">分类</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="category.html?category=java">java</a>
-							</dd>
-							<dd>
-								<a href="category.html?category=python">python</a>
-							</dd>
-							<dd>
-								<a href="category.html?category=c">c</a>
+						<dl id="side" class="layui-nav-child">
+							<dd v-for="category in categories">
+								<a v-bind:href="'category.html?category=' + category.name" v-text="category.name"></a>
 							</dd>
 						</dl>
 					</li>
@@ -107,6 +101,12 @@
 						username: ''
 					}
 				});
+				side = new Vue({
+					el: '#side',
+					data: {
+						categories: []
+					}
+				});
 				$.getJSON('user/isLogin', function(result) {
 					if (result.code == 200) {
 						vue.nickname = result.userInfo.nickname;
@@ -114,6 +114,11 @@
 						vue.isLogin = true;
 					}
 				})
+				$.getJSON('global/category', function(result){
+					if (result.code == 200) {
+						side.categories = result.categories;
+					}
+				});
 				$.get('global/notice', function(result) {
 					$("#notice").html(result)
 				})

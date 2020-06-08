@@ -18,8 +18,8 @@ import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Commodity;
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.User;
-import com.qsd.bookstore.pojo.Global;
 import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
@@ -52,6 +52,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		if (login != null) {
 			session.setAttribute("user", login);
+			global.addOnline();
 			return new UserVo(200, "登录成功");
 		}else {
 			//管理员验证

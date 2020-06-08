@@ -15,9 +15,9 @@ import com.qsd.bookstore.dao.RecordDao;
 import com.qsd.bookstore.dao.ShopDao;
 import com.qsd.bookstore.dao.UserDao;
 import com.qsd.bookstore.po.Commodity;
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.Record;
 import com.qsd.bookstore.po.User;
-import com.qsd.bookstore.pojo.Global;
 import com.qsd.bookstore.service.ShopService;
 
 /**

@@ -41,10 +41,10 @@
 				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
 					<li class="layui-nav-item layui-nav-itemed">
 						<a href="javascript:;">分类</a>
-						<dl class="layui-nav-child">
-							<dd><a href="javascript:;" onclick="getContent('java')">java</a></dd>
-							<dd><a href="javascript:;" onclick="getContent('python')">python</a></dd>
-							<dd><a href="javascript:;" onclick="getContent('c')">c</a></dd>
+						<dl id="side" class="layui-nav-child">
+							<dd v-for="category in categories">
+								<a href="javascript:;" v-text="category.name" v-on:click="getContent(category.name)"></a>
+							</dd>
 						</dl>
 					</li>
 				</ul>
@@ -91,6 +91,17 @@
 				var commodityName = $("#commodityName").val();
 				window.location.href = "search.html?commodityName=" + commodityName;
 			}
+			side = new Vue({
+				el: '#side',
+				data: {
+					categories: []
+				}
+			});
+			$.getJSON('global/category', function(result){
+				if (result.code == 200) {
+					side.categories = result.categories;
+				}
+			});
 			/**
 			 * 基础相关
 			 * */
@@ -110,7 +121,7 @@
 					vue.isLogin = true;
 				}
 			})
-			$.get('index/notice', function(result) {
+			$.get('global/notice', function(result) {
 				$("#notice").html(result)
 			})
 			layui.use('element', function() {

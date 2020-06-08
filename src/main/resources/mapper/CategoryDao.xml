@@ -8,4 +8,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from category
 	</select>
 	
+	<insert id="newCategory">
+		insert into category values(#{name}, #{description})
+	</insert>
+	
+	<delete id="deleteCategoryByName">
+		delete from category
+		where name = #{name}
+	</delete>
+	
 </mapper>

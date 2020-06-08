@@ -14,8 +14,8 @@ import com.qsd.bookstore.dao.UserDao;
 import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Category;
 import com.qsd.bookstore.po.Commodity;
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.User;
-import com.qsd.bookstore.pojo.Global;
 import com.qsd.bookstore.service.AdminService;
 
 /**
@@ -86,5 +86,14 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return categoryDao.queryAllCategory();
 	}
-
+	
+	@Override
+	public int addCategory(Category category) {
+		return categoryDao.newCategory(category);
+	}
+	
+	public int deleteCategory(String name) {
+		return categoryDao.deleteCategoryByName(name);
+	}
+	
 }
