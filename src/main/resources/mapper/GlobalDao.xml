@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="saveGlobal">
 		insert into global(notice, view, online, commodity_sell_num, turnover, user_num, commodity_num)
-		VALUES(#{notice}, #{view}, #{online}, #{commodity_sell_num}, #{turnover}, #{user_num}, #{commodity_num})
+		VALUES(#{notice}, #{view}, #{online}, #{commoditySellNum}, #{turnover}, #{userNum}, #{commodityNum})
 	</insert>
 
 </mapper>

@@ -15,8 +15,6 @@ import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.UserService;
 
-import cn.hutool.crypto.SecureUtil;
-
 /**
  * @Description 
  * @Author Esion
@@ -39,7 +37,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.login(user);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Transactional
 	@Override
 	public Integer register(User user) {
