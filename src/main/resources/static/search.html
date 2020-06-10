@@ -121,13 +121,17 @@
 								limit: 9,
 							    count: result.count ,//数据总数
 								jump: function(obj, first){
-								    //obj包含了当前分页的所有参数，比如：
-								    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-								    console.log(obj.limit); //得到每页显示的条数
-								    
-								    //首次不执行
 								    if(!first){
-								      //do something
+								    	$.getJSON('search/base', {
+								    		commodityName: commodityName,
+											page: obj.curr,
+											limit: obj.limit
+										}, function(result) {
+											if (result.code == 200) {
+												//数据赋值
+												content.commoditys = result.data;
+											}
+										});
 								    }
 								  }
 							  });
@@ -136,7 +140,56 @@
 				})
 			}
 			function cf(){
-				
+				var commodityName = $("#commodityName").val();
+				var max = $("#max").val();
+				var min = $("#min").val();
+				if(max == ""){
+					max = 0;
+				}
+				if(min == ""){
+					min = 0;
+				}
+				$.getJSON('search/price', {
+						commodityName: commodityName, 
+						max: max,
+						min: min,
+						page: 1, 
+						limit: 9
+					}, function(result){
+					if(result.code = 200){
+						//绑定数据
+						content.commoditys = result.data;
+						//渲染分页
+						layui.use(['laypage', 'layer'], function(){
+							var laypage = layui.laypage;
+							var layer = layui.layer;
+							//总页数低于页码总数
+							  laypage.render({
+							    elem: 'page',
+								limit: 9,
+							    count: result.count ,//数据总数
+								jump: function(obj, first){
+								    if(!first){
+								    	$.getJSON('search/base', {
+								    		commodityName: commodityName,
+								    		max: max,
+											min: min,
+											page: obj.curr,
+											limit: obj.limit
+										}, function(result) {
+											if (result.code == 200) {
+												//数据赋值
+												content.commoditys = result.data;
+											}
+										});
+								    }
+								  }
+							  });
+						})
+					}else{
+						layer.msg(result.message)
+					}
+				})
 			}
 			function cl(){
 				$("#max").val("")

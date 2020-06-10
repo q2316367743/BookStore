@@ -12,6 +12,8 @@ import com.qsd.bookstore.po.Safe;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.SafeService;
 
+import cn.hutool.crypto.digest.DigestUtil;
+
 /**
  * @Description 
  * @Author Esion
@@ -75,6 +77,8 @@ public class SafeServiceImpl implements SafeService {
 				if (safe.getAnswer3().equals(answer.getAnswer3())) {
 					String username = safe.getUsername();
 					String password = answer.getPassword();
+					//密码加密
+					password = DigestUtil.md5Hex(password);
 					UserByLogin user = new UserByLogin(username, password);
 					userDao.setPassword(user);
 					return 1;

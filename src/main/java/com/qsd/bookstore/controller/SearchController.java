@@ -38,6 +38,19 @@ public class SearchController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("price")
+	public CommodityVo priceSearch(String commodityName, int max, int min, int page, int limit) {
+		Map<String, Object> baseSearch = searchService.priceSearch(commodityName, max, min, page, limit);
+		if (baseSearch != null) {
+			int count = (int) baseSearch.get("count");
+			List<Commodity> commodities = (List<Commodity>) baseSearch.get("commoditys");
+			return new CommodityVo(200, "搜索>商品：" + commodityName + ",max:" + max + ",min" + min +  "<成功", count, commodities);
+		}else {
+			return new CommodityVo(400, "搜索" + commodityName + "错误");
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("category")
 	public CommodityVo category(String category, int page, int limit) {
 		Map<String, Object> baseSearch = searchService.searchByCategory(category, page, limit);

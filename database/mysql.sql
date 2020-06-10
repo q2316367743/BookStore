@@ -1,7 +1,7 @@
 # 创建用户表
 create table user(
     username varchar(11) primary key ,
-    password varchar(18) not null ,
+    password varchar(32) not null ,
     nickname varchar(20),
     gender boolean,
     age int,
@@ -10,7 +10,7 @@ create table user(
     balance double default 100.0,
     is_safe boolean default false
 );
-# 床建密保问题表
+# 创建密保问题表
 create table safe(
     username varchar(11) primary key ,
     question1 varchar(20),

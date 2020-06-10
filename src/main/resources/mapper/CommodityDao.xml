@@ -96,5 +96,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		commodity(name, image_name, file_name, price, category, content, author) 
 		VALUES (#{name}, #{imageName}, #{fileName}, #{price}, #{category}, #{content}, #{author});
 	</insert>
+	
+	<select id="queryCommoditiesByNameAndPrice" resultMap="commodityMap">
+		select * from commodity
+		where name like '%${name}%'
+		and price &lt; #{max}
+		and price &gt; #{min}
+	</select>
 
 </mapper>

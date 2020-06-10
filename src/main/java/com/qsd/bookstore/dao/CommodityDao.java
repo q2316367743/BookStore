@@ -78,4 +78,9 @@ public interface CommodityDao {
 	 * 插入一条图书记录
 	 * */
 	int newCommodity(Commodity commodity);
+	/**
+	 * 根据名字和价格区间查询商品
+	 * */
+	List<Commodity> queryCommoditiesByNameAndPrice(@Param("name")String name, @Param("max")int max, @Param("min")int min);
+	
 }

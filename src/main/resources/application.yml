@@ -33,6 +33,10 @@ spring:
   thymeleaf:
     cache: false
     encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
       
 # MyBatis配置
 mybatis:

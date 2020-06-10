@@ -15,6 +15,8 @@ import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.UserService;
 
+import cn.hutool.crypto.digest.DigestUtil;
+
 /**
  * @Description 
  * @Author Esion
@@ -34,18 +36,27 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User login(UserByLogin user) {
+		//密码加密
+		String password = user.getPassword();
+		password = DigestUtil.md5Hex(password);
+		user.setPassword(password);
 		return userDao.login(user);
 	}
 
 	@Transactional
 	@Override
 	public Integer register(User user) {
+		//创建购物车和记录表
 		String shopName = "s" + markName();
 		String recordName = "r" + markName();
 		shopDao.createShopTable(shopName);
 		recordDao.createRecordTable(recordName);
 		user.setShopName(shopName);
 		user.setRecordName(recordName);
+		//密码加密
+		String password = user.getPassword();
+		password = DigestUtil.md5Hex(password);
+		user.setPassword(password);
 		return userDao.register(user);
 	}
 
@@ -83,7 +94,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Integer alterpwd(UserByPwd user) {
-		// TODO Auto-generated method stub
+		String oldpwd = user.getOldpwd();
+		String newpwd = user.getNewpwd();
+		oldpwd = DigestUtil.md5Hex(oldpwd);
+		newpwd = DigestUtil.md5Hex(newpwd);
+		user.setOldpwd(oldpwd);
+		user.setNewpwd(newpwd);
 		return userDao.alterpwd(user);
 	}
 	
