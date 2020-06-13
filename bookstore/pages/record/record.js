@@ -1,6 +1,9 @@
 // pages/record/record.js
 import {userUrl} from '../../config'
 import {comImgUrl} from '../../config'
+import {shopUrl} from '../../config'
+import {resourceUrl} from '../../config'
+
 Page({
 
   /**
@@ -46,5 +49,40 @@ Page({
       }
     })
   },
+
+  download: function(e){
+    var id = e.currentTarget.dataset.id;
+    var token = wx.getStorageSync('token')
+    wx.showLoading({
+      title: '获取下载连接中',
+    })
+    wx.request({
+      url: shopUrl + 'getDownloadPath',
+      data: {
+        token: token,
+        commodityId: id
+      },
+      success: function(res){
+        var result = res.data
+        wx.hideLoading({
+          complete: (res) => {
+            
+          },
+        })
+        var key = result
+        var url = resourceUrl + 'download?token=' +key;
+        wx.setClipboardData({
+          data: url,
+          success: function(e){
+            wx.showToast({
+              title: '已将链接复制到剪切板',
+              icon: 'success',
+              duration: 2000
+            })
+          }
+        })
+      }
+    })
+  }
 
 })

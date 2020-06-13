@@ -3,7 +3,7 @@
 <view class=''>
  <block wx:for="{{items}}">
  <!-- 每个cell -->
-  <navigator class='item' url="{{'../info/info?id='+item.id}}" >
+  <view class='item' bindtap="download" data-id="{{item.id}}" >
 
     <!-- 产品图片 -->
     <view class='iconImageView'>
@@ -25,6 +25,6 @@
       <text class='needSocreText'>￥{{item.price}}</text>
     </view>
 
-  </navigator>
+  </view>
  </block>
 </view>

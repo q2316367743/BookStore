@@ -22,6 +22,13 @@ public interface ResourceService {
 	 * */
 	int getCommodityFile(HttpServletRequest request, HttpServletResponse response, int commodityId);
 	/**
+	 * 获取商品文件
+	 * @param response 
+	 * @param commodityId 商品ID
+	 * @return 结果
+	 * */
+	int getCommodityFile(HttpServletResponse response, String token);
+	/**
 	 * 上传商品图片
 	 * @param image 商品图片
 	 * */

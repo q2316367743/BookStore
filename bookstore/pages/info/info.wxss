@@ -1,7 +1,7 @@
 /* pages/info/info.wxss */
 .clear{clear: both;overflow: hidden;}
 .banner{height:300px;}
-.slide-image {width:100%;height:300px;position: absolute;}
+.slide-image {width:100%;height:100vw;position: absolute;}
  
 /*分享按钮*/
 .fenxiang button::after{border: none;}

@@ -11,7 +11,8 @@ var config = {
   comImgUrl: `${imageUrl}/commodity/`,
   userUrl: `${apiUrl}/user/`,
   shopUrl: `${apiUrl}/shop/`,
-  searchUrl: `${apiUrl}/search/`
+  searchUrl: `${apiUrl}/search/`,
+  resourceUrl: `${apiUrl}/resource/`
 }
 
 module.exports = config
