@@ -1,14 +1,18 @@
 package com.qsd.bookstore.config;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.qsd.bookstore.component.AdminInterceptor;
-import com.qsd.bookstore.component.ViewInterceptor;
+import com.qsd.bookstore.interceptor.AdminInterceptor;
+import com.qsd.bookstore.interceptor.UserInterceptor;
+import com.qsd.bookstore.interceptor.ViewInterceptor;
 
 
 /**
@@ -23,6 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
 	private ViewInterceptor viewInterceptor;
 	@Autowired
 	private AdminInterceptor adminInterceptor;
+	@Autowired
+	private UserInterceptor userInterceptor;
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -38,6 +44,16 @@ public class WebConfig implements WebMvcConfigurer {
 		//管理员登录
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns("/admin/**");
+		//token拦截
+		List<String> need = new ArrayList<>();
+		need.add("/shop/**");
+		need.add("/user/**");
+		List<String> dis = new ArrayList<>();
+		dis.add("/user/login");
+		dis.add("/user/register");
+		registry.addInterceptor(userInterceptor)
+				.addPathPatterns(need)
+				.excludePathPatterns(dis);
 	}
 	
 }

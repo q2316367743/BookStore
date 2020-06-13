@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>[[${commodity.name}]]</title>
+		<title>商品详情</title>
 		<link rel="stylesheet" href="/layui/css/layui.css">
 		<script src="/layui/layui.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -27,41 +27,41 @@
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
 					<li class="layui-nav-item"><a href="/index.html">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
-					<li th:if="!${user}" class="layui-nav-item"><a
+					<li v-if="!isLogin" class="layui-nav-item"><a
 						href="/login.html">请登录</a></li>
-					<li th:if="${user}" class="layui-nav-item"><a href="javascript:;">欢迎您，[[${user.nickname}]]</a>
+					<li v-else class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 						<dl class="layui-nav-child">
 							<dd><a href="/user/self#my">我的信息</a></dd>
 							<dd><a href="/user/self#record">我的图书</a></dd>
 							<dd><a href="/user/self#shop">购物车</a></dd>
-							<dd><a href="/user/exit">退出</a></dd>
+							<dd><a href="javascript:;" onclick="exit()">退出</a></dd>
 						</dl>
 					</li>
 				</ul>
 			</div>
-			<div class="layui-body" style="margin-top: 30px;">
+			<div id="show" class="layui-body" style="margin-top: 30px;">
 				<div class='layui-card layui-col-xs10' style='height: 300px;margin-top: 50px;background-color: #F2F2F2;'>
 					<div class='layui-col-xs4'>
-						<img id="image" th:src="@{'http://192.168.0.105/image/bookstore/commodity/'+${commodity.imageName}+'.jpg'}" style="width: 250px;height: 250px;margin: 25px;">
+						<img id="image" v-bind:src="'http://192.168.0.105/image/bookstore/commodity/'+commodity.imageName+'.jpg'" style="width: 250px;height: 250px;margin: 25px;">
 					</div>
 					<div class='layui-col-xs8'>
 						<div style='height: 80px;margin-top: 20px;'>
-							<a style="font-size: 40px;"><b th:text="${commodity.name}"></b></a>
+							<a style="font-size: 40px;"><b v-text="commodity.name"></b></a>
 						</div>
 						<div style='height: 90px;'>
-							<span th:text="${commodity.content}"></span>
+							<span v-text="commodity.content"></span>
 						</div>
 						<div style='height: 30px;font-size: 18px'>
-							<b>作者：</b><b th:text="${commodity.author}"></b>
+							<b>作者：</b><b v-text="commodity.authot"></b>
 						</div>
 						<div style='height: 30px;color: red;'>
-							<b>￥</b><b th:text="${commodity.price}"></b>
+							<b>￥</b><b v-text="commodity.price"></b>
 						</div>
-						<div th:if="${commodity.status}">
+						<div v-if="!isLogin">
 							<button type="button" class="layui-btn" onclick="addShop()">加入购物车</button>
 							<button type="button" class="layui-btn layui-bg-red" onclick="buy()">购买</button>
 						</div>
-						<div th:if="!${commodity.status}">
+						<div v-else>
 							<button type="button" class="layui-btn layui-btn-disabled" >加入购物车</button>
 							<button type="button" class="layui-btn layui-btn-disabled">购买</button>
 							<span style="color: red;">该商品已下架，无法购买</span>
@@ -70,58 +70,85 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" th:if="${user}">
-		function addShop(){
-				$.getJSON('../../shop/addShop?commodityId=[[${commodity.id}]]', function(result){
-					layui.use('layer', function(){
+		<script type="text/javascript">
+			function addShop(){
+				var token = sessionStorage.getItem('token');
+				if(token != null){
+					$.getJSON('shop/add?', {
+						commodityId: show.commodity.id,
+						token: token
+					}, function(result){
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							if(result.code == 200){
+								layer.msg('加入购物车成功');
+							}else {
+								layer.msg(result.msg)
+							}
+						})
+					})
+				}else{
+					layui.use('layer',function(){
 						var layer = layui.layer;
-						if(result.code == 200){
-							layer.msg('加入购物车成功');
-						}else if(result.code == 404){
-							alert("用户信息失效，请重新登录");
-							window.location.href = '../login.html?commodityId=[[${commodity.id}]]';
-						}else {
-							layer.msg(result.msg)
-						}
+						layer.alert("用户信息失效，请重新登录");
+						window.location.href = 'login.html?commodityId='+show.commodity.id;
 					})
-				})
-			
-		}
-		function buy(){
-			window.location.href = "../../shop/pay?commodityId=" + '[[${commodity.id}]]';
-		}
-		</script>
-		<script type="text/javascript" th:if="!${user}">
-		function addShop(){
-			layui.use('layer', function(){
-				var layer = layui.layer;
-			layer.open({
-				title: '警告',
-				content: '未登录，请先登录',
-				btm: ["确定"],
-				yes: function(index, layero) {
-					window.location.href = "/login.html?commodityId=[[${commodity.id}]]";
 				}
-			})
-			})		
-		}
-		function buy(){
+			}
+			function buy(){
+				window.location.href = "pay.html?commodityId=" + show.commodity.id;
+			}
 			
-			layui.use('layer', function() {
-					var layer = layui.layer;
-					layer.open({
-						title : '警告',
-						content : '未登录，请先登录',
-						btm : [ "确定" ],
-						yes : function(index, layero) {
-							window.location.href = "/login.html?commodityId=[[${commodity.id}]]";
+			function exit(){
+				sessionStorage.removeItem('token');
+				sessionStorage.removeItem('nickname');
+				location.reload()
+			}
+			window.onload = function(){
+				show = new Vue({
+					el: '#show',
+					data:{
+						commodity: {},
+						isLogin: false
+					},
+					created: function(){
+						var variable = window.location.search.substring(1);
+						if (variable !== null || variable !== undefined || variable !== '') {
+							var temp = variable.split("=");
+							if (temp[0] == 'commodityId') {
+								var commodityId = temp[1];
+								$.getJSON('commodity/info', {
+									commodityId: commodityId
+								}, function(res){
+									if(res.code == 200){
+										show.commodity = res.data
+									}
+								})
+							}else{
+								layer.alert("参数出错")
+							}
+						}else{
+							layer.alert("缺少参数")
 						}
-					})
+						
+						
+					}
 				})
 			}
-		</script>
-		<script>
-			
+			vue = new Vue({
+				el: '#nav',
+				data: {
+					isLogin: false,
+					nickname: ''
+				},
+				created: function(){
+					var nickname = sessionStorage.getItem('nickname');
+					if(nickname != null){
+						this.nickname = nickname
+						this.isLogin = true;
+					}
+				}
+			});
 			//点击搜索
 			function search() {
 				var commodityName = $("#commodityName").val();

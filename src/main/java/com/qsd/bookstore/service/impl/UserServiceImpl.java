@@ -14,6 +14,7 @@ import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.UserService;
+import com.qsd.bookstore.util.JwtUtil;
 
 import cn.hutool.crypto.digest.DigestUtil;
 
@@ -74,8 +75,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Integer logout(User user) {
-		String username = user.getUsername();
+	public Integer logout(String token) {
+		String username = JwtUtil.getUsername(token);
+		User user = userDao.queryUser(username);
 		String shopName = user.getShopName();
 		String recordName = user.getRecordName();
 		Boolean isSafe = user.getIsSafe();
@@ -94,10 +96,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Integer alterpwd(UserByPwd user) {
+		String token = user.getUsername();
+		String username = JwtUtil.getUsername(token);
 		String oldpwd = user.getOldpwd();
 		String newpwd = user.getNewpwd();
 		oldpwd = DigestUtil.md5Hex(oldpwd);
 		newpwd = DigestUtil.md5Hex(newpwd);
+		user.setUsername(username);
 		user.setOldpwd(oldpwd);
 		user.setNewpwd(newpwd);
 		return userDao.alterpwd(user);
@@ -142,6 +147,16 @@ public class UserServiceImpl implements UserService {
 		}
 		Integer random = (int) (Math.random() * 90 + 10);
 		return now.getYear()+m+d+h+mi+s+random.toString();
+	}
+
+	@Override
+	public User info(String token) {
+		boolean verify = JwtUtil.verify(token);
+		if (verify) {
+			String username = JwtUtil.getUsername(token);
+			return userDao.queryUser(username);
+		}
+		return null;
 	}
 
 }

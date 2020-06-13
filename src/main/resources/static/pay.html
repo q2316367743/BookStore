@@ -94,6 +94,36 @@
 		</div>
 	</div>
 	<script>
+		function exit(){
+			sessionStorage.removeItem('token');
+			sessionStorage.removeItem('nickname');
+			window.location.href = 'index.html';
+		}
+		window.onload = function(){
+			var variable = window.location.search.substring(1);
+			layui.use('layer', function(){
+				var layer = layui.layer;
+				if (variable !== null || variable !== undefined || variable !== '') {
+					var temp = variable.split("=");
+					if (temp[0] == 'commodityId') {
+						var commodityId = temp[1];
+						var token = sessionStorage.getItem('token');
+						if(token != null){
+							
+						}else{
+							layer.alert("请登录");
+							window.location.href = 'login.html';
+						}
+					}else{
+						layer.alert("参数出错");
+						window.location.href = 'index.html';
+					}
+				}else{
+					layer.alert("缺少参数");
+					window.location.href = 'index.html';
+				}
+			})
+		}
 		function buy(){
 			$.getJSON('buy', {commodityId: [[${commodity.id}]]},function(result){
 				layui.use('layer', function(){

@@ -18,7 +18,7 @@ import com.qsd.bookstore.vo.CommodityVo;
 import com.qsd.bookstore.vo.ShopVo;
 
 /**
- * @Description 
+ * @Description 关于商品的信息，不需要认证
  * @Author Esion
  * @Data 2020年6月2日
  */
@@ -51,22 +51,14 @@ public class CommodityController {
 		}
 	}
 	
-	@GetMapping("info/{commodityId}")
-	public ModelAndView info(@PathVariable("commodityId") Integer commodityId, HttpServletRequest request) {
+	@GetMapping("info")
+	public CommodityVo<Commodity> info(int commodityId){
 		Commodity commodity = commodityService.queryCommodityById(commodityId);
 		if (commodity != null) {
-			ModelAndView modelAndView = new ModelAndView("commodity");
-			Object user = request.getSession().getAttribute("user");
-			modelAndView.addObject("commodity", commodity);
-			modelAndView.addObject("user", user);
-			return modelAndView;
+			return new CommodityVo<Commodity>(200, "success", -1, commodity);
 		}else {
-			ModelAndView modelAndView = new ModelAndView("read");
-			modelAndView.addObject("result", new ShopVo(0, "商品不存在"));
-			return modelAndView;
+			return new CommodityVo<>(404, "商品不存在");
 		}
 	}
-	
-	
 	
 }

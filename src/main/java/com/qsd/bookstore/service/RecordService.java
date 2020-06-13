@@ -19,6 +19,7 @@ public interface RecordService {
 	 * @return 全部商品列表
 	 * */
 	List<Commodity> getAllRecord(User user);
+	List<Commodity> getAllByUsername(String username);
 	
 	
 }

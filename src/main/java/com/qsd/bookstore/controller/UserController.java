@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +25,8 @@ import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
+import com.qsd.bookstore.util.JwtUtil;
+import com.qsd.bookstore.vo.CommodityVo;
 import com.qsd.bookstore.vo.UserVo;
 
 /**
@@ -38,22 +41,22 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private ShopService shopService;
-	@Autowired
 	private RecordService recordService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private ShopService shopService;
 	@Autowired
 	private Global global;
 
 	@GetMapping("login")
 	public UserVo login(UserByLogin user, HttpServletRequest request) {
 		User login = userService.login(user);
+		String token = JwtUtil.sign(user);
 		HttpSession session = request.getSession();
 		if (login != null) {
-			session.setAttribute("user", login);
 			global.addOnline();
-			return new UserVo(200, "登录成功");
+			return new UserVo(200, "登录成功", token, login);
 		}else {
 			//管理员验证
 			Admin admin = new Admin(user);
@@ -70,48 +73,39 @@ public class UserController {
 	public UserVo register(User user, HttpServletRequest request) {
 		Integer register = userService.register(user);
 		if (register > 0) {
-			User login = userService.login(new UserByLogin(user));
-			HttpSession session = request.getSession();
-			session.setAttribute("user", login);
+			UserByLogin temp = new UserByLogin(user);
+			User login = userService.login(temp);
+			String token = JwtUtil.sign(temp);
 			global.updateUserNum();
-			return new UserVo(200, "注册成功");
+			return new UserVo(200, "注册成功", token, login);
 		}else {
 			return new UserVo(400, "账户重复");
 		}
 	}
 	
-	@GetMapping("isLogin")
-	public UserVo isLogin(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			return new UserVo(200, "登录成功", user);
-		}else {
-			return new UserVo(400, "帐户或密码错误");
+	/**
+	 * 根据token获取用户信息
+	 * */
+	@GetMapping("info")
+	public UserVo info(String token, HttpServletRequest request) {
+		if (token != null) {
+			User user = userService.info(token);
+			if (user != null) {
+				return new UserVo(200, "success", user);
+			}else {
+				return new UserVo(400, "token信息错误");
+			}
 		}
-	}
-	
-	@GetMapping("exit")
-	public void exit(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		try {
-			response.sendRedirect("/index.html");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return new UserVo(404, "缺少token");
 	}
 	
 	@PostMapping("update")
-	public UserVo update(User user,HttpServletRequest request) {
+	public UserVo update(String token, User user,HttpServletRequest request) {
 		try {
-			HttpSession session = request.getSession();
 			//获取账户名
-			User oldUser = (User) session.getAttribute("user");
+			User oldUser = userService.info(token);
 			//修改数据库
-			User newUser = userService.update(oldUser, user);
-			session.setAttribute("user", newUser);
+			userService.update(oldUser, user);
 			return new UserVo(200, "成功");
 		} catch (Exception e) {
 			return new UserVo(400, "失败");
@@ -120,12 +114,9 @@ public class UserController {
 	}
 	
 	@GetMapping("logout")
-	public UserVo logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		Integer logout = userService.logout(user);
+	public UserVo logout(String token, HttpServletRequest request) {
+		Integer logout = userService.logout(token);
 		if (logout > 0) {
-			session.removeAttribute("user");
 			return new UserVo(200, "注销成功");
 		}else {
 			return new UserVo(400, "注销失败");
@@ -133,45 +124,32 @@ public class UserController {
 	}
 	
 	@GetMapping("alterpwd")
-	public UserVo alterpwd(String oldpwd, String newpwd, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			Integer alterpwd = userService.alterpwd(new UserByPwd(user.getUsername(), oldpwd, newpwd));
-			if (alterpwd > 0) {
-				session.removeAttribute("user");
-				return new UserVo(200, "修改成功，请登录");
-			}else {
-				return new UserVo(400, "旧密码错误");
-			}
+	public UserVo alterpwd(String token, String oldpwd, String newpwd, HttpServletRequest request) {
+		Integer alterpwd = userService.alterpwd(new UserByPwd(token, oldpwd, newpwd));
+		if (alterpwd > 0) {
+			return new UserVo(200, "修改成功，请登录");
 		}else {
-			return new UserVo(400, "请先登录");
+			return new UserVo(400, "旧密码错误");
 		}
 	}
 	
-	@GetMapping("self")
-	public ModelAndView self(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView modelAndView = new ModelAndView("self");
-		
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			try {
-				response.sendRedirect("../login.html");
-				return null;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		//个人信息
-		modelAndView.addObject("user", user);
+	// 查询购物车全部记录
+	@GetMapping("shop")
+	public CommodityVo<List<Commodity>> shop(String token, int page, int limit) {
+		//获取用户信息
+		String username = JwtUtil.getUsername(token);
 		//购物车信息
-		List<Commodity> commodities = shopService.getAll(user);
-		modelAndView.addObject("commodities", commodities);
-		//购买记录
-		List<Commodity> records = recordService.getAllRecord(user);
-		modelAndView.addObject("records", records);
-		return modelAndView;
+		List<Commodity> commodities = shopService.getAllByUsername(username);
+		return new CommodityVo<List<Commodity>>(200, "success", -1, commodities);
+	}
+	
+	@GetMapping("record")
+	public CommodityVo<List<Commodity>> record(String token, int page, int limit) {
+		//获取用户信息
+		String username = JwtUtil.getUsername(token);
+		//购物车信息
+		List<Commodity> commodities = recordService.getAllByUsername(username);
+		return new CommodityVo<List<Commodity>>(200, "success", -1, commodities);
 	}
 	
 }

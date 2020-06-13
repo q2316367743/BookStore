@@ -1,5 +1,7 @@
 package com.qsd.bookstore.vo;
 
+import cn.hutool.json.JSONUtil;
+
 /**
  * @Description 
  * @Author Esion
@@ -32,5 +34,8 @@ public class ShopVo {
 		this.message = message;
 	}
 	
+	public String toJSONString() {
+		return JSONUtil.toJsonStr(this);
+	}
 
 }

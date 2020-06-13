@@ -26,13 +26,13 @@
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
 					<li class="layui-nav-item"><a href="">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
-					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
+					<li v-if="!isLogin" class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 						<dl class="layui-nav-child">
 							<dd><a href="user/self#my">我的信息</a></dd>
 							<dd><a href="user/self#record">我的图书</a></dd>
 							<dd><a href="user/self#shop">购物车</a></dd>
-							<dd><a href="user/exit">退出</a></dd>
+							<dd><a href="javascript:;" onclick="exit()">退出</a></dd>
 						</dl>
 					</li>
 
@@ -92,13 +92,24 @@
 				var commodityName = $("#commodityName").val();
 				window.location.href = "search.html?commodityName=" + commodityName;
 			}
+			function exit(){
+				sessionStorage.removeItem('token');
+				sessionStorage.removeItem('nickname');
+				location.reload()
+			}
 			window.onload = function() {
 				vue = new Vue({
 					el: '#nav',
 					data: {
 						isLogin: false,
-						nickname: '',
-						username: ''
+						nickname: ''
+					},
+					created: function(){
+						var nickname = sessionStorage.getItem('nickname');
+						if(nickname != null){
+							this.nickname = nickname
+							this.isLogin = true;
+						}
 					}
 				});
 				side = new Vue({
@@ -107,13 +118,7 @@
 						categories: []
 					}
 				});
-				$.getJSON('user/isLogin', function(result) {
-					if (result.code == 200) {
-						vue.nickname = result.userInfo.nickname;
-						vue.username = result.userInfo.username;
-						vue.isLogin = true;
-					}
-				})
+				
 				$.getJSON('global/category', function(result){
 					if (result.code == 200) {
 						side.categories = result.categories;
@@ -148,7 +153,7 @@
 													"	</div>" +
 													"	<div class='layui-col-xs4'>" +
 													"		<div style='height: 80px;margin-top: 20px;'>" +
-													"			<a href='commodity/info/" + commodity.id + "'>" +
+													"			<a href='commodity.html?commodityId=" + commodity.id + "'>" +
 													commodity.name +
 													"</a>" +
 													"		</div>" +

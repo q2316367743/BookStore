@@ -12,7 +12,8 @@ public class UserVo {
 	
 	private Integer code;
 	private String message;
-	private UserInfo userInfo;
+	private String token;
+	private User user;
 	
 	public UserVo() {
 		super();
@@ -27,9 +28,14 @@ public class UserVo {
 		super();
 		this.code = code;
 		this.message = message;
-		this.userInfo = new UserInfo();
-		this.userInfo.setNickname(user.getNickname());
-		this.userInfo.setUsername(user.getUsername());
+		this.user = user;
+	}
+	public UserVo(Integer code, String message, String token, User user) {
+		super();
+		this.code = code;
+		this.message = message;
+		this.token = token;
+		this.user = user;
 	}
 	public Integer getCode() {
 		return code;
@@ -43,30 +49,17 @@ public class UserVo {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	
-	public UserInfo getUserInfo() {
-		return userInfo;
-	}
-	public void setUserInfo(UserInfo userInfo) {
-		this.userInfo = userInfo;
-	}
-
-	class UserInfo{
-		private String nickname;
-		private String username;
-		public String getNickname() {
-			return nickname;
-		}
-		public void setNickname(String nickname) {
-			this.nickname = nickname;
-		}
-		public String getUsername() {
-			return username;
-		}
-		public void setUsername(String username) {
-			this.username = username;
-		}
-		
-	}
-
 }

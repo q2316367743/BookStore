@@ -17,7 +17,7 @@ import com.qsd.bookstore.vo.SafeVo;
 import com.qsd.bookstore.vo.ShopVo;
 
 /**
- * @Description 
+ * @Description 密保，只有设置密保需要认证
  * @Author Esion
  * @Data 2020年6月6日
  */
@@ -45,6 +45,7 @@ public class SafeController {
 	
 	/**
 	 * 设置密保
+	 * 需要认证
 	 * */
 	@PostMapping("setSafe")
 	public ShopVo setSafe(Safe safe, HttpServletRequest request) {

@@ -13,7 +13,7 @@ import com.qsd.bookstore.service.SearchService;
 import com.qsd.bookstore.vo.CommodityVo;
 
 /**
- * @Description 
+ * @Description 根据条件筛选产品，不需要认证
  * @Author Esion
  * @Data 2020年6月2日
  */

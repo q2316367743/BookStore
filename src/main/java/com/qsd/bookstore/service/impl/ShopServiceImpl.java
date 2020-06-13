@@ -19,6 +19,7 @@ import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.Record;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.ShopService;
+import com.qsd.bookstore.util.JwtUtil;
 
 /**
  * @Description 
@@ -40,7 +41,9 @@ public class ShopServiceImpl implements ShopService {
 	private Global global;
 
 	@Override
-	public int addShop(String shopName, int commodity_id) {
+	public int addShop(String username, int commodity_id) {
+		User user = userDao.queryUser(username);
+		String shopName = user.getShopName();
 		Boolean status = commodityDao.queryCommodityStatus(commodity_id);
 		if (status != null) {
 			if (status) {
@@ -68,7 +71,9 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public boolean removeCommodity(User user, int commodityId) {
+	public boolean removeCommodity(String token, int commodityId) {
+		String username = JwtUtil.getUsername(token);
+		User user = userDao.queryUser(username);
 		String shopName = user.getShopName();
 		int result = shopDao.removeCommodityById(shopName, commodityId);
 		return result > 0;
@@ -125,6 +130,12 @@ public class ShopServiceImpl implements ShopService {
 		}else {
 			return -1;
 		}
+	}
+
+	@Override
+	public List<Commodity> getAllByUsername(String username) {
+		User user = userDao.queryUser(username);
+		return shopDao.queryAll(user.getShopName());
 	}
 	
 }

@@ -17,11 +17,12 @@ import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ShopService;
+import com.qsd.bookstore.util.JwtUtil;
 import com.qsd.bookstore.vo.CommodityVo;
 import com.qsd.bookstore.vo.ShopVo;
 
 /**
- * @Description 处理购物车获取，购买，移除
+ * @Description 处理购物车获取，购买，移除；需要认证
  * @Author Esion
  * @Data 2020年6月4日
  */
@@ -33,60 +34,37 @@ public class ShopController {
 	private ShopService shopService;
 	@Autowired
 	private CommodityService commodityService;
-
+	
 	/**
 	 * 加入购物车
 	 * 
 	 * @param commodityId 商品id
 	 * @return 添加结果
 	 */
-	@GetMapping("addShop")
-	public CommodityVo<String> addShop(Integer commodityId, HttpServletRequest request) {
-		// 获取购物车表名
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		if (user != null) {
-			String shopName = user.getShopName();
-			// 增加记录
-			int addShop = shopService.addShop(shopName, commodityId);
-			if (addShop > 0) {
-				return new CommodityVo<String>(200, "加入购物车成功");
-			} else if (addShop == 0) {
-				return new CommodityVo<String>(400, "未加入购物车");
-			} else if (addShop == -1) {
-				return new CommodityVo<String>(500, "已经加入购物车，请勿重复添加");
-			} else if (addShop == -2) {
-				return new CommodityVo<String>(401, "商品已下架，无法加入购物车");
-			} else {
-				return new CommodityVo<String>(402, "商品不存在，无法加入购物车");
-			}
+	@GetMapping("add")
+	public CommodityVo<String> add(String token, Integer commodityId){
+		String username = JwtUtil.getUsername(token);
+		int addShop = shopService.addShop(username, commodityId);
+		if (addShop > 0) {
+			return new CommodityVo<String>(200, "加入购物车成功");
+		} else if (addShop == 0) {
+			return new CommodityVo<String>(400, "未加入购物车");
+		} else if (addShop == -1) {
+			return new CommodityVo<String>(500, "已经加入购物车，请勿重复添加");
+		} else if (addShop == -2) {
+			return new CommodityVo<String>(401, "商品已下架，无法加入购物车");
 		} else {
-			return new CommodityVo<String>(404, "用户信息不存在");
-		}
-
-	}
-
-	// 查询购物车全部记录
-	@GetMapping("all")
-	public CommodityVo<List<Commodity>> all(HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
-		if (user != null) {
-			List<Commodity> commodities = shopService.getAll(user);
-			return new CommodityVo<List<Commodity>>(200, "全部商品", -1, commodities);
-		} else {
-			return new CommodityVo<List<Commodity>>(404, "用户信息不存在，请重新登陆");
+			return new CommodityVo<String>(402, "商品不存在，无法加入购物车");
 		}
 	}
 
+	/**
+	 * 从购物车中删除商品
+	 * */
 	@GetMapping("remove")
-	public CommodityVo<Boolean> removeCommodity(int commodityId, HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
-		if (user != null) {
-			boolean b = shopService.removeCommodity(user, commodityId);
-			return new CommodityVo<Boolean>(200, "成功移除商品" + commodityId, -1, b);
-		} else {
-			return new CommodityVo<Boolean>(404, "用户信息不存在，请重新登陆");
-		}
+	public CommodityVo<Boolean> removeCommodity(String token, int commodityId, HttpServletRequest request) {
+		boolean b = shopService.removeCommodity(token, commodityId);
+		return new CommodityVo<Boolean>(200, "成功移除商品" + commodityId, -1, b);
 	}
 
 	@GetMapping("buy")
@@ -107,6 +85,9 @@ public class ShopController {
 		}
 	}
 
+	/**
+	 * 跳转到支付页面
+	 * */
 	@GetMapping("pay")
 	public ModelAndView pay(int commodityId, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView("pay");
