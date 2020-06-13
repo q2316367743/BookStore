@@ -1,0 +1,35 @@
+<!--pages/shop/shop.wxml-->
+<!--pages/record/record.wxml-->
+<!-- 礼品列表 -->
+<view class=''>
+  <block wx:for="{{items}}">
+    <!-- 每个cell -->
+    <navigator style="{{item.txtStyle}}" data-index="{{index}}" class='item' url="{{'../info/info?id='+item.id}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" >
+
+      <!-- 产品图片 -->
+      <view class='iconImageView'>
+        <image class='iconImage' src="{{comImgUrl + item.imageName + '.jpg'}}" mode = 'aspectFit'></image>
+      </view>
+
+      <!-- 产品名称 -->
+      <view class='productNameView'>
+        <text class='productNameText'>{{item.name}}</text>
+      </view>
+
+      <!-- 产品内容 -->
+      <view class='productDesView'>
+        <text class='productDesText'>{{item.content}}</text>
+      </view>
+
+      <!-- 需要的价格 -->
+      <view class='needScoreView'>
+        <text class='needSocreText'>￥{{item.price}}</text>
+      </view>
+
+    </navigator>
+
+    <view bindtap="del" class="remove" style="{{item.delStyle}};top: {{index * 300}}rpx" data-id="{{item.id}}">删除 </view>
+
+  </block>
+</view>
+

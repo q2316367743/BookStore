@@ -1,0 +1,55 @@
+<view style="overflow: auto;">
+<image src="{{'http://192.168.0.105/image/bookstore/commodity/'+imageName+'.jpg'}}" class="slide-image"/>
+
+<view style="margin-top: 300px;">
+  <view style="border-top:1px solid #F6F6F6;background: #fff; padding:5px 15px;">
+    <view class="clearfix flex grey gridXt info-price clear">
+      <view class='price'>￥{{price}}</view>
+      <view style="width: 100%">
+        <button class="fxbtn weui-btn weui-btn_mini weui-btn_primary" open-type="share">
+          分享
+        </button>
+      </view>
+    </view>
+  </view>
+  <view class="info-title">
+    <text>{{name}}</text>
+  </view>
+</view>
+ 
+<view style="border-top:1px solid #F6F6F6;background: #fff; padding:5px 15px;margin-top: 5px;">
+    <view class="clearfix flex grey gridXt">
+      <text class="sub">作者：{{author}}</text>
+    </view>
+</view>
+
+<view style="border-top:1px solid #F6F6F6;background: #fff; padding:5px 15px;">
+    <view class="clearfix flex grey gridXt">
+      <text class="sub">销售量：{{number}}</text>
+      <text class="sub">浏览量：{{view}}</text>
+    </view>
+</view>
+
+<!--商品详情-->
+<view class='details_box'>
+  <view style="height:40px;line-height: 40px;border-bottom:1px solid #f5f5f5;">
+     <view>商品详情</view>
+  </view>
+  <view style='padding:10px 0px;'>
+      <view class="wxParse">
+         {{content}}
+      </view>
+    </view>
+</view>
+ </view>
+<!--底部浮动 start-->
+<view class="foot-nav mt15">
+  <view class="flex con gridXt tc">
+    <view class="add-cart sub f16">
+      <button class="add-cart-btn" bindtap='addShop'>加入购物车</button>
+    </view>
+    <view class="add-cart sub f16">
+      <button class="add-cart-btn" bindtap='buy'>立即购买</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,38 @@
+<!--pages/self/self.wxml-->
+<view class="weui-cells weui-cells_after-title"> 
+  <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="choseImage"> 
+    <view class="weui-cell__bd">头像</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access"> 
+      <image class= "head_img" src="{{avatarUrl}}">
+      </image>
+    </view> 
+  </view>
+  <navigator url="../change/change?changeWhat=name" class="weui-cell weui-cell_access" hover-class="weui-cell_active"> 
+    <view class="weui-cell__bd">用户名</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.username}}</view> 
+  </navigator> 
+  <navigator url="../change/change?changeWhat=tel" class="weui-cell weui-cell_access" hover-class="weui-cell_active"> 
+    <view class="weui-cell__bd">昵称</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.nickname}}</view> 
+  </navigator>
+  <navigator url="../change/change?changeWhat=sex" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">性别</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">
+      {{userinfo.gender?'男':'女'}}
+    </view> 
+  </navigator> 
+  <navigator url="../change/change?changeWhat=school" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">年龄</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.age}}</view> 
+  </navigator> 
+  <navigator url="../change/change?changeWhat=number" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">余额</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.balance}}</view> 
+  </navigator> 
+  <navigator url="../change/change?changeWhat=number" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">密保</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.isSafe ? '已设置':'未设置'}}</view> 
+  </navigator>
+  <button class="weui-btn" type="primary" bindtap="shop">查看购物车</button>
+  <button class="weui-btn" type="primary" bindtap="record">查看购物记录</button>
+</view>

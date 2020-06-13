@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view style="margin: 20rpx;">
+    <navigator url="../list/list" hover-class="navigator-hover">
+      <button class="weui-btn_cell weui-btn_cell-default">全部商品</button>
+    </navigator>
+    <navigator url="../search/search" hover-class="navigator-hover">
+      <button class="weui-btn_cell weui-btn_cell-default">搜索商品</button>
+    </navigator>
+    <navigator url="../category/category" hover-class="navigator-hover">
+      <button class="weui-btn_cell weui-btn_cell-default">商品分类</button>
+    </navigator>
+  </view>
+</view>
