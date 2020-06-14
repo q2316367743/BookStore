@@ -35,7 +35,7 @@
 			<ul class="layui-nav layui-col-xs-offset9" id="nav">
 				<li class="layui-nav-item"><a href="/index.html">主页</a></li>
 				<li class="layui-nav-item"><a href="">留言</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${user.nickname}]]</a>
+				<li class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 					<dl class="layui-nav-child">
 							<dd><a href="/user/self#my">我的信息</a></dd>
 							<dd><a href="/user/self#record">我的图书</a></dd>
@@ -45,7 +45,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="layui-body" style="margin-top: 20px;">
+		<div id="content" class="layui-body" style="margin-top: 20px;">
 			<div style="font-size: 25px">
 				<b>支付页面</b>
 			</div>
@@ -53,18 +53,18 @@
 				style='height: 300px; margin-top: 20px; background-color: #F2F2F2;'>
 				<div class='layui-col-xs4'>
 					<img id="image"
-						th:src="@{'http://192.168.0.105/image/bookstore/commodity/'+${commodity.imageName}+'.jpg'}"
+						v-bind:src="'http://192.168.0.105/image/bookstore/commodity/'+commodity.imageName+'.jpg'"
 						style="width: 250px; height: 250px; margin: 25px;">
 				</div>
 				<div class='layui-col-xs8'>
 					<div style='height: 80px; margin-top: 20px;'>
-						<a style="font-size: 40px;"><b th:text="${commodity.name}"></b></a>
+						<a style="font-size: 40px;"><b v-text="commodity.name"></b></a>
 					</div>
 					<div style='height: 90px;'>
-						<span th:text="${commodity.content}"></span>
+						<span v-text="commodity.content"></span>
 					</div>
 					<div style='height: 30px; font-size: 18px'>
-						<b>作者：</b><b th:text="${commodity.author}"></b>
+						<b>作者：</b><b v-text="commodity.author"></b>
 					</div>
 				</div>
 			</div>
@@ -74,18 +74,18 @@
 					style="margin-top: 5px;">
 					<div class="layui-form-item">
 						<label class="layui-form-label">余额</label> <label
-							class="layui-form-label" th:text="${user.balance}"></label>
+							class="layui-form-label" v-text="balance"></label>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">价格</label> <label
-							class="layui-form-label" th:text="${commodity.price}"></label>
+							class="layui-form-label" v-text="commodity.price"></label>
 					</div>
 				</div>
 				<div class="layui-col-xs7">
 					<div class="layui-form-item" style="margin-top: 5px;">
 						<label class="layui-form-label">买后剩余</label> <label
 							class="layui-form-label"
-							th:text="${user.balance} - ${commodity.price}"></label>
+							v-text="balance - commodity.price"></label>
 					</div>
 				</div>
 				<button id="isBuy" style="margin-top: 50px" type="button"
@@ -100,16 +100,72 @@
 			window.location.href = 'index.html';
 		}
 		window.onload = function(){
+			vue = new Vue({
+				el: '#nav',
+				data: {
+					isLogin: false,
+					nickname: ''
+				},
+				created: function(){
+					var nickname = sessionStorage.getItem('nickname');
+					var token = sessionStorage.getItem('token');
+					if(nickname != null&&token!=null){
+						this.nickname = nickname
+						this.isLogin = true;
+					}else{
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							layer.alert("未登录，请登录")
+							window.location.href = 'login.html'
+						})
+					}
+				}
+			});
 			var variable = window.location.search.substring(1);
 			layui.use('layer', function(){
 				var layer = layui.layer;
 				if (variable !== null || variable !== undefined || variable !== '') {
 					var temp = variable.split("=");
 					if (temp[0] == 'commodityId') {
-						var commodityId = temp[1];
-						var token = sessionStorage.getItem('token');
+						commodityId = temp[1];
+						token = sessionStorage.getItem('token');
 						if(token != null){
-							
+							//万事俱备
+							content = new Vue({
+								el: '#content',
+								data: {
+									commodity: {},
+									balance: 0.0,
+								},
+								created: function(){
+									//获取商品详情
+									var that = this;
+									$.getJSON('commodity/info',{
+										commodityId: commodityId
+									}, function(res){
+										if(res.code == 200){
+											that.commodity = res.data
+										}else{
+											layer.alert(res.msg);
+										}
+									})
+									//获取余额
+									$.getJSON('user/balance', {
+										token: token
+									}, function(res){
+										if(res.code == 200){
+											that.balance = res.data
+										}else{
+											layer.alert(res.message)
+										}
+									})
+									//判断余额
+									if(this.balance - this.commodity.price < 0){
+										$("#isBuy").attr({"disabled":"disabled"});
+										$("#isBuy").text("无法购买，余额不足")
+									}
+								}
+							})
 						}else{
 							layer.alert("请登录");
 							window.location.href = 'login.html';
@@ -125,7 +181,7 @@
 			})
 		}
 		function buy(){
-			$.getJSON('buy', {commodityId: [[${commodity.id}]]},function(result){
+			$.getJSON('shop/buy', {commodityId: commodityId, token: token},function(result){
 				layui.use('layer', function(){
 					var layer = layui.layer;
 					if(result.code == 200){
@@ -157,11 +213,7 @@
 			})
 		}
 			
-		if([[${user.balance} - ${commodity.price}]] < 0){
-			$("#isBuy").attr({"disabled":"disabled"});
-		}
-		
-		layui.use(['element', 'laypage', 'layer'], function() {
+		layui.use('element', function() {
 			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
 		});

@@ -159,4 +159,11 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public Double balance(String token) {
+		String username = JwtUtil.getUsername(token);
+		User user = userDao.queryUser(username);
+		return user.getBalance();
+	}
+
 }

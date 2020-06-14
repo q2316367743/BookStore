@@ -48,6 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
 		List<String> need = new ArrayList<>();
 		need.add("/shop/**");
 		need.add("/user/**");
+		need.add("/resource/**");
 		List<String> dis = new ArrayList<>();
 		dis.add("/user/login");
 		dis.add("/user/register");

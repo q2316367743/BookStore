@@ -3,9 +3,6 @@ package com.qsd.bookstore.service.impl;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,13 +78,12 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	@Transactional
-	public int buyCommodity(HttpServletRequest request, int commodityId) {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
+	public int buyCommodity(String token, int commodityId) {
+		String username = JwtUtil.getUsername(token);
+		User user = userDao.queryUser(username);
 		if (user != null) {
 			Boolean status = commodityDao.queryCommodityStatus(commodityId);
 			if (status != null && status) {
-				String username = user.getUsername();
 				String shopName = user.getShopName();
 				String recordName = user.getRecordName();
 				Double balance = user.getBalance();
@@ -106,11 +102,8 @@ public class ShopServiceImpl implements ShopService {
 						//5. 加入到记录表中
 						Record record = new Record(recordName, commodityId, new Timestamp(System.currentTimeMillis()));
 						recordDao.addRecord(record);
-						//6. 更新余额
-						User queryUser = userDao.queryUser(username);
 						//7. 商品销售额加一
 						commodityDao.addNumber(commodityId);
-						session.setAttribute("user", queryUser);
 						//书籍销售量加一
 						global.addCommoditySellNum();
 						return 1;

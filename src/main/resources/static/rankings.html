@@ -100,13 +100,14 @@
 					},
 					created: function(){
 						var nickname = sessionStorage.getItem('nickname');
-						if(nickname != null){
+						var token = sessionStorage.getItem('token');
+						if(nickname != null&&token!=null){
 							this.nickname = nickname
 							this.isLogin = true;
 						}
 					}
 				});
-				$.get('index/notice', function(result) {
+				$.get('global/notice', function(result) {
 					$("#notice").html(result)
 				})
 				layui.use(

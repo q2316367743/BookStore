@@ -2,8 +2,6 @@ package com.qsd.bookstore.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
 
@@ -37,11 +35,11 @@ public interface ShopService {
 	boolean removeCommodity(String token, int commodityId);
 	/**
 	 * 购买商品
-	 * @param request 请求参数
+	 * @param token token信息
 	 * @param commodityId 商品ID
 	 * @return 结果
 	 * */
-	int buyCommodity(HttpServletRequest request, int commodityId);
+	int buyCommodity(String token, int commodityId);
 	/**
 	 * 根据用户名查询购物车信息
 	 * */

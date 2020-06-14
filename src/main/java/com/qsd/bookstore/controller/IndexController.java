@@ -29,7 +29,10 @@ public class IndexController {
 	
 	@GetMapping("notice")
 	public String notice() {
-		return global.getNotice();
+		String notice = global.getNotice();
+		notice = notice.replace("\n", "<br>");
+		notice = notice.replace(" ", "&nbsp;");
+		return notice;
 	}
 	
 	@GetMapping("category")

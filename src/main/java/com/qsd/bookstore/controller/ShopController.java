@@ -66,8 +66,8 @@ public class ShopController {
 	}
 
 	@GetMapping("buy")
-	public CommodityVo<Integer> buy(int commodityId, HttpServletRequest request) {
-		int result = shopService.buyCommodity(request, commodityId);
+	public CommodityVo<Integer> buy(int commodityId, String token) {
+		int result = shopService.buyCommodity(token, commodityId);
 		if (result == 1) {
 				return new CommodityVo<Integer>(200, "成功购买商品" + commodityId);
 		} else if (result == 0) {

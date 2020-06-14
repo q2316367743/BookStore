@@ -44,5 +44,10 @@ public interface UserService {
 	 * 根据token获取用户信息
 	 * */
 	User info(String token);
+	/**
+	 * 根据token信息获取用户余额
+	 * */
+	Double balance(String token);
+	
 
 }

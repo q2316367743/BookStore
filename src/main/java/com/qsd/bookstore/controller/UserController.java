@@ -27,6 +27,7 @@ import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
 import com.qsd.bookstore.util.JwtUtil;
 import com.qsd.bookstore.vo.CommodityVo;
+import com.qsd.bookstore.vo.ResultVo;
 import com.qsd.bookstore.vo.UserVo;
 
 /**
@@ -150,6 +151,15 @@ public class UserController {
 		//购物车信息
 		List<Commodity> commodities = recordService.getAllByUsername(username);
 		return new CommodityVo<List<Commodity>>(200, "success", -1, commodities);
+	}
+	
+	/**
+	 * 获取用户余额
+	 * */
+	@GetMapping("balance")
+	public ResultVo<Double> balance(String token){
+		Double balance = userService.balance(token);
+		return new ResultVo<Double>(200, "success", balance);
 	}
 	
 }

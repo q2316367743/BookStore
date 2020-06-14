@@ -36,8 +36,6 @@ public class AdminOperaController {
 	
 	@GetMapping("setNotice")
 	public ShopVo setNotice(String notice) {
-		notice = notice.replace("\n", "<br>");
-		notice = notice.replace(" ", "&nbsp;");
 		global.setNotice(notice);
 		return new ShopVo(200, "设置公告成功");
 	}
