@@ -12,7 +12,8 @@ var config = {
   userUrl: `${apiUrl}/user/`,
   shopUrl: `${apiUrl}/shop/`,
   searchUrl: `${apiUrl}/search/`,
-  resourceUrl: `${apiUrl}/resource/`
+  resourceUrl: `${apiUrl}/resource/`,
+  globalUrl: `${apiUrl}/global/`
 }
 
 module.exports = config

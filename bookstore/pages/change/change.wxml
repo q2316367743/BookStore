@@ -1,0 +1,38 @@
+<!--pages/change/change.wxml-->
+<view class="weui-cells weui-cells_after-title"> 
+  <block wx:if="{{changeWhat != 'password'}}">
+    <view class="weui-cell weui-cell_input"> 
+      <view class="weui-cell__hd"> 
+        <view class="weui-label">{{translate[changeWhat]}}</view> 
+      </view>
+      <view class="weui-cell__bd"> 
+        <input value="{{oldValue}}" class="weui-input" placeholder="请输入{{translate[changeWhat]}}" bindchange="change"/> 
+      </view> 
+    </view>
+    <view class="page__bd page__bd_spacing submit"> 
+    <button class="weui-btn" type="primary" bindtap="bindSubmit">修改</button> 
+  </view>
+  </block>
+  <block wx:else>
+    <view class="weui-cell weui-cell_input"> 
+      <view class="weui-cell__hd"> 
+        <view class="weui-label">旧密码</view> 
+      </view>
+      <view class="weui-cell__bd"> 
+        <input class="weui-input" placeholder="请输入旧密码" bindchange="oldPWD"/> 
+      </view> 
+    </view>
+    <view class="weui-cell weui-cell_input"> 
+      <view class="weui-cell__hd"> 
+        <view class="weui-label">新密码</view> 
+      </view>
+      <view class="weui-cell__bd"> 
+        <input class="weui-input" placeholder="请输入新密码" bindchange="newPWD"/> 
+      </view> 
+    </view>
+    <view class="page__bd page__bd_spacing submit"> 
+    <button class="weui-btn" type="primary" bindtap="changePWD">修改</button> 
+  </view>
+  </block>
+  
+</view>

@@ -44,9 +44,6 @@ Page({
           wx.setStorageSync('password', that.data.password)
           wx.setStorageSync('token', res.data.token)
           wx.setStorageSync('userinfo', res.data.user)
-          let pages = getCurrentPages()
-          let prePage = pages[pages.length - 2]
-          prePage.cha
           wx.switchTab({
             url: '/pages/self/self'
           })

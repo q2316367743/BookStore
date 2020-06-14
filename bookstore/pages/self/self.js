@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isLogin: false,
     avatarUrl: '',
     userinfo: {},
     num: 1
@@ -39,7 +40,8 @@ Page({
           var result = res.data
           if(result.code == 200){
             that.setData({
-              userinfo: result.user
+              userinfo: result.user,
+              isLogin: true
             })
           }else if(result.code == 400){
             var password = wx.getStorageSync('password')
@@ -56,7 +58,8 @@ Page({
                     wx.setStorageSync('token', res.data.token)
                     wx.setStorageSync('userinfo', res.data.user)
                     that.setData({
-                      userinfo: res.data.userinfo
+                      userinfo: res.data.userinfo,
+                      isLogin: true
                     })
                   }else{
                     wx.showModal({
@@ -65,40 +68,14 @@ Page({
                       showCancel: false,
                       confirmText: "确定",
                       success: function (res) {
-                        wx.navigateTo({
-                          url: '/pages/login/login',
-                        })
+                        
                       }
                     })
                   }
                 }
               })
-            }else{
-              wx.showModal({
-                title: '提示',
-                content: '请先登录',
-                showCancel: false,
-                confirmText: "确定",
-                success: function (res) {
-                  wx.navigateTo({
-                    url: '/pages/login/login',
-                  })
-                }
-              })
             }
           }
-        }
-      })
-    }else{
-      wx.showModal({
-        title: '提示',
-        content: '请先登录',
-        showCancel: false,
-        confirmText: "确定",
-        success: function (res) {
-          wx.navigateTo({
-            url: '/pages/login/login',
-          })
         }
       })
     }
@@ -111,10 +88,36 @@ Page({
 
   },
 
+  refresh: function(){
+    this.openAlert("头像暂不支持修改") 
+    this.setData({
+      avatarUrl: app.globalData.userInfo.avatarUrl
+    })
+  },
+  changeUsername: function(){
+    this.openAlert("用户名不支持修改") 
+  },
+  changeBalance: function(){
+    this.openAlert("余额不支持修改") 
+  },
+  openAlert: function (e) { 
+    wx.showToast({ 
+      title: e, 
+      icon: "none", 
+      duration: 2000 
+    }) 
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var userinfo = wx.getStorageSync('userinfo');
+    if(userinfo != null){
+      this.setData({
+        isLogin: true
+      })
+    }
     if(this.data.num == 2){
       this.data.num = 3
     }
@@ -133,6 +136,28 @@ Page({
       })
       this.data.num += 1;
     }
+  },
+
+  login: function(){
+    wx.redirectTo({
+      url: '/pages/login/login',
+    })
+  },
+
+  register: function(){
+    wx.redirectTo({
+      url: '/pages/register/register',
+    })
+  },
+
+  layout: function(){
+    wx.removeStorageSync('username')
+    wx.removeStorageSync('password')
+    wx.removeStorageSync('token')
+    wx.removeStorageSync('userinfo')
+    this.setData({
+      isLogin: false
+    })
   },
 
   /**

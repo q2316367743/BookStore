@@ -72,15 +72,40 @@ Page({
       },
       success: function(res){
         var result = res.data
-        wx.hideLoading({
-          complete: (res) => {
-            wx.showToast({
-              title: '加入成功',
-              icon: 'success',
-              duration: 2000
-            })
-          },
-        })
+        console.log(result)
+        if(result.code == 200){
+          wx.hideLoading({
+            complete: (res) => {
+              wx.showToast({
+                title: '加入成功',
+                icon: 'success',
+                duration: 2000
+              })
+            },
+          })
+        }else if(result.code == 404){
+          wx.showModal({
+            title: '提示',
+            content: '请先登录',
+            showCancel: false,
+            confirmText: "确定",
+            success: function (res) {
+              wx.navigateTo({
+                url: '/pages/login/login',
+              })
+            }
+          })
+        }else{
+          wx.showModal({
+            title: '提示',
+            content: result.msg,
+            showCancel: false,
+            confirmText: "确定",
+            success: function (res) {
+              
+            }
+          })
+        }
       }
     })
   },
