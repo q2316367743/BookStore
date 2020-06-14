@@ -1,0 +1,10 @@
+<!--pages/about/about.wxml-->
+<view class="container">
+  <view><text>作者：</text><text>浅梦凉城</text></view>
+  <view><text>网站名称：</text><text>人生艰难书店</text></view>
+  <view><text>项目名：</text><text>bookstore</text></view>
+  <view><text>网站开发：</text><text>浅梦凉城网站</text></view>
+  <view><text>版本：</text><text>2.1.1</text></view>
+  <view><text>网站源码：</text></view>
+  <view bindtap="bindurl">https://gitee.com/qiaoshengda/BookStore</view>
+</view>

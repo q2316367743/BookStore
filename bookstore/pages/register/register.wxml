@@ -1,0 +1,55 @@
+<view class="container">
+  <view class="weui-cells weui-cells_after-title">
+    <form catchsubmit="formSubmit" catchreset="formReset">
+      <view class="weui-cell weui-cell_input"> 
+        <view class="weui-cell__hd"> 
+          <view class="weui-label">账户</view> 
+        </view>
+        <view class="weui-cell__bd"> 
+          <input maxlength="11" name="username" class="weui-input" placeholder="请输入账户"/> 
+        </view> 
+      </view>
+      <view class="weui-cell weui-cell_input"> 
+        <view class="weui-cell__hd"> 
+          <view class="weui-label">密码</view> 
+        </view>
+        <view class="weui-cell__bd"> 
+          <input maxlength="18" password="true" name="password" class="weui-input" placeholder="请输入密码"/> 
+        </view> 
+      </view>
+      <view class="weui-cell weui-cell_input"> 
+        <view class="weui-cell__hd"> 
+          <view class="weui-label">昵称</view> 
+        </view>
+        <view class="weui-cell__bd"> 
+          <input maxlength="5" name="nickname" class="weui-input" placeholder="请输入昵称"/> 
+        </view> 
+      </view>
+      <view class="weui-cell weui-cell_input"> 
+        <view class="weui-cell__hd"> 
+          <view class="weui-label">性别</view> 
+        </view>
+        <view class="weui-cell__bd"> 
+          <radio-group name="gender">
+          <label><radio value="1"/>男</label>
+          <label><radio value="0"/>女</label>
+        </radio-group>
+        </view> 
+      </view>
+      <view class="weui-cell weui-cell_input"> 
+        <view class="weui-cell__hd"> 
+          <view class="weui-label">年龄</view> 
+        </view>
+        <view class="weui-cell__bd"> 
+          <input maxlength="3" name="age" type="number" class="weui-input" placeholder="请输入年龄"/> 
+        </view> 
+      </view>
+
+      <view class="page__bd page__bd_spacing submit"> 
+        <button class="weui-btn" type="primary" formType="submit">Submit</button>
+        <button class="weui-btn" formType="reset">Reset</button>
+      </view>
+    </form>
+  </view>
+
+</view>

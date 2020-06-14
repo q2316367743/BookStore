@@ -4,3 +4,8 @@
   width: 120rpx; 
   border-radius: 50%; 
 }
+.about{
+  display: flex;
+  flex-flow: column;
+  margin-top: 50px;
+}

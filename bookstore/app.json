@@ -9,7 +9,11 @@
     "pages/login/login",
     "pages/shop/shop",
     "pages/record/record",
-    "pages/change/change"
+    "pages/change/change",
+    "pages/my/my",
+    "pages/notice/notice",
+    "pages/about/about",
+    "pages/register/register"
   ],
   "window": {
     "backgroundTextStyle": "light",

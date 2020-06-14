@@ -1,7 +1,7 @@
 <view style="overflow: auto;">
 <image src="{{'http://192.168.0.105/image/bookstore/commodity/'+imageName+'.jpg'}}" class="slide-image"/>
 
-<view style="margin-top: 300px;">
+<view style="margin-top: 100vw;">
   <view style="border-top:1px solid #F6F6F6;background: #fff; padding:5px 15px;">
     <view class="clearfix flex grey gridXt info-price clear">
       <view class='price'>￥{{price}}</view>

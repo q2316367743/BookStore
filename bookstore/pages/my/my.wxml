@@ -1,0 +1,43 @@
+<!--pages/my/my.wxml-->
+<view class="weui-cells weui-cells_after-title"> 
+  <view bindtap="refresh" class="weui-cell weui-cell_access" hover-class="weui-cell_active"> 
+    <view class="weui-cell__bd">头像</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access"> 
+      <image class= "head_img" src="{{avatarUrl}}">
+      </image>
+    </view> 
+  </view>
+  <navigator url="../change/change?changeWhat=nickname" class="weui-cell weui-cell_access" hover-class="weui-cell_active"> 
+    <view class="weui-cell__bd">昵称</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.nickname}}</view> 
+  </navigator>
+  <view bindtap="changeUsername" class="weui-cell weui-cell_access" hover-class="weui-cell_active"> 
+    <view class="weui-cell__bd">用户名</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.username}}</view> 
+  </view> 
+  <navigator url="../change/change?changeWhat=password" class="weui-cell weui-cell_access" hover-class="weui-cell_active"> 
+    <view class="weui-cell__bd">密码</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">******</view> 
+  </navigator> 
+  <navigator url="../change/change?changeWhat=gender" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">性别</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">
+      {{userinfo.gender?'男':'女'}}
+    </view> 
+  </navigator> 
+  <navigator url="../change/change?changeWhat=age" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">年龄</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.age}}</view> 
+  </navigator> 
+  <view bindtap="changeBalance" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">余额</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.balance}}</view> 
+  </view> 
+  <navigator url="../change/change?changeWhat=safe" class="weui-cell weui-cell_access" hover-class=" weui-cell_active"> 
+    <view class="weui-cell__bd">密保</view> 
+    <view class="weui-cell__ft weui-cell__ft_in-access">{{userinfo.isSafe ? '已设置':'未设置'}}</view> 
+  </navigator>
+  <button class="weui-btn" type="primary" bindtap="shop">查看购物车</button>
+  <button class="weui-btn" type="primary" bindtap="record">查看购物记录</button>
+  <button class="weui-btn" type="primary" bindtap="layout">退出登陆</button>
+</view>

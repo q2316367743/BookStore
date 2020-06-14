@@ -26,6 +26,11 @@ Page({
       changeWhat: changeWhat,
       oldValue: userinfo[changeWhat]
     })
+    if(changeWhat == "gender"){
+      this.setData({
+        oldValue: userinfo[changeWhat]?'男':'女'
+      })
+    }
     wx.setNavigationBarTitle({
       title: '修改' + this.data.translate[changeWhat]
     })
@@ -50,6 +55,9 @@ Page({
   },
 
   bindSubmit: function(){
+    if(this.data.changeWhat == "gender"){
+      this.data.newValue = this.data.newValue=='男'?true:false
+    }
     console.log(this.data.newValue)
   },
 

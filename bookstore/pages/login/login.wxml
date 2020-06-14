@@ -1,5 +1,4 @@
 <!--pages/login/login.wxml-->
-<view class="weui-cells title">登录</view>
 <view class="weui-cells weui-cells_after-title"> 
   <view class="weui-cell weui-cell_input"> 
     <view class="weui-cell__hd"> 

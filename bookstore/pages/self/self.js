@@ -113,13 +113,14 @@ Page({
    */
   onShow: function () {
     var userinfo = wx.getStorageSync('userinfo');
-    if(userinfo != null){
+    if(userinfo){
       this.setData({
         isLogin: true
       })
-    }
-    if(this.data.num == 2){
-      this.data.num = 3
+    }else{
+      this.setData({
+        isLogin: false
+      })
     }
     if(this.data.num < 5){
       if (app.globalData.userInfo) {
@@ -139,13 +140,13 @@ Page({
   },
 
   login: function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/login/login',
     })
   },
 
   register: function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: '/pages/register/register',
     })
   },
@@ -157,6 +158,17 @@ Page({
     wx.removeStorageSync('userinfo')
     this.setData({
       isLogin: false
+    })
+  },
+
+  notice: function(){
+    wx.navigateTo({
+      url: '/pages/notice/notice',
+    })
+  },
+  about: function(){
+    wx.navigateTo({
+      url: '/pages/about/about',
     })
   },
 
