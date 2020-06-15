@@ -148,7 +148,7 @@
 								created: function(){
 									//获取商品详情
 									var that = this;
-									$.getJSON('commodity/info',{
+									$.getJSON('http://192.168.0.105:8055/commodity/info',{
 										commodityId: commodityId
 									}, function(res){
 										if(res.code == 200){
@@ -158,7 +158,7 @@
 										}
 									})
 									//获取余额
-									$.getJSON('user/balance', {
+									$.getJSON('http://192.168.0.105:8055/user/balance', {
 										token: token
 									}, function(res){
 										if(res.code == 200){
@@ -189,7 +189,7 @@
 			})
 		}
 		function buy(){
-			$.getJSON('shop/buy', {commodityId: commodityId, token: token},function(result){
+			$.getJSON('http://192.168.0.105:8055/shop/buy', {commodityId: commodityId, token: token},function(result){
 				layui.use('layer', function(){
 					var layer = layui.layer;
 					if(result.code == 200){

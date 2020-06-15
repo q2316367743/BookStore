@@ -97,7 +97,7 @@
 						nickname: ''
 					}
 				});
-				$.getJSON('user/isLogin', function(result) {
+				$.getJSON('http://192.168.0.105:8055/user/isLogin', function(result) {
 					if (result.code == 200) {
 						vue.nickname = result.userInfo.nickname;
 						vue.username = result.userInfo.username;
@@ -108,7 +108,7 @@
 							//监听提交
 							form.on('submit(demo1)', function(data) {
 								var data = JSON.parse(JSON.stringify(data.field))
-								$.post('safe/setSafe', data, function(data){
+								$.post('http://192.168.0.105:8055/safe/setSafe', data, function(data){
 									layer.open({
 										title: '设置结果',
 										content: data.message,

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>排行榜</title>
+		<title>主页</title>
 		<link rel="stylesheet" href="layui/css/layui.css">
 		<script src="layui/layui.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -24,9 +24,9 @@
 					</button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-					<li class="layui-nav-item"><a href="index.html">主页</a></li>
+					<li class="layui-nav-item"><a href="">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
-					<li v-if="isLogin == false" class="layui-nav-item"><a href="login.html">请登录</a></li>
+					<li v-if="!isLogin" class="layui-nav-item"><a href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 						<dl class="layui-nav-child">
 							<dd><a href="self.html#my">我的信息</a></dd>
@@ -40,25 +40,19 @@
 			</div>
 			<div class="layui-side">
 				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
-					<li class="layui-nav-item layui-this"><a href="index.html">首页</a></li>
+					<li class="layui-nav-item layui-this"><a href="">首页</a></li>
 				</ul>
 				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
 					<li class="layui-nav-item"><a href="javascript:;">分类</a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="category.html?category=java">java</a>
-							</dd>
-							<dd>
-								<a href="category.html?category=python">python</a>
-							</dd>
-							<dd>
-								<a href="category.html?category=c">c</a>
+						<dl id="side" class="layui-nav-child">
+							<dd v-for="category in categories">
+								<a v-bind:href="'category.html?category=' + category.name" v-text="category.name"></a>
 							</dd>
 						</dl>
 					</li>
 				</ul>
 				<ul class="layui-nav layui-nav-tree layui-inline layui-bg-green side">
-					<li class="layui-nav-item"><a href="">排行榜</a></li>
+					<li class="layui-nav-item"><a href="rankings.html">排行榜</a></li>
 				</ul>
 				<div class="notice">
 					<blockquote class="layui-elem-quote" style="margin-top: 10px;">公告栏</blockquote>
@@ -66,30 +60,42 @@
 				</div>
 			</div>
 			<div class="layui-body" style="margin-top: 10px;">
-
-				<div class="layui-col-xs3 layui-col-xs-offset1">
-					<blockquote class="layui-elem-quote layui-col-xs12" style="margin-top: 10px;">销售量排行榜</blockquote>
-					<div class="layui-col-xs12" style="padding: 10px; height: 440px; background-color: #F2F2F2;">
-						<div class="layui-col-md12" style="height: 400px; overflow: auto;" id="orderByNumber"></div>
+				<div class="layui-col-xs-offset1 layui-col-xs4 layui-carousel">
+					<div class="layui-carousel" id="test1" lay-filter="test1">
+						<div carousel-item="">
+							<div>
+								<img class="img" src="http://192.168.0.105/image/bookstore/index/index0.jpg">
+							</div>
+							<div>
+								<img class="img" src="http://192.168.0.105/image/bookstore/index/index1.jpg">
+							</div>
+							<div>
+								<img class="img" src="http://192.168.0.105/image/bookstore/index/index2.jpg">
+							</div>
+							<div>
+								<img class="img" src="http://192.168.0.105/image/bookstore/index/index3.jpg">
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="layui-col-xs3 layui-col-xs-offset1">
-					<blockquote class="layui-elem-quote layui-col-xs12" style="margin-top: 10px;">浏览量排行榜</blockquote>
+				<div class="layui-col-xs3 layui-col-xs-offset4">
+					<blockquote class="layui-elem-quote layui-col-xs12" style="margin-top: 10px;">畅销书排行榜</blockquote>
 					<div class="layui-col-xs12" style="padding: 10px; height: 440px; background-color: #F2F2F2;">
-						<div class="layui-col-md12" style="height: 400px; overflow: auto;" id="orderByView"></div>
+						<div class="layui-col-md12" style="height: 400px; overflow: auto;" id="order"></div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 		<script>
+			function search() {
+				var commodityName = $("#commodityName").val();
+				window.location.href = "search.html?commodityName=" + commodityName;
+			}
 			function exit(){
 				sessionStorage.removeItem('token');
 				sessionStorage.removeItem('nickname');
 				location.reload()
-			}
-			function search() {
-				var commodityName = $("#commodityName").val();
-				window.location.href = "search.html?commodityName=" + commodityName;
 			}
 			window.onload = function() {
 				vue = new Vue({
@@ -107,22 +113,32 @@
 						}
 					}
 				});
-				$.get('global/notice', function(result) {
+				side = new Vue({
+					el: '#side',
+					data: {
+						categories: []
+					}
+				});
+				
+				$.getJSON('http://192.168.0.105:8055/global/category', function(result){
+					if (result.code == 200) {
+						side.categories = result.categories;
+					}
+				});
+				$.get('http://192.168.0.105:8055/global/notice', function(result) {
 					$("#notice").html(result)
 				})
-				layui.use(
-					['carousel', 'form', 'element', 'flow'],
+				layui.use(['carousel', 'form', 'element', 'flow'],
 					function() {
 						var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 						var carousel = layui.carousel;
 						var form = layui.form;
 						var flow = layui.flow;
-						//销售量排行榜
+						//排行榜
 						flow.load({
-							elem: '#orderByNumber', //流加载容器
+							elem: '#order', //流加载容器
 							done: function(page, next) { //执行下一页的回调
-								$.getJSON(
-									'commodity/orderByNumber', {
+								$.getJSON('http://192.168.0.105:8055/commodity/orderByNumber', {
 										page: page,
 										limit: 10
 									},
@@ -132,70 +148,29 @@
 											var commoditys = result.data;
 											for (var i = 0; i < commoditys.length; i++) {
 												var commodity = commoditys[i];
-												lis
-													.push("<div class='layui-card' style='height: 150px;padding: 10px;'>" +
-														"	<div class='layui-col-xs8'>" +
-														"		<img src='http://192.168.0.105/image/bookstore/commodity/" + commodity.imageName + ".jpg'>" +
-														"	</div>" +
-														"	<div class='layui-col-xs4'>" +
-														"		<div style='height: 80px;margin-top: 20px;'>" +
-														"			<a href='commodity.html?commodityId=" + commodity.id + "'>" +
-														commodity.name +
-														"</a>" +
-														"		</div>" +
-														"		<div style='height: 50px;color: red;'>" +
-														"			<b>￥" +
-														commodity.price +
-														"</b>" +
-														"		</div>" +
-														"	</div>" +
-														"</div>");
+												lis.push("<div class='layui-card' style='height: 150px;padding: 10px;'>" +
+													"	<div class='layui-col-xs8'>" +
+													"		<img src='http://192.168.0.105/image/bookstore/commodity/" + commodity.imageName + ".jpg'>" +
+													"	</div>" +
+													"	<div class='layui-col-xs4'>" +
+													"		<div style='height: 80px;margin-top: 20px;'>" +
+													"			<a href='commodity.html?commodityId=" + commodity.id + "'>" +
+													commodity.name +
+													"</a>" +
+													"		</div>" +
+													"		<div style='height: 50px;color: red;'>" +
+													"			<b>￥" +
+													commodity.price +
+													"</b>" +
+													"		</div>" +
+													"	</div>" +
+													"</div>");
 											}
 											next(lis.join(''), page < result.count);
 										}
 									})
 							}
-						
 						});
-						//浏览量排行榜
-						flow.load({
-							elem: '#orderByView', //流加载容器
-							done: function(page, next) { //执行下一页的回调
-								$.getJSON(
-									'commodity/orderByView', {
-										page: page,
-										limit: 10
-									},
-									function(result) {
-										if (result.code == 0) {
-											var lis = [];
-											var commoditys = result.data;
-											for (var i = 0; i < commoditys.length; i++) {
-												var commodity = commoditys[i];
-												lis
-													.push("<div class='layui-card' style='height: 150px;padding: 10px;'>" +
-														"	<div class='layui-col-xs8'>" +
-														"		<img src='http://192.168.0.105/image/bookstore/commodity/" + commodity.imageName + ".jpg'>" +
-														"	</div>" +
-														"	<div class='layui-col-xs4'>" +
-														"		<div style='height: 80px;margin-top: 20px;'>" +
-														"			<a href='commodity.html?commodityId=" + commodity.id + "'>" +
-														commodity.name +
-														"</a>" +
-														"		</div>" +
-														"		<div style='height: 50px;color: red;'>" +
-														"			<b>￥" +
-														commodity.price +
-														"</b>" +
-														"		</div>" +
-														"	</div>" +
-														"</div>");
-											}
-											next(lis.join(''), page < result.count);
-										}
-									})
-							}
-						})
 						//轮播图
 						carousel.render({
 							elem: '#test1',

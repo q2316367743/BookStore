@@ -116,11 +116,11 @@
 				},
 				methods: {
 					query: function() {
-						$.getJSON('safe/userExist', {
+						$.getJSON('http://192.168.0.105:8055/safe/userExist', {
 							username: this.username
 						}, function(result) {
 							if (result.code == 200) {
-								$.getJSON('safe/getQuestion',{username: vue.username}, function(result) {
+								$.getJSON('http://192.168.0.105:8055/safe/getQuestion',{username: vue.username}, function(result) {
 									if (result.code == 200) {
 										vue.isShow = true;
 										vue.question = result.question;
@@ -140,7 +140,7 @@
 				var answer2 = $("#answer2").val();
 				var answer3 = $("#answer3").val();
 				var password = $("#password").val();
-				$.getJSON('safe/setNewPwd', {
+				$.getJSON('http://192.168.0.105:8055/safe/setNewPwd', {
 					password: password, 
 					answer1: answer1, 
 					answer2: answer2, 

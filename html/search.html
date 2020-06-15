@@ -112,7 +112,7 @@
 			//点击搜索
 			function search(){
 				var commodityName = $("#commodityName").val();
-				$.getJSON('search/base', {commodityName: commodityName, page: 1, limit: 9}, function(result){
+				$.getJSON('http://192.168.0.105:8055/search/base', {commodityName: commodityName, page: 1, limit: 9}, function(result){
 					if(result.code = 200){
 						//绑定数据
 						content.commoditys = result.data;
@@ -154,7 +154,7 @@
 				if(min == ""){
 					min = 0;
 				}
-				$.getJSON('search/price', {
+				$.getJSON('http://192.168.0.105:8055/search/price', {
 						commodityName: commodityName, 
 						max: max,
 						min: min,
@@ -175,7 +175,7 @@
 							    count: result.count ,//数据总数
 								jump: function(obj, first){
 								    if(!first){
-								    	$.getJSON('search/base', {
+								    	$.getJSON('http://192.168.0.105:8055/search/base', {
 								    		commodityName: commodityName,
 								    		max: max,
 											min: min,

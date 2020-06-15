@@ -255,7 +255,7 @@
 				},
 				created: function(){
 					var that = this
-					$.getJSON('user/info', {
+					$.getJSON('http://192.168.0.105:8055/user/info', {
 						token: token
 					}, function(res){
 						if(res.code == 200){
@@ -275,7 +275,7 @@
 				},
 				created: function(){
 					var that = this
-					$.getJSON('user/shop', {
+					$.getJSON('http://192.168.0.105:8055/user/shop', {
 						token: token,
 						page: 1,
 						limit: 9
@@ -287,7 +287,7 @@
 				},
 				methods: {
 					remove: function(commodityId) {
-						$.getJSON('shop/remove?commodityId=' + commodityId, function(
+						$.getJSON('http://192.168.0.105:8055/shop/remove?commodityId=' + commodityId, function(
 								result) {
 							if (result.code == 200) {
 								layer.msg('购物车删除成功');
@@ -309,7 +309,7 @@
 				},
 				created: function(){
 					var that = this
-					$.getJSON('user/record', {
+					$.getJSON('http://192.168.0.105:8055/user/record', {
 						token: token,
 						page: 1,
 						limit: 9
@@ -328,12 +328,12 @@
 			});
 		}
 		function download(commodityId){
-			$.getJSON('shop/getDownloadPath', {
+			$.getJSON('http://192.168.0.105:8055/shop/getDownloadPath', {
 				token: token,
 				commodityId: commodityId
 			}, function(res){
 				if(res.code == 200){
-					window.open('resource/download?token='+res.data, '_blank')
+					window.open('http://192.168.0.105:8055/resource/download?token='+res.data, '_blank')
 				}else{
 					alert(res.message)
 				}
@@ -343,7 +343,7 @@
 		function alterpwd() {
 			var oldpwd = $("#oldpwd").val();
 			var newpwd = $("#newpwd").val();
-			$.getJSON('user/alterpwd',
+			$.getJSON('http://192.168.0.105:8055/user/alterpwd',
 				{
 					token: token,
 					oldpwd : oldpwd,
@@ -382,7 +382,7 @@
 			var nickname = $("#nickname").val();
 			var age = $("#age").val();
 			var gender = $("input[name='gender']:checked").val();
-			$.post('user/update', {
+			$.post('http://192.168.0.105:8055/user/update', {
 				token: token,
 				nickname : nickname,
 				gender : gender,
@@ -413,7 +413,7 @@
 						console.log("我再想想")
 					}
 				}, function(index, layero) {
-					$.getJSON('user/logout', {
+					$.getJSON('http://192.168.0.105:8055/user/logout', {
 						token: token
 					}, function(result) {
 						layer.open({

@@ -83,7 +83,7 @@
 			function addShop(){
 				var token = sessionStorage.getItem('token');
 				if(token != null){
-					$.getJSON('shop/add?', {
+					$.getJSON('http://192.168.0.105:8055/shop/add?', {
 						commodityId: show.commodity.id,
 						token: token
 					}, function(result){
@@ -126,7 +126,7 @@
 							var temp = variable.split("=");
 							if (temp[0] == 'commodityId') {
 								var commodityId = temp[1];
-								$.getJSON('commodity/info', {
+								$.getJSON('http://192.168.0.105:8055/commodity/info', {
 									commodityId: commodityId
 								}, function(res){
 									if(res.code == 200){

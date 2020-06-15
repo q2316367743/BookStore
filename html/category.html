@@ -62,9 +62,9 @@
 				<div style="margin-left: 30px; margin-top: 10px;">
 					全部图书 > {{category}}
 				</div>
-				<div class="layui-col-xs10 layui-col-xs-offset1" style="margin-top: 30px;padding: 10px;">
+				<div class="layui-col-xs11" style="margin: 5%;margin-top: 30px;padding: 10px;">
 
-					<div class='layui-card layui-col-xs4' style='height: 170px;padding: 10px;background-color: #F2F2F2;' v-for="commodity in commoditys">
+					<div class='layui-card layui-col-xs4' style='margin-left: 10px;height: 170px;padding: 10px;background-color: #F2F2F2;' v-for="commodity in commoditys">
 						<div class='layui-col-xs8'>
 							<img v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
 						</div>
@@ -125,7 +125,7 @@
 					}
 				}
 			});
-			$.get('global/notice', function(result) {
+			$.get('http://192.168.0.105:8055/global/notice', function(result) {
 				$("#notice").html(result)
 			})
 			layui.use('element', function() {
@@ -154,7 +154,7 @@
 			//获取内容
 			function getContent(category) {
 				content.category = category
-				$.getJSON('search/category', {
+				$.getJSON('http://192.168.0.105:8055/search/category', {
 					category: category,
 					page: 1,
 					limit: 9
