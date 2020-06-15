@@ -17,6 +17,7 @@ import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.util.JwtUtil;
 import com.qsd.bookstore.vo.CommodityVo;
+import com.qsd.bookstore.vo.ResultVo;
 import com.qsd.bookstore.vo.ShopVo;
 
 /**
@@ -122,9 +123,10 @@ public class ShopController {
 	}
 	
 	@GetMapping("getDownloadPath")
-	public String getDownloadPath(String token, int commodityId) {
+	public ResultVo<String> getDownloadPath(String token, int commodityId) {
 		String username = JwtUtil.getUsername(token);
-		return JwtUtil.sign(username, commodityId);
+		String message = JwtUtil.sign(username, commodityId);
+		return new ResultVo<String>(200, "success", message);
 	}
 
 }

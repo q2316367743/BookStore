@@ -115,6 +115,8 @@
 					var data = JSON.parse(JSON.stringify(data.field))
 					$.post('user/register', data, function(data){
 						if (data.code == 200){
+							sessionStorage.setItem('token', result.token);
+							sessionStorage.setItem('nickname', result.user.nickname);
 							window.location.href = "index.html";
 						}else if(data.code == 400){
 							alert("注册失败，" + data.message)

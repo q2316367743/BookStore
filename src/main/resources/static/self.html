@@ -32,7 +32,7 @@
 </style>
 </head>
 <body class="layui-layout-body">
-	<div class="layui-layout layui-layout-admin" id="nav">
+	<div class="layui-layout layui-layout-admin">
 		<div class="layui-bg-green layui-header layui-row">
 			<div class="layui-logo">
 				<a style="color: white;" href="/index.html">人生艰难书店</a>
@@ -50,10 +50,10 @@
 			<ul class="layui-nav layui-col-xs-offset9">
 				<li class="layui-nav-item"><a href="/index.html">主页</a></li>
 				<li class="layui-nav-item"><a href="">留言</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${user.nickname}]]</a>
+				<li class="layui-nav-item"><a href="javascript:;" id="nickname"></a>
 					<dl class="layui-nav-child">
 						<dd>
-							<a href="#my">我的信息</a>
+							<a href="#my;">我的信息</a>
 						</dd>
 						<dd>
 							<a href="#record">我的图书</a>
@@ -62,7 +62,7 @@
 							<a href="#shop">购物车</a>
 						</dd>
 						<dd>
-							<a href="exit">退出</a>
+							<a href="javascript:exit();">退出</a>
 						</dd>
 					</dl></li>
 			</ul>
@@ -78,53 +78,53 @@
 					<li class="layui-col-xs-offset1" lay-id="#password">修改密码</li>
 				</ul>
 				<div class="layui-tab-content" style="height: 470px;overflow: auto;">
-					<div class="layui-tab-item layui-show" style="overflow: auto">
+					<div id="self" class="layui-tab-item layui-show" style="overflow: auto">
 						<div class="layui-col-xs10 layui-col-xs-offset1">
 							<div class="item">
 								<label class="layui-form-label">昵称：</label>
 								<div class="layui-input-block">
 									<input id="nickname" class="layui-input" type="text"
-										th:value="${user.nickname}" />
+										v-bind:value="user.nickname" />
 								</div>
 							</div>
 							<div class="item">
 								<label class="layui-form-label">账户：</label>
 								<div class="layui-input-block">
 									<input disabled="disabled" class="layui-input" type="text"
-										th:value="${user.username}" />
+										v-bind:value="user.username" />
 								</div>
 							</div>
 							<div class="item">
 								<label class="layui-form-label">性别：</label>
 								<div class="layui-input-block">
-									<input type="radio" class="mradio" th:checked="${user.gender}"
-										name="gender" value="1" id="man"><label for="man">男</label>
-									<input type="radio" class="mradio" th:checked="!${user.gender}"
-										name="gender" value="0" id="woman"><label for="woman">女</label>
+									<input type="radio" class="mradio" v-model="user.gender"
+										name="gender" value="true" id="man"><label for="man">男</label>
+									<input type="radio" class="mradio" v-model="user.gender"
+										name="gender" value="false" id="woman"><label for="woman">女</label>
 								</div>
 							</div>
 							<div class="item">
 								<label class="layui-form-label">年龄：</label>
 								<div class="layui-input-block">
 									<input id="age" class="layui-input" type="text"
-										th:value="${user.age}" />
+										v-bind:value="user.age" />
 								</div>
 							</div>
 							<div class="item">
 								<label class="layui-form-label">余额：</label>
 								<div class="layui-input-block">
 									<input disabled="disabled" id="balance" class="layui-input"
-										type="text" th:value="${user.balance}" />
+										type="text" v-bind:value="user.balance" />
 								</div>
 							</div>
 							<div class="item">
 								<label class="layui-form-label">密保：</label>
 								<div class="layui-input-block">
-									<div th:if="${user.isSafe}">
+									<div v-if="user.isSafe">
 										<div style="color: green;" class="layui-col-xs2 set">已设置密保</div>
 										<button type="button" style="margin-left: 5px" onclick="setSafe()" class="layui-btn">更改</button>
 									</div>
-									<div th:if="!${user.isSafe}">
+									<div v-else>
 										<div style="color: red;" class="layui-col-xs2 set">未设置密保</div>
 										<button type="button" style="margin-left: 5px" onclick="setSafe()" class="layui-btn">设置</button>
 										<div class="layui-col-xs4">（密保用于密码丢失时进行找回）</div>
@@ -146,54 +146,54 @@
 							</div>
 						</div>
 					</div>
-					<div class="layui-tab-item">
+					<div id="shop" class="layui-tab-item">
 						<div class='layui-card'
 							style='height: 170px; padding: 10px; background-color: #F2F2F2;'
-							th:each="commodity: ${commodities}">
+							v-for="commodity in commodities">
 							<div class='layui-col-xs4'>
 								<img
-									th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
+									v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
 							</div>
 							<div class='layui-col-xs4'>
 								<div style='height: 40px; margin-top: 20px;'>
 									<a
-										th:href="@{'../commodity/info/' + ${commodity.id}}">[[${commodity.name}]]</a>
+										v-bind:href="'commodity.html?commodityId=' + commodity.id">{{commodity.name}}</a>
 								</div>
 								<div style='height: 50px; color: red;'>
-									<b>￥[[${commodity.price}]]</b>
+									<b>￥{{commodity.price}}</b>
 								</div>
 								<button type="button" class="layui-btn layui-btn-warm"
-									th:onclick="'javascript:info(' + ${commodity.id} + ')'">详情</button>
+									v-on:click="window.location.href = 'commodity.html?commodityId='+commodity.id;">详情</button>
 								<button type="button" class="layui-btn"
-									th:onclick="'javascript:buy(' + ${commodity.id} + ')'">购买</button>
+									v-on:click="window.location.href = 'pay.html?commodityId='+commodity.id;">购买</button>
 								<button type="button" class="layui-btn layui-btn-danger"
-									th:onclick="'javascript:remove(' + ${commodity.id} + ')'">移除</button>
+									v-on:click="remove(commodity.id)">移除</button>
 							</div>
 						</div>
-						<div th:if="${#lists.isEmpty(commodities)}">购物车没有记录</div>
+						<div v-if="commodities.length == 0">购物车没有记录</div>
 					</div>
-					<div class="layui-tab-item">
+					<div id="record" class="layui-tab-item">
 						<div class='layui-card'
 							style='height: 170px; padding: 10px; background-color: #F2F2F2;'
-							th:each="record: ${records}">
+							v-for="commodity in commodities">
 							<div class='layui-col-xs4'>
 								<img
-									th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${record.imageName} + '.jpg'}">
+									v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
 							</div>
 							<div class='layui-col-xs4'>
 								<div style='height: 40px; margin-top: 20px;'>
-									<a th:href="@{'../commodity/info/' + ${record.id}}">[[${record.name}]]</a>
+									<a
+										v-bind:href="'commodity.html?commodityId=' + commodity.id">{{commodity.name}}</a>
 								</div>
 								<div style='height: 50px; color: red;'>
-									<b>￥[[${record.price}]]</b>
+									<b>￥{{commodity.price}}</b>
 								</div>
-								<button type="button" class="layui-btn layui-bg-red"
-									th:onclick="'javascript:read(' + ${record.id} + ')'">阅读</button>
+								<button type="button" class="layui-btn layui-bg-red" >阅读<span style="">(暂不支持)</span></button>
 								<button type="button" class="layui-btn"
-									th:onclick="'javascript:download(' + ${record.id} + ')'">下载</button>
+									v-on:click="download(commodity.id)">下载</button>
 							</div>
 						</div>
-						<div th:if="${#lists.isEmpty(record)}">没有购买记录</div>
+						<div v-if="commodities.length == 0">没有购买记录</div>
 					</div>
 					<div
 						class="layui-tab-item layui-form layui-form-pane layui-col-xs-offset1 layui-col-xs10">
@@ -227,26 +227,125 @@
 		}
 	</script>
 	<script>
-		function read(commodityId){
-			window.location.href = "../read/web/viewer.html?file=/resource/read/" + commodityId;
+		function exit(){
+			sessionStorage.removeItem('token');
+			sessionStorage.removeItem('nickname');
+			window.location.href = 'index.html'
+		}
+		window.onload = function(){
+			//用户信息获取
+			nickname = sessionStorage.getItem('nickname');
+			token = sessionStorage.getItem('token');
+			if(nickname != null&&token!=null){
+				this.nickname = nickname
+				this.isLogin = true;
+			}else{
+				layui.use('layer', function(){
+					var layer = layui.layer;
+					layer.alert("未登录，请登录")
+					window.location.href = 'login.html'
+				})
+			}
+			$("#nickname").text("欢迎您，"+nickname);
+			//获取基本用户信息
+			self = new Vue({
+				el: '#self',
+				data: {
+					user: {}
+				},
+				created: function(){
+					var that = this
+					$.getJSON('user/info', {
+						token: token
+					}, function(res){
+						if(res.code == 200){
+							that.user = res.user;
+						}else if(res.code == 300){
+							alert("登录信息过期，请重新登录")
+							window.location.href = 'login.html'
+						}
+					})
+				}
+			})
+			//购物车信息
+			shop = new Vue({
+				el: '#shop',
+				data: {
+					commodities: []
+				},
+				created: function(){
+					var that = this
+					$.getJSON('user/shop', {
+						token: token,
+						page: 1,
+						limit: 9
+					}, function(res){
+						if(res.code == 200){
+							that.commodities = res.data;
+						}
+					})
+				},
+				methods: {
+					remove: function(commodityId) {
+						$.getJSON('shop/remove?commodityId=' + commodityId, function(
+								result) {
+							if (result.code == 200) {
+								layer.msg('购物车删除成功');
+								//重新获取购物车列表
+								location.reload();
+							} else if (result.code == 404) {
+								alert("请先登录," + result.message);
+								window.location.href = "login.html"
+							}
+						});
+					}
+				}
+			})
+			//购物车信息
+			record = new Vue({
+				el: '#record',
+				data: {
+					commodities: []
+				},
+				created: function(){
+					var that = this
+					$.getJSON('user/record', {
+						token: token,
+						page: 1,
+						limit: 9
+					}, function(res){
+						if(res.code == 200){
+							that.commodities = res.data;
+						}
+					})
+				},
+				methods: {
+					download: function(commodityId){
+						download(commodityId)
+						
+					}
+				}
+			});
 		}
 		function download(commodityId){
-			window.location.href = "/resource/read/" + commodityId;
+			$.getJSON('shop/getDownloadPath', {
+				token: token,
+				commodityId: commodityId
+			}, function(res){
+				if(res.code == 200){
+					window.open('resource/download?token='+res.data, '_blank')
+				}else{
+					alert(res.message)
+				}
+			})
 		}
-		function buy(commodityId) {
-			window.location.href = "../shop/pay?commodityId=" + commodityId;
-		}
-
-		function info(commodityId) {
-			window.location.href = "../commodity/info/"
-					+ commodityId;
-		}
-
+		
 		function alterpwd() {
 			var oldpwd = $("#oldpwd").val();
 			var newpwd = $("#newpwd").val();
-			$.getJSON('alterpwd',
+			$.getJSON('user/alterpwd',
 				{
+					token: token,
 					oldpwd : oldpwd,
 					newpwd : newpwd
 				},
@@ -260,7 +359,13 @@
 											+ result.message,
 							btm : [ "确定" ],
 							yes : function(index,layero) {
-								result.code == 200 ? window.location.href = "/login.html" : location.reload();
+								if(result.code == 200){
+									sessionStorage.removeItem('token');
+									sessionStorage.removeItem('nickname');
+									window.location.href = 'index.html'
+								}else{
+									location.reload();
+								}
 							}
 						})
 					})
@@ -269,7 +374,7 @@
 
 		function search() {
 			var commodityName = $("#commodityName").val();
-			window.location.href = "/search.html?commodityName="
+			window.location.href = "search.html?commodityName="
 					+ commodityName;
 		}
 
@@ -277,7 +382,8 @@
 			var nickname = $("#nickname").val();
 			var age = $("#age").val();
 			var gender = $("input[name='gender']:checked").val();
-			$.post('update', {
+			$.post('user/update', {
+				token: token,
 				nickname : nickname,
 				gender : gender,
 				age : age
@@ -307,14 +413,20 @@
 						console.log("我再想想")
 					}
 				}, function(index, layero) {
-					$.getJSON('logout', function(result) {
+					$.getJSON('user/logout', {
+						token: token
+					}, function(result) {
 						layer.open({
 							title : '注销结果',
 							content : result.code == 200 ? '注销成功' : '注销失败，原因：'
 									+ result.message,
 							btm : [ "确定" ],
 							yes : function(index, layero) {
-								window.location.href = '/index.html';
+								if(result.code == 200){
+									sessionStorage.removeItem('token');
+									sessionStorage.removeItem('nickname');
+									window.location.href = '/index.html';
+								}
 							}
 						})
 					})
@@ -322,7 +434,7 @@
 			});
 		}
 		layui.use([ 'form', 'element' ], function() {
-			var element = layui.element;
+			element = layui.element;
 			var form = layui.form;
 			//Hash地址的定位
 			var layid = location.hash;
@@ -333,19 +445,6 @@
 			});
 		})
 
-		function remove(commodityId) {
-			$.getJSON('../shop/remove?commodityId=' + commodityId, function(
-					result) {
-				if (result.code == 200) {
-					layer.msg('购物车删除成功');
-					//重新获取购物车列表
-					location.reload();
-				} else if (result.code == 404) {
-					alert("请先登录," + result.message);
-					window.location.href = "login.html"
-				}
-			});
-		}
 	</script>
 </body>
 </html>

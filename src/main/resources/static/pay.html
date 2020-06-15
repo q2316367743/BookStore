@@ -37,9 +37,9 @@
 				<li class="layui-nav-item"><a href="">留言</a></li>
 				<li class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 					<dl class="layui-nav-child">
-							<dd><a href="/user/self#my">我的信息</a></dd>
-							<dd><a href="/user/self#record">我的图书</a></dd>
-							<dd><a href="/user/self#shop">购物车</a></dd>
+							<dd><a href="self.html#my">我的信息</a></dd>
+							<dd><a href="self.html#record">我的图书</a></dd>
+							<dd><a href="self.html#shop">购物车</a></dd>
 							<dd><a href="/user/exit">退出</a></dd>
 						</dl>
 				</li>
@@ -122,8 +122,9 @@
 				}
 			});
 			var variable = window.location.search.substring(1);
-			layui.use('layer', function(){
+			layui.use(['layer', 'element'], function(){
 				var layer = layui.layer;
+				var element = layui.element
 				if (variable !== null || variable !== undefined || variable !== '') {
 					var temp = variable.split("=");
 					if (temp[0] == 'commodityId') {
@@ -190,7 +191,7 @@
 							content: '购买成功',
 							btm: ["确定"],
 							yes: function(index, layero) {
-								window.location.href = "/user/self#record";
+								window.location.href = "self.html#record";
 							}
 						})
 					}else if(result.code == 400){
@@ -213,10 +214,6 @@
 			})
 		}
 			
-		layui.use('element', function() {
-			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-
-		});
 		//点击搜索
 		function search() {
 			var commodityName = $("#commodityName").val();

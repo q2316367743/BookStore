@@ -27,7 +27,7 @@ public class UserInterceptor implements HandlerInterceptor {
 			if (verify) {
 				return true;
 			}
-			new ShopVo(400, "token information error");
+			new ShopVo(300, "token information error");
 		}
 		result = new ShopVo(404, "no token");
 		response.setContentType("utf-8");
