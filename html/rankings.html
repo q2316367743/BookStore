@@ -8,6 +8,11 @@
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 		<script src="layui/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="./index.css" />
+		<style type="text/css">
+			.all::-webkit-scrollbar{
+			    display: none;
+			}
+		</style>
 	</head>
 	<body class="layui-layout-body">
 		<div class="layui-layout layui-layout-admin">
@@ -70,13 +75,13 @@
 				<div class="layui-col-xs3 layui-col-xs-offset1">
 					<blockquote class="layui-elem-quote layui-col-xs12" style="margin-top: 10px;">销售量排行榜</blockquote>
 					<div class="layui-col-xs12" style="padding: 10px; height: 440px; background-color: #F2F2F2;">
-						<div class="layui-col-md12" style="height: 400px; overflow: auto;" id="orderByNumber"></div>
+						<div class="layui-col-md12 all" style="height: 400px; overflow: auto;" id="orderByNumber"></div>
 					</div>
 				</div>
 				<div class="layui-col-xs3 layui-col-xs-offset1">
 					<blockquote class="layui-elem-quote layui-col-xs12" style="margin-top: 10px;">浏览量排行榜</blockquote>
 					<div class="layui-col-xs12" style="padding: 10px; height: 440px; background-color: #F2F2F2;">
-						<div class="layui-col-md12" style="height: 400px; overflow: auto;" id="orderByView"></div>
+						<div class="layui-col-md12 all" style="height: 400px; overflow: auto;" id="orderByView"></div>
 					</div>
 				</div>
 			</div>

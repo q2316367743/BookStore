@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>商品详情</title>
-		<link rel="stylesheet" href="/layui/css/layui.css">
-		<script src="/layui/layui.js"></script>
+		<link rel="stylesheet" href="layui/css/layui.css">
+		<script src="layui/layui.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-		<script src="/layui/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="layui/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			.content{
 				overflow: auto;
@@ -34,15 +34,15 @@
 					</button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-					<li class="layui-nav-item"><a href="/index.html">主页</a></li>
+					<li class="layui-nav-item"><a href="index.html">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
 					<li v-if="!isLogin" class="layui-nav-item"><a
-						href="/login.html">请登录</a></li>
+						href="login.html">请登录</a></li>
 					<li v-else class="layui-nav-item"><a href="javascript:;">欢迎您，{{nickname}}</a>
 						<dl class="layui-nav-child">
-							<dd><a href="/self.html#my">我的信息</a></dd>
-							<dd><a href="/self.html#record">我的图书</a></dd>
-							<dd><a href="/self.html#shop">购物车</a></dd>
+							<dd><a href="self.html#my">我的信息</a></dd>
+							<dd><a href="self.html#record">我的图书</a></dd>
+							<dd><a href="self.html#shop">购物车</a></dd>
 							<dd><a href="javascript:;" onclick="exit()">退出</a></dd>
 						</dl>
 					</li>

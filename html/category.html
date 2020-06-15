@@ -102,7 +102,7 @@
 					categories: []
 				}
 			});
-			$.getJSON('global/category', function(result){
+			$.getJSON('http://192.168.0.105:8055/global/category', function(result){
 				if (result.code == 200) {
 					side.categories = result.categories;
 				}
