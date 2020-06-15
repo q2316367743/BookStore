@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addRedirectViewController("admin", "admin/dashboard");
+		registry.addRedirectViewController("", "index.html");
 	}
 
 	@Override
@@ -44,7 +44,8 @@ public class WebConfig implements WebMvcConfigurer {
 				.excludePathPatterns("/layui/**", "/read/**");
 		//管理员登录
 		registry.addInterceptor(adminInterceptor)
-				.addPathPatterns("/admin/**");
+				.addPathPatterns("/admin/**")
+				.excludePathPatterns("/admin/opera/login");
 		//token拦截
 		List<String> need = new ArrayList<>();
 		need.add("/shop/**");

@@ -3,7 +3,6 @@ package com.qsd.bookstore.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.dto.UserByPwd;
-import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.User;
-import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
@@ -41,8 +38,6 @@ public class UserController {
 	@Autowired
 	private RecordService recordService;
 	@Autowired
-	private AdminService adminService;
-	@Autowired
 	private ShopService shopService;
 	@Autowired
 	private Global global;
@@ -51,18 +46,10 @@ public class UserController {
 	public UserVo login(UserByLogin user, HttpServletRequest request) {
 		User login = userService.login(user);
 		String token = JwtUtil.sign(user);
-		HttpSession session = request.getSession();
 		if (login != null) {
 			global.addOnline();
 			return new UserVo(200, "登录成功", token, login);
 		}else {
-			//管理员验证
-			Admin admin = new Admin(user);
-			boolean result = adminService.login(admin);
-			if (result) {
-				session.setAttribute("admin", admin);
-				return new UserVo(101, "管理员登录成功");
-			}
 			return new UserVo(400, "帐户或密码错误");
 		}
 	}
