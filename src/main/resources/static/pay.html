@@ -14,6 +14,13 @@
 	right: 20px;
 	bottom: 20px;
 }
+.content{
+	overflow: auto;
+	width: 90%;
+}
+.content::-webkit-scrollbar{
+    display: none;
+}
 </style>
 </head>
 <body class="layui-layout-body">
@@ -57,10 +64,10 @@
 						style="width: 250px; height: 250px; margin: 25px;">
 				</div>
 				<div class='layui-col-xs8'>
-					<div style='height: 80px; margin-top: 20px;'>
+					<div style='height: 70px; margin-top: 20px;'>
 						<a style="font-size: 40px;"><b v-text="commodity.name"></b></a>
 					</div>
-					<div style='height: 90px;'>
+					<div class="content" style='height: 100px;'>
 						<span v-text="commodity.content"></span>
 					</div>
 					<div style='height: 30px; font-size: 18px'>
