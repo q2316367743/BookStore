@@ -16,7 +16,9 @@ import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.po.Record;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.ShopService;
+import com.qsd.bookstore.util.JdbcUtil;
 import com.qsd.bookstore.util.JwtUtil;
+import com.qsd.bookstore.vo.PageVo;
 
 /**
  * @Description 
@@ -58,13 +60,6 @@ public class ShopServiceImpl implements ShopService {
 			//没有商品
 			return -3;
 		}
-	}
-
-	@Override
-	public List<Commodity> getAll(User user) {
-		String shopName = user.getShopName();
-		List<Commodity> commodities = shopDao.queryAll(shopName);
-		return commodities;
 	}
 
 	@Override
@@ -125,10 +120,13 @@ public class ShopServiceImpl implements ShopService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Commodity> getAllByUsername(String username) {
+	public PageVo<Commodity> getAllByUsername(String username, int page, int limit) {
 		User user = userDao.queryUser(username);
-		return shopDao.queryAll(user.getShopName());
+		List<Commodity> queryAll = shopDao.queryAll(user.getShopName());
+		return JdbcUtil.PageUtil(page, limit, queryAll);
 	}
+
 	
 }

@@ -3,12 +3,12 @@ package com.qsd.bookstore.vo;
 import cn.hutool.json.JSONUtil;
 
 /**
- * @Description 
+ * @Description 基础回复
  * @Author Esion
  * @Data 2020年6月5日
  */
 
-public class ShopVo {
+public class BaseVo {
 	
 	private Integer code;
 	private String message;
@@ -24,11 +24,11 @@ public class ShopVo {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public ShopVo() {
+	public BaseVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ShopVo(Integer code, String message) {
+	public BaseVo(Integer code, String message) {
 		super();
 		this.code = code;
 		this.message = message;

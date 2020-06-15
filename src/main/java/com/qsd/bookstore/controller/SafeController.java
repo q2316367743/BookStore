@@ -14,7 +14,7 @@ import com.qsd.bookstore.po.Safe;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.SafeService;
 import com.qsd.bookstore.vo.SafeVo;
-import com.qsd.bookstore.vo.ShopVo;
+import com.qsd.bookstore.vo.BaseVo;
 
 /**
  * @Description 密保，只有设置密保需要认证
@@ -32,14 +32,14 @@ public class SafeController {
 	 * 判断是否存在用户
 	 * */
 	@GetMapping("userExist")
-	public ShopVo userExist(String username, HttpServletRequest request) {
+	public BaseVo userExist(String username, HttpServletRequest request) {
 		int exist = safeService.exist(username);
 		if (exist == 0) {
-			return new ShopVo(404, "用户不存在");
+			return new BaseVo(404, "用户不存在");
 		}else if (exist == 2) {
-			return new ShopVo(200, "用户存在且设置密保");
+			return new BaseVo(200, "用户存在且设置密保");
 		}else {
-			return new ShopVo(400, "用户未设置密保，请仔细回想密码");
+			return new BaseVo(400, "用户未设置密保，请仔细回想密码");
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class SafeController {
 	 * 需要认证
 	 * */
 	@PostMapping("setSafe")
-	public ShopVo setSafe(Safe safe, HttpServletRequest request) {
+	public BaseVo setSafe(Safe safe, HttpServletRequest request) {
 		//1. 获取用户信息
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
@@ -57,11 +57,11 @@ public class SafeController {
 		if (result == 1) {
 			user.setIsSafe(true);
 			session.setAttribute("user", user);
-			return new ShopVo(200, "设置修改成功");
+			return new BaseVo(200, "设置修改成功");
 		}else if(result == -1) {
-			return new ShopVo(404, "用户未登录");
+			return new BaseVo(404, "用户未登录");
 		}else {
-			return new ShopVo(400, "设置失败，请重试");
+			return new BaseVo(400, "设置失败，请重试");
 		}
 	}
 	
@@ -86,16 +86,16 @@ public class SafeController {
 	 * 404：未设置密保
 	 * */
 	@GetMapping("setNewPwd")
-	public ShopVo setNewPwd(SafeByAnswer answer, HttpServletRequest request) {
+	public BaseVo setNewPwd(SafeByAnswer answer, HttpServletRequest request) {
 		Safe safe = (Safe) request.getSession().getAttribute("safe");
 		if (safe == null) {
-			return new ShopVo(404, "未设置密保");
+			return new BaseVo(404, "未设置密保");
 		}
 		int setNewPwd = safeService.setNewPwd(safe, answer);
 		if (setNewPwd ==  1) {
-			return new ShopVo(200, "成功");
+			return new BaseVo(200, "成功");
 		}else {
-			return new ShopVo(400, "密保答案错误");
+			return new BaseVo(400, "密保答案错误");
 		}
 		
 	}

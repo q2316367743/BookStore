@@ -16,9 +16,9 @@ import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.util.JwtUtil;
-import com.qsd.bookstore.vo.CommodityVo;
+import com.qsd.bookstore.vo.DataVo;
 import com.qsd.bookstore.vo.ResultVo;
-import com.qsd.bookstore.vo.ShopVo;
+import com.qsd.bookstore.vo.BaseVo;
 
 /**
  * @Description 处理购物车获取，购买，移除；需要认证
@@ -41,19 +41,19 @@ public class ShopController {
 	 * @return 添加结果
 	 */
 	@GetMapping("add")
-	public CommodityVo<String> add(String token, Integer commodityId){
+	public DataVo<String> add(String token, Integer commodityId){
 		String username = JwtUtil.getUsername(token);
 		int addShop = shopService.addShop(username, commodityId);
 		if (addShop > 0) {
-			return new CommodityVo<String>(200, "加入购物车成功");
+			return new DataVo<String>(200, "加入购物车成功");
 		} else if (addShop == 0) {
-			return new CommodityVo<String>(400, "未加入购物车");
+			return new DataVo<String>(400, "未加入购物车");
 		} else if (addShop == -1) {
-			return new CommodityVo<String>(500, "已经加入购物车，请勿重复添加");
+			return new DataVo<String>(500, "已经加入购物车，请勿重复添加");
 		} else if (addShop == -2) {
-			return new CommodityVo<String>(401, "商品已下架，无法加入购物车");
+			return new DataVo<String>(401, "商品已下架，无法加入购物车");
 		} else {
-			return new CommodityVo<String>(402, "商品不存在，无法加入购物车");
+			return new DataVo<String>(402, "商品不存在，无法加入购物车");
 		}
 	}
 
@@ -61,26 +61,26 @@ public class ShopController {
 	 * 从购物车中删除商品
 	 * */
 	@GetMapping("remove")
-	public CommodityVo<Boolean> removeCommodity(String token, int commodityId, HttpServletRequest request) {
+	public DataVo<Boolean> removeCommodity(String token, int commodityId, HttpServletRequest request) {
 		boolean b = shopService.removeCommodity(token, commodityId);
-		return new CommodityVo<Boolean>(200, "成功移除商品" + commodityId, -1, b);
+		return new DataVo<Boolean>(200, "成功移除商品" + commodityId, -1, b);
 	}
 
 	@GetMapping("buy")
-	public CommodityVo<Integer> buy(int commodityId, String token) {
+	public DataVo<Integer> buy(int commodityId, String token) {
 		int result = shopService.buyCommodity(token, commodityId);
 		if (result == 1) {
-				return new CommodityVo<Integer>(200, "成功购买商品" + commodityId);
+				return new DataVo<Integer>(200, "成功购买商品" + commodityId);
 		} else if (result == 0) {
-			return new CommodityVo<Integer>(400, "账户余额不足");
+			return new DataVo<Integer>(400, "账户余额不足");
 		} else if (result == -1) {
-			return new CommodityVo<Integer>(404, "用户信息不存在，请重新登陆");
+			return new DataVo<Integer>(404, "用户信息不存在，请重新登陆");
 		} else if (result == 2) {
-			return new CommodityVo<Integer>(500, "您以购买过商品，请勿重复购买");
+			return new DataVo<Integer>(500, "您以购买过商品，请勿重复购买");
 		} else if (result == -2) {
-			return new CommodityVo<Integer>(402, "商品不存在");
+			return new DataVo<Integer>(402, "商品不存在");
 		} else {
-			return new CommodityVo<Integer>(401, "商品以下架");
+			return new DataVo<Integer>(401, "商品以下架");
 		}
 	}
 
@@ -103,12 +103,12 @@ public class ShopController {
 					return modelAndView;
 				}else {
 					modelAndView.setViewName("read");
-					modelAndView.addObject("result", new ShopVo(0, "商品已下架，无法购买"));
+					modelAndView.addObject("result", new BaseVo(0, "商品已下架，无法购买"));
 					return modelAndView;
 				}
 			}else {
 				modelAndView.setViewName("read");
-				modelAndView.addObject("result", new ShopVo(0, "商品不存在"));
+				modelAndView.addObject("result", new BaseVo(0, "商品不存在"));
 				return modelAndView;
 			}
 		} else {

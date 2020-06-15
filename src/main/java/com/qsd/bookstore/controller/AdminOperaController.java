@@ -14,7 +14,7 @@ import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.service.AdminService;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ResourceService;
-import com.qsd.bookstore.vo.ShopVo;
+import com.qsd.bookstore.vo.BaseVo;
 
 /**
  * @Description 
@@ -35,72 +35,72 @@ public class AdminOperaController {
 	private ResourceService resourceService;
 	
 	@GetMapping("setNotice")
-	public ShopVo setNotice(String notice) {
+	public BaseVo setNotice(String notice) {
 		global.setNotice(notice);
-		return new ShopVo(200, "设置公告成功");
+		return new BaseVo(200, "设置公告成功");
 	}
 	
 	@RequestMapping("setIndexImage")
-	public ShopVo setIndexImage(@RequestParam("images") MultipartFile images) {
+	public BaseVo setIndexImage(@RequestParam("images") MultipartFile images) {
 		String filename = images.getOriginalFilename();
 		System.err.println(filename);
-		return new ShopVo(200, "成功");
+		return new BaseVo(200, "成功");
 	}
 	
 	@GetMapping("enableSell")
-	public ShopVo enableSell(int commodityId, boolean status) {
+	public BaseVo enableSell(int commodityId, boolean status) {
 		Integer result = adminService.setSellStatus(commodityId, status);
 		if (result == -1) {
-			return new ShopVo(404, "商品不存在");
+			return new BaseVo(404, "商品不存在");
 		}else if (result == 0) {
-			return new ShopVo(400, "操作失败");
+			return new BaseVo(400, "操作失败");
 		}
-		return new ShopVo(200, "操作成功");
+		return new BaseVo(200, "操作成功");
 	}
 	
 	@PostMapping("newCommodityWithfeild")
-	public ShopVo newCommodityWithfeild(Commodity commodity) {
+	public BaseVo newCommodityWithfeild(Commodity commodity) {
 		commodity.setStatus(true);
 		int result = commodityService.newCommodity(commodity);
 		if (result > 0) {
-			return new ShopVo(200, "success");
+			return new BaseVo(200, "success");
 		}else {
-			return new ShopVo(400, "error");
+			return new BaseVo(400, "error");
 		}
 	}
 	
 	@RequestMapping("newCommodityWithImage")
-	public ShopVo newCommodityWithImage(@RequestParam("image") MultipartFile image) {
+	public BaseVo newCommodityWithImage(@RequestParam("image") MultipartFile image) {
 		int result = -1;
 		result = resourceService.uploadCommodityImage(image);
 		if (result > 0) {
-			return new ShopVo(200, "success");
+			return new BaseVo(200, "success");
 		}else {
-			return new ShopVo(400, "error");
+			return new BaseVo(400, "error");
 		}
 	}
 	
 	@RequestMapping("newCommodityWithFile")
-	public ShopVo newCommodityWithFile(@RequestParam("file") MultipartFile file) {
+	public BaseVo newCommodityWithFile(@RequestParam("file") MultipartFile file) {
 		int result = -1;
 		result = resourceService.uploadCommodityFile(file);
 		if (result > 0) {
-			return new ShopVo(200, "success");
+			return new BaseVo(200, "success");
 		}else {
-			return new ShopVo(400, "error");
+			return new BaseVo(400, "error");
 		}
 	}
 	
 	@GetMapping("newCategory")
-	public ShopVo newCategory(Category category) {
+	public BaseVo newCategory(Category category) {
 		adminService.addCategory(category);
-		return new ShopVo(200, "success");
+		return new BaseVo(200, "success");
 	}
 	
 	@GetMapping("deleteCategory")
-	public ShopVo deleteCategory(String name) {
+	public BaseVo deleteCategory(String name) {
 		adminService.deleteCategory(name);
-		return new ShopVo(200, "success");
+		return new BaseVo(200, "success");
 	}
 
 }

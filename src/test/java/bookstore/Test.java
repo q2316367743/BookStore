@@ -2,7 +2,7 @@ package bookstore;
 
 import com.qsd.bookstore.dto.UserByLogin;
 import com.qsd.bookstore.util.JwtUtil;
-import com.qsd.bookstore.vo.ShopVo;
+import com.qsd.bookstore.vo.BaseVo;
 
 /**
  * @Description 
@@ -17,7 +17,7 @@ public class Test {
 //		System.out.println(sign);
 //		boolean verify = JwtUtil.verify(sign);
 //		System.out.println(verify);
-		System.out.println(new ShopVo(200, "success").toJSONString());
+		System.out.println(new BaseVo(200, "success").toJSONString());
 	}
 	
 }

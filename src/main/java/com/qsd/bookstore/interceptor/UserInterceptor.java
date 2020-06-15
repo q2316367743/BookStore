@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.qsd.bookstore.util.JwtUtil;
-import com.qsd.bookstore.vo.ShopVo;
+import com.qsd.bookstore.vo.BaseVo;
 
 /**
  * @Description 用户状态拦截，拦截特定url
@@ -21,15 +21,15 @@ public class UserInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String token = request.getParameter("token");
-		ShopVo result = null;
+		BaseVo result = null;
 		if (token != null) {
 			boolean verify = JwtUtil.verify(token);
 			if (verify) {
 				return true;
 			}
-			new ShopVo(300, "token information error");
+			new BaseVo(300, "token information error");
 		}
-		result = new ShopVo(404, "no token");
+		result = new BaseVo(404, "no token");
 		response.setContentType("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().print(result.toJSONString());

@@ -22,7 +22,8 @@ import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
 import com.qsd.bookstore.util.JwtUtil;
-import com.qsd.bookstore.vo.CommodityVo;
+import com.qsd.bookstore.vo.DataVo;
+import com.qsd.bookstore.vo.PageVo;
 import com.qsd.bookstore.vo.ResultVo;
 import com.qsd.bookstore.vo.UserVo;
 
@@ -132,21 +133,21 @@ public class UserController {
 	
 	// 查询购物车全部记录
 	@GetMapping("shop")
-	public CommodityVo<List<Commodity>> shop(String token, int page, int limit) {
+	public DataVo<List<Commodity>> shop(String token, int page, int limit) {
 		//获取用户信息
 		String username = JwtUtil.getUsername(token);
 		//购物车信息
-		List<Commodity> commodities = shopService.getAllByUsername(username);
-		return new CommodityVo<List<Commodity>>(200, "success", -1, commodities);
+		PageVo<Commodity> allByUsername = shopService.getAllByUsername(username, page, limit);
+		return new DataVo<List<Commodity>>(200, "success", allByUsername.getCount(), allByUsername.getData());
 	}
 	
 	@GetMapping("record")
-	public CommodityVo<List<Commodity>> record(String token, int page, int limit) {
+	public DataVo<List<Commodity>> record(String token, int page, int limit) {
 		//获取用户信息
 		String username = JwtUtil.getUsername(token);
 		//购物车信息
-		List<Commodity> commodities = recordService.getAllByUsername(username);
-		return new CommodityVo<List<Commodity>>(200, "success", -1, commodities);
+		PageVo<Commodity> data = recordService.getAllByUsername(username, page, limit);
+		return new DataVo<List<Commodity>>(200, "success", data.getCount(), data.getData());
 	}
 	
 	/**

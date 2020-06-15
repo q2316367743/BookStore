@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qsd.bookstore.dao.CategoryDao;
 import com.qsd.bookstore.po.Category;
 import com.qsd.bookstore.po.Global;
-import com.qsd.bookstore.vo.CategoryVo;
+import com.qsd.bookstore.vo.ResultVo;
 
 /**
  * @Description 
@@ -36,9 +36,9 @@ public class IndexController {
 	}
 	
 	@GetMapping("category")
-	public CategoryVo category() {
+	public ResultVo<List<Category>> category() {
 		List<Category> categories = categoryDao.queryAllCategory();
-		return new CategoryVo(200, "success", categories);
+		return new ResultVo<>(200, "success", categories);
 	}
 	
 }

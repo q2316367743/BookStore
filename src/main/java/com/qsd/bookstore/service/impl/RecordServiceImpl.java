@@ -10,6 +10,8 @@ import com.qsd.bookstore.dao.UserDao;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.RecordService;
+import com.qsd.bookstore.util.JdbcUtil;
+import com.qsd.bookstore.vo.PageVo;
 
 /**
  * @Description
@@ -24,17 +26,13 @@ public class RecordServiceImpl implements RecordService {
 	@Autowired
 	private UserDao userDao;
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Commodity> getAllRecord(User user) {
-		String recordName = user.getRecordName();
-		return recordDao.queryAllRecord(recordName);
-	}
-
-	@Override
-	public List<Commodity> getAllByUsername(String username) {
+	public PageVo<Commodity> getAllByUsername(String username, int page, int limit) {
 		User user = userDao.queryUser(username);
 		String recordName = user.getRecordName();
-		return recordDao.queryAllRecord(recordName);
+		List<Commodity> records = recordDao.queryAllRecord(recordName);
+		return JdbcUtil.PageUtil(page, limit, records);
 	}
 
 }

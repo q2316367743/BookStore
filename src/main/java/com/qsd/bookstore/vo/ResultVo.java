@@ -1,7 +1,7 @@
 package com.qsd.bookstore.vo;
 
 /**
- * @Description 
+ * @Description 加强回复
  * @Author Esion
  * @Data 2020年6月14日
  */

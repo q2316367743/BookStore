@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.User;
+import com.qsd.bookstore.vo.PageVo;
 
 /**
  * @Description 
@@ -14,12 +15,13 @@ import com.qsd.bookstore.po.User;
 public interface RecordService {
 
 	/**
-	 * 获取全部的购买记录
-	 * @param user 用户信息
-	 * @return 全部商品列表
+	 * 查询全部记录根据用户名
+	 * @param username 用户名
+	 * @param page 页数
+	 * @param limit 每页的页数
+	 * @return 分页后的记录
 	 * */
-	List<Commodity> getAllRecord(User user);
-	List<Commodity> getAllByUsername(String username);
+	PageVo<Commodity> getAllByUsername(String username, int page, int limit);
 	
 	
 }

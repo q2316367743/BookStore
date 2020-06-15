@@ -1,8 +1,6 @@
 package com.qsd.bookstore.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.qsd.bookstore.dao.CommodityDao;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.service.CommodityService;
+import com.qsd.bookstore.util.JdbcUtil;
+import com.qsd.bookstore.vo.PageVo;
 
 /**
  * @Description 
@@ -22,42 +22,18 @@ public class CommodityServiceImpl implements CommodityService {
 	@Autowired
 	private CommodityDao commodityDao;
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> queryAllByNum(int page, int limit) {
-		Map<String, Object> map = new HashMap<>();
+	public PageVo<Commodity> queryAllByNum(int page, int limit) {
 		List<Commodity> commodities = commodityDao.queryAllByNum();
-		int size = commodities.size();
-		int count = size / limit + 1;
-		int fromIndex = (page - 1) * limit;
-		int toIndex = fromIndex;
-		if (size - fromIndex > limit) {
-			toIndex = fromIndex + limit;
-		}else {
-			toIndex = size;
-		}
-		List<Commodity> subList = commodities.subList(fromIndex, toIndex);
-		map.put("count", count);
-		map.put("commoditys", subList);
-		return map;
+		return JdbcUtil.PageUtil(page, limit, commodities);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> queryAllByView(int page, int limit) {
-		Map<String, Object> map = new HashMap<>();
+	public PageVo<Commodity> queryAllByView(int page, int limit) {
 		List<Commodity> commodities = commodityDao.queryAllByView();
-		int size = commodities.size();
-		int count = size / limit + 1;
-		int fromIndex = (page - 1) * limit;
-		int toIndex = fromIndex;
-		if (size - fromIndex > limit) {
-			toIndex = fromIndex + limit;
-		}else {
-			toIndex = size;
-		}
-		List<Commodity> subList = commodities.subList(fromIndex, toIndex);
-		map.put("count", count);
-		map.put("commoditys", subList);
-		return map;
+		return JdbcUtil.PageUtil(page, limit, commodities);
 	}
 
 	@Override

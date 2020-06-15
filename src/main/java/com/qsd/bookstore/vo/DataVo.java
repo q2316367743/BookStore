@@ -1,25 +1,26 @@
 package com.qsd.bookstore.vo;
 
 /**
- * @Description 
+ * @Description 数据分页回复
  * @Author Esion
  * @Data 2020年6月2日
  */
 
-public class CommodityVo<T> {
+public class DataVo<T> {
 
 	private Integer code;
 	private String msg;
 	private Integer count;
 	private T data;
-	public CommodityVo() {
+	public DataVo() {
 	}
-	public CommodityVo(Integer code, String msg) {
+	public DataVo(Integer code, String msg) {
 		super();
 		this.code = code;
 		this.msg = msg;
 	}
-	public CommodityVo(Integer code, String msg, Integer count, T data) {
+	
+	public DataVo(Integer code, String msg, Integer count, T data) {
 		super();
 		this.code = code;
 		this.msg = msg;

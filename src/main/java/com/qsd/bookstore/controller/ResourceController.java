@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.qsd.bookstore.service.ResourceService;
 import com.qsd.bookstore.util.JwtUtil;
-import com.qsd.bookstore.vo.ShopVo;
+import com.qsd.bookstore.vo.BaseVo;
 
 /**
  * @Description 
@@ -36,15 +36,15 @@ public class ResourceController {
 		switch (result) {
 		case -1:
 			//未登录
-			modelAndView.addObject("result", new ShopVo(-1, "您没有登录，请重新登陆"));
+			modelAndView.addObject("result", new BaseVo(-1, "您没有登录，请重新登陆"));
 			break;
 		case 0:
 			// 没有购买图书
-			modelAndView.addObject("result", new ShopVo(0, "您没有购买图书，请购买后查看"));
+			modelAndView.addObject("result", new BaseVo(0, "您没有购买图书，请购买后查看"));
 			break;
 		case 2:
 			// 下载异常
-			modelAndView.addObject("result", new ShopVo(2, "下载异常"));
+			modelAndView.addObject("result", new BaseVo(2, "下载异常"));
 			break;
 		case 1:
 			// 成功
@@ -71,25 +71,25 @@ public class ResourceController {
 				switch (result) {
 				case -1:
 					//未登录
-					modelAndView.addObject("result", new ShopVo(-1, "您没有登录，请重新登陆"));
+					modelAndView.addObject("result", new BaseVo(-1, "您没有登录，请重新登陆"));
 					break;
 				case 0:
 					// 没有购买图书
-					modelAndView.addObject("result", new ShopVo(0, "您没有购买图书，请购买后查看"));
+					modelAndView.addObject("result", new BaseVo(0, "您没有购买图书，请购买后查看"));
 					break;
 				case 2:
 					// 下载异常
-					modelAndView.addObject("result", new ShopVo(2, "下载异常"));
+					modelAndView.addObject("result", new BaseVo(2, "下载异常"));
 					break;
 				case 1:
 					// 成功
 					return null;
 				}
 			}else {
-				modelAndView.addObject("result", new ShopVo(2, "token信息错误"));
+				modelAndView.addObject("result", new BaseVo(2, "token信息错误"));
 			}
 		}else {
-			modelAndView.addObject("result", new ShopVo(2, "token为空"));
+			modelAndView.addObject("result", new BaseVo(2, "token为空"));
 		}
 		return modelAndView;
 	}

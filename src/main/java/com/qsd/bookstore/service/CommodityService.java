@@ -1,8 +1,7 @@
 package com.qsd.bookstore.service;
 
-import java.util.Map;
-
 import com.qsd.bookstore.po.Commodity;
+import com.qsd.bookstore.vo.PageVo;
 
 /**
  * @Description 
@@ -15,11 +14,11 @@ public interface CommodityService {
 	/**
 	 * 查询全部的商品信息根据销售量
 	 * */
-	Map<String, Object> queryAllByNum(int page, int limit);
+	PageVo<Commodity> queryAllByNum(int page, int limit);
 	/**
 	 * 查询全部的商品信息根据购买量
 	 * */
-	Map<String, Object> queryAllByView(int page, int limit);
+	PageVo<Commodity> queryAllByView(int page, int limit);
 	/**
 	 * 查询商品信息根据商品ID
 	 * */
