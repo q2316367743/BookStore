@@ -64,6 +64,17 @@
 							</div>
 						</div>
 						<div class="layui-form-item">
+							<label class="layui-form-label">验证码</label>
+							<div class="layui-input-block">
+								<div class="layui-col-xs8">
+									<input type="text" name="code" autocomplete="off" placeholder="请输入年龄" class="layui-input">
+								</div>
+								<div class="layui-col-xs4" onclick="refrence()">
+									<img id="verifyimg" height="38px" width="100px" />
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
 							<div class="layui-input-block">
 								<button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即注册</button>
 								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -75,10 +86,25 @@
 			</div>
 		</div>
 		<script>
+			var token = '';
+			function refrence(){
+				$.getJSON('http://192.168.0.105:8055/global/getVerifyCode', function(res){
+					if(res.code == 200){
+						token = res.token
+						$("#verifyimg").attr('src', ' data:image/jpeg;base64,'+res.data)
+					}
+				})
+			}
 			window.onload = function() {
 				layui.use('element', function() {
 					var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 				});
+				$.getJSON('http://192.168.0.105:8055/global/getVerifyCode', function(res){
+					if(res.code == 200){
+						token = res.token
+						$("#verifyimg").attr('src', ' data:image/jpeg;base64,'+res.data)
+					}
+				})
 			}
 			
 			layui.use(['form', 'layedit', 'laydate'], function() {
@@ -109,19 +135,27 @@
 						if (age > 200 || age < 0){
 							return '年龄错误'
 						}
+					},
+					code: function(value){
+						//验证码长度为4
+						if(value.length > 4){
+							return '长度过长'
+						}
 					}
 				});
 				
 				//监听提交
 				form.on('submit(demo1)', function(data) {
 					var data = JSON.parse(JSON.stringify(data.field))
-					$.post('http://192.168.0.105:8055/user/register', data, function(data){
-						if (data.code == 200){
+					data.token = token
+					$.post('http://192.168.0.105:8055/user/register', data, function(result){
+						if (result.code == 200){
 							sessionStorage.setItem('token', result.token);
-							sessionStorage.setItem('nickname', result.user.nickname);
+							sessionStorage.setItem('nickname', data.nickname);
+							layer.alert("注册成功")
 							window.location.href = "index.html";
-						}else if(data.code == 400){
-							alert("注册失败，" + data.message)
+						}else if(result.code == 400){
+							alert("注册失败，" + result.message)
 						}
 					}, "json")
 					return false;

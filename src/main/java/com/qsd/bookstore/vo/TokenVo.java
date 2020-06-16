@@ -1,41 +1,37 @@
 package com.qsd.bookstore.vo;
 
-import com.qsd.bookstore.po.User;
-
 /**
- * @Description 
+ * @Description 返回token的结果集
  * @Author Esion
  * @Data 2020年6月1日
  */
 
-public class UserVo {
+public class TokenVo<T> {
 	
 	private Integer code;
 	private String message;
 	private String token;
-	private User user;
+	private T data;
 	
-	public UserVo() {
-		super();
-		// TODO Auto-generated constructor stub
+	public TokenVo() {
 	}
-	public UserVo(Integer code, String message) {
+	public TokenVo(Integer code, String message) {
 		super();
 		this.code = code;
 		this.message = message;
 	}
-	public UserVo(Integer code, String message, User user) {
+	public TokenVo(Integer code, String message, T data) {
 		super();
 		this.code = code;
 		this.message = message;
-		this.user = user;
+		this.data = data;
 	}
-	public UserVo(Integer code, String message, String token, User user) {
+	public TokenVo(Integer code, String message, String token, T data) {
 		super();
 		this.code = code;
 		this.message = message;
 		this.token = token;
-		this.user = user;
+		this.data = data;
 	}
 	public Integer getCode() {
 		return code;
@@ -49,17 +45,17 @@ public class UserVo {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	public String getToken() {
 		return token;
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public T getData() {
+		return data;
+	}
+	public void setData(T data) {
+		this.data = data;
 	}
 	
 }

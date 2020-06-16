@@ -19,10 +19,11 @@ import com.qsd.bookstore.service.RecordService;
 import com.qsd.bookstore.service.ShopService;
 import com.qsd.bookstore.service.UserService;
 import com.qsd.bookstore.util.JwtUtil;
+import com.qsd.bookstore.util.VerifyCodeUtil;
 import com.qsd.bookstore.vo.DataVo;
 import com.qsd.bookstore.vo.PageVo;
 import com.qsd.bookstore.vo.ResultVo;
-import com.qsd.bookstore.vo.UserVo;
+import com.qsd.bookstore.vo.TokenVo;
 
 /**
  * @Description 处理关于用户相关
@@ -43,28 +44,37 @@ public class UserController {
 	private Global global;
 
 	@GetMapping("login")
-	public UserVo login(UserByLogin user, HttpServletRequest request) {
+	public TokenVo<User> login(UserByLogin user, HttpServletRequest request) {
 		User login = userService.login(user);
-		String token = JwtUtil.sign(user);
+		String token = JwtUtil.sign(user.getUsername());
 		if (login != null) {
 			global.addOnline();
-			return new UserVo(200, "登录成功", token, login);
+			return new TokenVo<>(200, "登录成功", token, login);
 		}else {
-			return new UserVo(400, "帐户或密码错误");
+			return new TokenVo<>(400, "帐户或密码错误");
 		}
 	}
 	
 	@PostMapping("register")
-	public UserVo register(User user, HttpServletRequest request) {
-		Integer register = userService.register(user);
-		if (register > 0) {
-			UserByLogin temp = new UserByLogin(user);
-			User login = userService.login(temp);
-			String token = JwtUtil.sign(temp);
-			global.updateUserNum();
-			return new UserVo(200, "注册成功", token, login);
+	public TokenVo<Void> register(User user, HttpServletRequest request) {
+		String code = user.getCode();
+		String token = user.getToken();
+		if (code != null && token != null) {
+			boolean verify = VerifyCodeUtil.verify(token, code);
+			if (verify) {
+				Integer register = userService.register(user);
+				if (register > 0) {
+					String tmp = JwtUtil.sign(user.getUsername());
+					global.updateUserNum();
+					return new TokenVo<>(200, "注册成功", tmp, null);
+				}else {
+					return new TokenVo<>(400, "账户重复");
+				}
+			}else {
+				return new TokenVo<>(400, "验证码错误");
+			}
 		}else {
-			return new UserVo(400, "账户重复");
+			return new TokenVo<>(400, "缺少验证码");
 		}
 	}
 	
@@ -72,49 +82,49 @@ public class UserController {
 	 * 根据token获取用户信息
 	 * */
 	@GetMapping("info")
-	public UserVo info(String token, HttpServletRequest request) {
+	public TokenVo<User> info(String token, HttpServletRequest request) {
 		if (token != null) {
 			User user = userService.info(token);
 			if (user != null) {
-				return new UserVo(200, "success", user);
+				return new TokenVo<>(200, "success", user);
 			}else {
-				return new UserVo(400, "token信息错误");
+				return new TokenVo<>(400, "token信息错误");
 			}
 		}
-		return new UserVo(404, "缺少token");
+		return new TokenVo<>(404, "缺少token");
 	}
 	
 	@PostMapping("update")
-	public UserVo update(String token, User user,HttpServletRequest request) {
+	public TokenVo<Boolean> update(String token, User user,HttpServletRequest request) {
 		try {
 			//获取账户名
 			User oldUser = userService.info(token);
 			//修改数据库
 			userService.update(oldUser, user);
-			return new UserVo(200, "成功");
+			return new TokenVo<>(200, "成功");
 		} catch (Exception e) {
-			return new UserVo(400, "失败");
+			return new TokenVo<>(400, "失败");
 		}
 		
 	}
 	
 	@GetMapping("logout")
-	public UserVo logout(String token, HttpServletRequest request) {
+	public TokenVo<Boolean> logout(String token, HttpServletRequest request) {
 		Integer logout = userService.logout(token);
 		if (logout > 0) {
-			return new UserVo(200, "注销成功");
+			return new TokenVo<>(200, "注销成功");
 		}else {
-			return new UserVo(400, "注销失败");
+			return new TokenVo<>(400, "注销失败");
 		}
 	}
 	
 	@GetMapping("alterpwd")
-	public UserVo alterpwd(String token, String oldpwd, String newpwd, HttpServletRequest request) {
+	public TokenVo<Boolean> alterpwd(String token, String oldpwd, String newpwd, HttpServletRequest request) {
 		Integer alterpwd = userService.alterpwd(new UserByPwd(token, oldpwd, newpwd));
 		if (alterpwd > 0) {
-			return new UserVo(200, "修改成功，请登录");
+			return new TokenVo<>(200, "修改成功，请登录");
 		}else {
-			return new UserVo(400, "旧密码错误");
+			return new TokenVo<>(400, "旧密码错误");
 		}
 	}
 	

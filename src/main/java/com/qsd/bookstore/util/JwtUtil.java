@@ -8,7 +8,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.qsd.bookstore.dto.UserByLogin;
 
 import cn.hutool.core.util.IdUtil;
 
@@ -21,25 +20,25 @@ import cn.hutool.core.util.IdUtil;
 public class JwtUtil {
 	
 	/**
-	 * 设置过期时间15分钟
-	 * */
-	private static final long EXPIRE_TIME = 15 * 60 * 1000;
-	/**
 	 * 设置文件过期时间2分钟
 	 * */
 	private static final long FILE_EXPIRE_TIME = 2 * 60 * 1000;
 	/**
+	 * 设置过期时间15分钟
+	 * */
+	private static final long EXPIRE_TIME = 15 * 60 * 1000;
+	/**
 	 * tocken私钥
 	 * */
-	private static final String TOKEN_SECRET = IdUtil.simpleUUID();;
+	private static final String TOKEN_SECRET = IdUtil.simpleUUID();
 	
 	/**
-	 * 生成签名，15分钟后过期
+	 * 生成登录信息签名，15分钟后过期
 	 * 
 	 * @param user 用户信息
 	 * @return 加密的token
 	 * */
-	public static String sign(UserByLogin user) {
+	public static String sign(String username) {
 		try {
 			Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
 			Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
@@ -47,8 +46,7 @@ public class JwtUtil {
 			map.put("typ", "JWT");
 			map.put("alg", "HS256");
 			return JWT.create().withHeader(map)
-							   .withClaim("username", user.getUsername())
-							   .withClaim("password", user.getPassword())
+							   .withClaim("username", username)
 							   .withExpiresAt(date)
 							   .sign(algorithm);
 		} catch (Exception e) {
@@ -78,6 +76,8 @@ public class JwtUtil {
 			return "";
 		}
 	}
+	
+	
 	
 	/**
 	 * 检验token是否正确
@@ -125,5 +125,5 @@ public class JwtUtil {
 			return null;
 		}
 	}
-
+	
 }

@@ -58,6 +58,7 @@ public class ResourceServiceImpl implements ResourceService {
 //	private static String UPLOAD_IMG_PATH = "D:\\nginx-1.14.2\\html\\bookstore\\commodity";
 			
 
+	@SuppressWarnings("unused")
 	@Override
 	public int getCommodityFile(HttpServletRequest request, HttpServletResponse response, int commodityId) {
 		File file = new File(PATH);

@@ -17,6 +17,8 @@ public class User {
 	private String recordName;
 	private Double balance;
 	private Boolean isSafe;
+	private String code;
+	private String token;
 	public String getUsername() {
 		return username;
 	}
@@ -71,11 +73,23 @@ public class User {
 	public void setIsSafe(Boolean isSafe) {
 		this.isSafe = isSafe;
 	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", nickname=" + nickname + ", gender=" + gender
 				+ ", age=" + age + ", shopName=" + shopName + ", recordName=" + recordName + ", balance=" + balance
-				+ "]";
+				+ ", isSafe=" + isSafe + ", code=" + code + ", token=" + token + "]";
 	}
 
 }

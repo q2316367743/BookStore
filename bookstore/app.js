@@ -10,6 +10,8 @@ App({
         
       }
     })
+    //通过token判断是否登录
+
     // 获取用户信息
     wx.getSetting({
       success: res => {

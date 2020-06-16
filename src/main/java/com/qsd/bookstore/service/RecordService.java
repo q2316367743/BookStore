@@ -1,9 +1,6 @@
 package com.qsd.bookstore.service;
 
-import java.util.List;
-
 import com.qsd.bookstore.po.Commodity;
-import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.vo.PageVo;
 
 /**
