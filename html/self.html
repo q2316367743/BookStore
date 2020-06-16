@@ -287,7 +287,10 @@
 				},
 				methods: {
 					remove: function(commodityId) {
-						$.getJSON('http://192.168.0.105:8055/shop/remove?commodityId=' + commodityId, function(
+						$.getJSON('http://192.168.0.105:8055/shop/remove', {
+							commodityId: commodityId,
+							token: token
+						}, function(
 								result) {
 							if (result.code == 200) {
 								layer.msg('购物车删除成功');
