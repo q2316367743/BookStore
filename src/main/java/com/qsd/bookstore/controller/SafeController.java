@@ -1,7 +1,6 @@
 package com.qsd.bookstore.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qsd.bookstore.dto.SafeByAnswer;
 import com.qsd.bookstore.po.Safe;
-import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.SafeService;
 import com.qsd.bookstore.vo.SafeVo;
 import com.qsd.bookstore.vo.BaseVo;
@@ -49,14 +47,10 @@ public class SafeController {
 	 * */
 	@PostMapping("setSafe")
 	public BaseVo setSafe(Safe safe, HttpServletRequest request) {
-		//1. 获取用户信息
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("user");
-		//2. 设置密保
-		int result = safeService.setSafe(user, safe);
+		System.out.println(safe);
+		//设置密保
+		int result = safeService.setSafe(safe);
 		if (result == 1) {
-			user.setIsSafe(true);
-			session.setAttribute("user", user);
 			return new BaseVo(200, "设置修改成功");
 		}else if(result == -1) {
 			return new BaseVo(404, "用户未登录");

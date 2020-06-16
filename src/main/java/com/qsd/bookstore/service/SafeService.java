@@ -2,7 +2,6 @@ package com.qsd.bookstore.service;
 
 import com.qsd.bookstore.dto.SafeByAnswer;
 import com.qsd.bookstore.po.Safe;
-import com.qsd.bookstore.po.User;
 
 /**
  * @Description 
@@ -14,10 +13,9 @@ public interface SafeService {
 
 	/**
 	 * 设置密保信息
-	 * @param user 用户信息
 	 * @param safe 密保信息
 	 * */
-	int setSafe(User user, Safe safe);
+	int setSafe(Safe safe);
 	/**
 	 * 判断用户是否存在
 	 * @param username 用户名

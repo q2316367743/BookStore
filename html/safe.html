@@ -11,7 +11,7 @@
 	<body class="layui-layout-body">
 		<div id="content" class="layui-layout layui-layout-admin">
 			<div class="layui-bg-green layui-header layui-row">
-				<div class="layui-logo"><a style="color: white;" href="/index.html">人生艰难书店</a></div>
+				<div class="layui-logo"><a style="color: white;" href="index.html">人生艰难书店</a></div>
 				<div class="layui-col-xs-offset4 layui-col-xs4 layui-row" style="margin-top: 11px;">
 					<div class="layui-col-xs10">
 						<input type="text" id="commodityName" placeholder="请输入商品名称" class="layui-input">
@@ -20,11 +20,11 @@
 						<i class="layui-icon layui-icon-search layui-col-xs2"></i>
 					</button>
 				</div>
-				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-					<li class="layui-nav-item"><a href="/index.html">主页</a></li>
+				<ul class="layui-nav layui-col-xs-offset9">
+					<li class="layui-nav-item"><a href="index.html">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
 					<li class="layui-nav-item">
-						<a href="javascript:;">欢迎您，{{nickname}}</a>
+						<a href="javascript:;">欢迎您，<span id="nickname"></span></a>
 						<dl class="layui-nav-child">
 							<dd><a href="self.html#my">我的信息</a></dd>
 							<dd><a href="self.html#record">我的图书</a></dd>
@@ -90,52 +90,45 @@
 			}
 			
 			window.onload = function(){
-				var vue = new Vue({
-					el: '#content',
-					data: {
-						username: '',
-						nickname: ''
-					}
-				});
-				$.getJSON('http://192.168.0.105:8055/user/isLogin', function(result) {
-					if (result.code == 200) {
-						vue.nickname = result.userInfo.nickname;
-						vue.username = result.userInfo.username;
-						vue.isLogin = true;
-						layui.use(['element', 'form'], function() {
-							var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-							var form = layui.form;
-							//监听提交
-							form.on('submit(demo1)', function(data) {
-								var data = JSON.parse(JSON.stringify(data.field))
-								$.post('http://192.168.0.105:8055/safe/setSafe', data, function(data){
-									layer.open({
-										title: '设置结果',
-										content: data.message,
-										btm : [ "确定" ],
-										yes : function(index,layero) {
-											if(result.code == 200 || result.code == 400){
-												window.location.href = 'self.html#my';
-											}else {
-												window.location.href = 'login.html';
-											}
+				var token = sessionStorage.getItem('token');
+				var nickname = sessionStorage.getItem('nickname');
+				if (token != null && nickname != null) {
+					$("#nickname").text(nickname);
+					layui.use(['element', 'form'], function() {
+						var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+						var form = layui.form;
+						//监听提交
+						form.on('submit(demo1)', function(data) {
+							data.field.token = token;
+							var data = JSON.parse(JSON.stringify(data.field))
+							console.log(data)
+							$.post('http://192.168.0.105:8055/safe/setSafe', data, function(result){
+								layer.open({
+									title: '设置结果',
+									content: result.message,
+									btm : [ "确定" ],
+									yes : function(index,layero) {
+										if(result.code == 200 || result.code == 400){
+											window.location.href = 'self.html#my';
+										}else {
+											window.location.href = 'login.html';
 										}
-									})
-									if (data.code == 200){
-										
-										window.location.href = "self.html#my";
-									}else if(data.code == 400){
-										alert("注册失败，" + data.message)
 									}
-								}, "json")
-								return false;
-							});
+								})
+								if (data.code == 200){
+									
+									window.location.href = "self.html#my";
+								}else if(data.code == 400){
+									alert("注册失败，" + data.message)
+								}
+							}, "json")
+							return false;
 						});
-					}else{
-						alert("请先登录")
-						window.location.href = 'login.html'
-					}
-				})
+					});
+				}else{
+					alert("请先登录")
+					window.location.href = 'login.html'
+				}
 			}
 
 		</script>

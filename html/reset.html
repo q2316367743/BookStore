@@ -11,7 +11,7 @@
 	<body class="layui-layout-body">
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-bg-green layui-header layui-row">
-				<div class="layui-logo"><a style="color: white;" href="/index.html">人生艰难书店</a></div>
+				<div class="layui-logo"><a style="color: white;" href="index.html">人生艰难书店</a></div>
 				<div class="layui-col-xs-offset4 layui-col-xs4 layui-row" style="margin-top: 11px;">
 					<div class="layui-col-xs10">
 						<input type="text" placeholder="请输入商品名称" class="layui-input">
@@ -19,7 +19,7 @@
 					<button onclick="search()" type="button" class="layui-btn"><i class="layui-icon layui-icon-search layui-col-xs2"></i></button>
 				</div>
 				<ul class="layui-nav layui-col-xs-offset9" id="nav">
-					<li class="layui-nav-item"><a href="/index.html">主页</a></li>
+					<li class="layui-nav-item"><a href="index.html">主页</a></li>
 					<li class="layui-nav-item"><a href="">留言</a></li>
 					<li class="layui-nav-item"><a href="login.html">请登录</a></li>
 				</ul>
@@ -103,8 +103,9 @@
 		</div>
 		<script>
 			window.onload = function() {
-				layui.use('element', function() {
+				layui.use(['element', 'layer'], function() {
 					var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+					layer = layui.layer
 				});
 			}
 			var vue = new Vue({

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="addSafe" parameterType="safe">
 		insert into safe 
-		values(#{username}, #{question1}, #{answer1}, #{question2}, #{answer2}, #{question3}, #{answer3})
+		values(#{token}, #{question1}, #{answer1}, #{question2}, #{answer2}, #{question3}, #{answer3})
 	</insert>
 	
 	<update id="updateSafe" parameterType="safe">
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set question1 = #{question1}, answer1 = #{amswer1}, 
 		question2 = #{question2}, answer2 = #{amswer2}, 
 		question3 = #{question3}, answer3 = #{amswer3}
-		where username = #{username}
+		where username = #{token}
 	</update>
 	
 	<select id="querySafeByUsername" resultType="safe">

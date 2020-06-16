@@ -8,18 +8,18 @@ package com.qsd.bookstore.po;
 
 public class Safe {
 	
-	private String username;
+	private String token;
 	private String question1;
 	private String answer1;
 	private String question2;
 	private String answer2;
 	private String question3;
 	private String answer3;
-	public String getUsername() {
-		return username;
+	public String getToken() {
+		return token;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setToken(String token) {
+		this.token = token;
 	}
 	public String getQuestion1() {
 		return question1;
@@ -59,8 +59,8 @@ public class Safe {
 	}
 	@Override
 	public String toString() {
-		return "Safe [username=" + username + ", question1=" + question1 + ", answer1=" + answer1 + ", question2="
-				+ question2 + ", answer2=" + answer2 + ", question3=" + question3 + ", answer3=" + answer3 + "]";
+		return "Safe [token=" + token + ", question1=" + question1 + ", answer1=" + answer1 + ", question2=" + question2
+				+ ", answer2=" + answer2 + ", question3=" + question3 + ", answer3=" + answer3 + "]";
 	}
 
 }
