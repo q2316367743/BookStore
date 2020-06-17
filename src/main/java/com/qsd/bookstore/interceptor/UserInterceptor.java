@@ -3,9 +3,11 @@ package com.qsd.bookstore.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.util.JwtUtil;
 import com.qsd.bookstore.vo.BaseVo;
 
@@ -16,6 +18,9 @@ import com.qsd.bookstore.vo.BaseVo;
  */
 @Component
 public class UserInterceptor implements HandlerInterceptor {
+	
+	@Autowired
+	private Global global;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -29,6 +34,7 @@ public class UserInterceptor implements HandlerInterceptor {
 			}
 			new BaseVo(300, "token information error");
 		}
+		global.addView();
 		result = new BaseVo(404, "no token");
 		response.setContentType("utf-8");
 		response.setCharacterEncoding("utf-8");

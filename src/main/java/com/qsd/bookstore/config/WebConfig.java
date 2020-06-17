@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.qsd.bookstore.interceptor.AdminInterceptor;
 import com.qsd.bookstore.interceptor.UserInterceptor;
-import com.qsd.bookstore.interceptor.ViewInterceptor;
 
 
 /**
@@ -24,8 +23,6 @@ import com.qsd.bookstore.interceptor.ViewInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 	
-	@Autowired
-	private ViewInterceptor viewInterceptor;
 	@Autowired
 	private AdminInterceptor adminInterceptor;
 	@Autowired
@@ -38,9 +35,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		//网站访问量拦截器
-		registry.addInterceptor(viewInterceptor)
-				.addPathPatterns("/user/login");
 		//管理员登录
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns("/admin/**")

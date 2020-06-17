@@ -54,7 +54,7 @@
 							<a href="javascript:;">全局设置</a>
 						</dd>
 						<dd>
-							<a href="javascript:;">退出</a>
+							<a onclick="exit()" href="javascript:;">退出</a>
 						</dd>
 					</dl></li>
 
@@ -89,7 +89,7 @@
 	<script>
 		layui.use(['element', 'layer'], function() {
 			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-			var layer = layui.layer;
+			layer = layui.layer;
 			//监听导航点击
 			element.on('nav(side)', function(elem){
 				var id = $(this).attr('layui-id');
@@ -111,6 +111,16 @@
 				
 			});
 		});
+		function exit(){
+			$.getJSON('opera/exit', function(res){
+				if(res.code == 200){
+					layer.alert('退出成功');
+					window.location.href = '../login.html';
+				}else{
+					layer.alert(res.message);
+				}
+			})
+		}
 	</script>
 </body>
 </html>

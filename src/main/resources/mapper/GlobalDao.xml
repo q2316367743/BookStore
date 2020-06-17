@@ -19,5 +19,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into global(notice, view, online, commodity_sell_num, turnover, user_num, commodity_num)
 		VALUES(#{notice}, #{view}, #{online}, #{commoditySellNum}, #{turnover}, #{userNum}, #{commodityNum})
 	</insert>
+	
+	<select id="queryAll" resultMap="globalMap">
+		select * from global order by id desc limit #{num}
+	</select>
+	
+	<select id="queryView" resultType="INTEGER">
+		select view from global order by id desc limit #{num}
+	</select>
+	
+	<select id="queryOnline" resultType="INTEGER">
+		select online from global order by id desc limit #{num}
+	</select>
+	
+	<select id="queryCommoditySellNum" resultType="INTEGER">
+		select commodity_sell_num from global order by id desc limit #{num}
+	</select>
+	
+	<select id="queryTurnover" resultType="INTEGER">
+		select turnover from global order by id desc limit #{num}
+	</select>
+	
+	<select id="queryUserNum" resultType="INTEGER">
+		select user_num from global order by id desc limit #{num}
+	</select>
+	
+	<select id="queryCommodityNum" resultType="INTEGER">
+		select commodity_num from global order by id desc limit #{num}
+	</select>
 
 </mapper>
