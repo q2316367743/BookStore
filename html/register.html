@@ -151,7 +151,7 @@
 					$.post('http://192.168.0.105:8055/user/register', data, function(result){
 						if (result.code == 200){
 							sessionStorage.setItem('token', result.token);
-							sessionStorage.setItem('nickname', data.nickname);
+							sessionStorage.setItem('nickname', result.data.nickname);
 							layer.alert("注册成功")
 							window.location.href = "index.html";
 						}else if(result.code == 400){

@@ -88,7 +88,7 @@
 				function(result){
 					if(result.code == 200){
 						sessionStorage.setItem('token', result.token);
-						sessionStorage.setItem('nickname', result.user.nickname);
+						sessionStorage.setItem('nickname', result.data.nickname);
 						if(commodityId == -1){
 							window.location.href = 'index.html'
 						}else {

@@ -56,7 +56,7 @@ public class UserController {
 	}
 	
 	@PostMapping("register")
-	public TokenVo<Void> register(User user, HttpServletRequest request) {
+	public TokenVo<User> register(User user, HttpServletRequest request) {
 		String code = user.getCode();
 		String token = user.getToken();
 		if (code != null && token != null) {
@@ -66,7 +66,7 @@ public class UserController {
 				if (register > 0) {
 					String tmp = JwtUtil.sign(user.getUsername());
 					global.updateUserNum();
-					return new TokenVo<>(200, "注册成功", tmp, null);
+					return new TokenVo<>(200, "注册成功", tmp, user);
 				}else {
 					return new TokenVo<>(400, "账户重复");
 				}
