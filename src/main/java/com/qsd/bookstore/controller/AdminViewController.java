@@ -27,6 +27,14 @@ public class AdminViewController {
 	@Autowired
 	private AdminService adminService;
 	
+	@GetMapping("index")
+	public String index(HttpServletRequest request, Model model) {
+		Admin admin = (Admin) request.getSession().getAttribute("admin");
+		adminService.getWebInfo(model);
+		model.addAttribute("admin", admin);
+		return "admin/index";
+	}
+	
 	@GetMapping("dashboard")
 	public String dashboard(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("admin");

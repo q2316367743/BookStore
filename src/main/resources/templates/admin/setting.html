@@ -26,172 +26,123 @@
 </style>
 </head>
 <body class="layui-layout-body">
-	<div class="layui-layout layui-layout-admin">
-		<div class="layui-header layui-row">
-			<div class="layui-logo">
-				<a style="color: white;" href="dashboard">人生艰难书店</a>
-			</div>
-			<ul class="layui-nav layui-col-xs-offset9" id="nav">
-				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
-				<li class="layui-nav-item"><a href="http://192.168.0.105/bookstore/index.html">商城</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${admin.username}]]</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="new">上架商品</a>
-						</dd>
-						<dd>
-							<a href="commodity">全部商品</a>
-						</dd>
-						<dd>
-							<a href="setting">全局设置</a>
-						</dd>
-						<dd>
-							<a href="exit">退出</a>
-						</dd>
-					</dl></li>
+	
+	<fieldset class="layui-elem-field layui-field-title"
+		style="margin-top: 20px;">
+		<legend>全部设置</legend>
+	</fieldset>
+	<div class="layui-col-xs6">
+		<blockquote class="layui-elem-quote layui-text" style="margin-left: 20px;background-color: white;">
+			网站公告设置
+		</blockquote>
+		<div class="layui-form layui-form-pane" style="margin-left: 20px">
+			<div class="layui-form-item layui-form-text">
+			    <label class="layui-form-label">网站公告内容</label>
+			    <div class="layui-input-block">
+			      <textarea id="notice" placeholder="请输入公告内容" class="layui-textarea"></textarea>
+			    </div>
+		 	</div>
+		 	<div class="layui-form-item">
+		    	<button onclick="setNotice()" class="layui-btn">设置</button>
+		  	</div>
+	 	</div>
+ 	</div>
+ 	<div class="layui-col-xs5" style="margin-left: 40px">
+ 		<blockquote class="layui-elem-quote layui-text" style="background-color: white;">
+			网站首页轮播图设置<span style="color: red;">(暂不支持，仅作演示)</span>
+		</blockquote>
+		<div class="layui-upload">
+		  <div class="layui-upload-list">
+		    <table class="layui-table">
+		      <thead>
+		        <tr><th>文件名</th>
+		        <th>大小</th>
+		        <th>状态</th>
+		        <th>操作</th>
+		      </tr></thead>
+		      <tbody id="demoList"></tbody>
+		    </table>
+		  </div>
+		  <div align="right">
+		  	<button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button> 
+		  	<button type="button" class="layui-btn" id="testListAction">开始上传</button>
+		  </div>
+		</div> 
+ 	</div>
 
-			</ul>
-		</div>
-		<div class="layui-side">
-			<ul class="layui-nav layui-nav-tree layui-inline"
-				style="height: 100%">
-				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">商品管理</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="new">上架商品</a>
-						</dd>
-						<dd>
-							<a href="commodity">全部商品</a>
-						</dd>
-					</dl></li>
-				<li class="layui-nav-item"><a href="statistics">网站统计</a></li>
-				<li class="layui-nav-item"><a href="user">用户管理</a></li>
-				<li class="layui-nav-item"><a href="message">留言管理</a></li>
-				<li class="layui-nav-item layui-this"><a href="setting">全局设置</a></li>
-			</ul>
-		</div>
-		<div class="layui-body" style="background-color: #F2F2F2;">
-			<fieldset class="layui-elem-field layui-field-title"
-				style="margin-top: 20px;">
-				<legend>全部设置</legend>
-			</fieldset>
-			<div class="layui-col-xs6">
-				<blockquote class="layui-elem-quote layui-text" style="margin-left: 20px;background-color: white;">
-					网站公告设置
-				</blockquote>
-				<div class="layui-form layui-form-pane" style="margin-left: 20px">
-					<div class="layui-form-item layui-form-text">
-					    <label class="layui-form-label">网站公告内容</label>
-					    <div class="layui-input-block">
-					      <textarea id="notice" placeholder="请输入公告内容" class="layui-textarea"></textarea>
-					    </div>
-				 	</div>
-				 	<div class="layui-form-item">
-				    	<button onclick="setNotice()" class="layui-btn">设置</button>
-				  	</div>
-			 	</div>
-		 	</div>
-		 	<div class="layui-col-xs5" style="margin-left: 40px">
-		 		<blockquote class="layui-elem-quote layui-text" style="background-color: white;">
-					网站首页轮播图设置<span style="color: red;">(暂不支持，仅作演示)</span>
-				</blockquote>
-				<div class="layui-upload">
-				  <div class="layui-upload-list">
-				    <table class="layui-table">
-				      <thead>
-				        <tr><th>文件名</th>
-				        <th>大小</th>
-				        <th>状态</th>
-				        <th>操作</th>
-				      </tr></thead>
-				      <tbody id="demoList"></tbody>
-				    </table>
-				  </div>
-				  <div align="right">
-				  	<button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button> 
-				  	<button type="button" class="layui-btn" id="testListAction">开始上传</button>
-				  </div>
-				</div> 
-		 	</div>
-		</div>
-		<div class="layui-footer">
-			版权所有：浅梦凉城
-		</div>
-		</div>
-		<script>
-			function setNotice(){
-				var notice = $("#notice").val();
-				$.getJSON('opera/setNotice', {notice: notice}, function(result){
-					if(result.code == 200){
-						layer.msg("设置成功");
-						$("#notice").val("");
-					}
-				})
-			}
-			layui.use(['element', 'upload'], function() {
-				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-				var upload = layui.upload;
-				//多文件列表示例
-				  var demoListView = $('#demoList');
-				  var uploadListIns = upload.render({
-				    elem: '#testList',
-				    url: 'opera/setIndexImage', //改成您自己的上传接口
-				    accept: 'images',
-				    acceptMime: 'image/*',
-				    field: 'images',
-				    number: 4,
-				    multiple: true,
-				    auto: false,
-				    size: 10240,
-				    bindAction: '#testListAction',
-				    choose: function(obj){   
-					      var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-					      //读取本地文件
-					      obj.preview(function(index, file, result){
-					        var tr = $(['<tr id="upload-'+ index +'">',
-					          '<td>'+ file.name +'</td>',
-					          '<td>'+ (file.size/1024).toFixed(1) +'kb</td>',
-					          '<td>等待上传</td>',
-					          '<td>',
-					            '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>',
-					            '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>',
-					          '</td>',
-					        '</tr>'].join(''));
-					        
-					        //单个重传
-					        tr.find('.demo-reload').on('click', function(){
-					          obj.upload(index, file);
-					        });
-					        
-					        //删除
-					        tr.find('.demo-delete').on('click', function(){
-					          delete files[index]; //删除对应的文件
-					          tr.remove();
-					          uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-					        });
-					        
-					        demoListView.append(tr);
-					      });
-					    },
-				    done: function(res, index, upload){
-					      if(res.code == 200){ //上传成功
-					        var tr = demoListView.find('tr#upload-'+ index);
-					        var tds = tr.children();
-					        tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
-					        tds.eq(3).html(''); //清空操作
-					        return delete this.files[index]; //删除文件队列已经上传成功的文件
-					      }
-					      this.error(index, upload);
-					    },
-				    error: function(index, upload){
-				      var tr = demoListView.find('tr#upload-'+ index);
-				      var tds = tr.children();
-				      tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
-				      tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
-				    }
-				  });
-			});
-		</script>
+	<script>
+		function setNotice(){
+			var notice = $("#notice").val();
+			$.getJSON('opera/setNotice', {notice: notice}, function(result){
+				if(result.code == 200){
+					layer.msg("设置成功");
+					$("#notice").val("");
+				}
+			})
+		}
+		layui.use(['element', 'upload'], function() {
+			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+			var upload = layui.upload;
+			//多文件列表示例
+			  var demoListView = $('#demoList');
+			  var uploadListIns = upload.render({
+			    elem: '#testList',
+			    url: 'opera/setIndexImage', //改成您自己的上传接口
+			    accept: 'images',
+			    acceptMime: 'image/*',
+			    field: 'images',
+			    number: 4,
+			    multiple: true,
+			    auto: false,
+			    size: 10240,
+			    bindAction: '#testListAction',
+			    choose: function(obj){   
+				      var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+				      //读取本地文件
+				      obj.preview(function(index, file, result){
+				        var tr = $(['<tr id="upload-'+ index +'">',
+				          '<td>'+ file.name +'</td>',
+				          '<td>'+ (file.size/1024).toFixed(1) +'kb</td>',
+				          '<td>等待上传</td>',
+				          '<td>',
+				            '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>',
+				            '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>',
+				          '</td>',
+				        '</tr>'].join(''));
+				        
+				        //单个重传
+				        tr.find('.demo-reload').on('click', function(){
+				          obj.upload(index, file);
+				        });
+				        
+				        //删除
+				        tr.find('.demo-delete').on('click', function(){
+				          delete files[index]; //删除对应的文件
+				          tr.remove();
+				          uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+				        });
+				        
+				        demoListView.append(tr);
+				      });
+				    },
+			    done: function(res, index, upload){
+				      if(res.code == 200){ //上传成功
+				        var tr = demoListView.find('tr#upload-'+ index);
+				        var tds = tr.children();
+				        tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+				        tds.eq(3).html(''); //清空操作
+				        return delete this.files[index]; //删除文件队列已经上传成功的文件
+				      }
+				      this.error(index, upload);
+				    },
+			    error: function(index, upload){
+			      var tr = demoListView.find('tr#upload-'+ index);
+			      var tds = tr.children();
+			      tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+			      tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+			    }
+			  });
+		});
+	</script>
 </body>
 </html>

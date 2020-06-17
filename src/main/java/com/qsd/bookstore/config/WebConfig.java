@@ -33,15 +33,14 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addRedirectViewController("", "index.html");
+		registry.addRedirectViewController("", "login.html");
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//网站访问量拦截器
 		registry.addInterceptor(viewInterceptor)
-				.addPathPatterns("/**")
-				.excludePathPatterns("/layui/**", "/read/**");
+				.addPathPatterns("/user/login");
 		//管理员登录
 		registry.addInterceptor(adminInterceptor)
 				.addPathPatterns("/admin/**")

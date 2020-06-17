@@ -39,125 +39,76 @@
 </style>
 </head>
 <body class="layui-layout-body">
-	<div class="layui-layout layui-layout-admin">
-		<div class="layui-header layui-row">
-			<div class="layui-logo">
-				<a style="color: white;" href="dashboard">人生艰难书店</a>
-			</div>
-			<ul class="layui-nav layui-col-xs-offset9" id="nav">
-				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
-				<li class="layui-nav-item"><a href="http://192.168.0.105/bookstore/index.html">商城</a></li>
-				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${admin.username}]]</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="new">上架商品</a>
-						</dd>
-						<dd>
-							<a href="commodity">全部商品</a>
-						</dd>
-						<dd>
-							<a href="setting">全局设置</a>
-						</dd>
-						<dd>
-							<a href="exit">退出</a>
-						</dd>
-					</dl></li>
-
-			</ul>
-		</div>
-		<div class="layui-side">
-			<ul class="layui-nav layui-nav-tree layui-inline"
-				style="height: 100%">
-				<li class="layui-nav-item"><a href="dashboard">仪表盘</a></li>
-				<li class="layui-nav-item layui-nav-itemed"><a href="javascript:;">商品管理</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="new">上架商品</a>
-						</dd>
-						<dd class="layui-this">
-							<a href="commodity">全部商品</a>
-						</dd>
-					</dl></li>
-				<li class="layui-nav-item"><a href="statistics">网站统计</a></li>
-				<li class="layui-nav-item"><a href="user">用户管理</a></li>
-				<li class="layui-nav-item"><a href="message">留言管理</a></li>
-				<li class="layui-nav-item"><a href="setting">全局设置</a></li>
-			</ul>
-		</div>
-		<div class="layui-body" style="background-color: #F2F2F2;">
-			<div class="layui-col-xs5">
-				<fieldset class="layui-elem-field layui-field-title">
-					<legend>全部上架商品</legend>
-				</fieldset>
-				<div class="all">
-					<div class='layui-card'
-						style='height: 170px; padding: 10px;'
-						th:each="commodity: ${trueCommodities}">
-						<div class='layui-col-xs5'>
-							<img
-								th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
-						</div>
-						<div class='layui-col-xs5'>
-							<div style='height: 40px; margin-top: 20px;'>
-								<a
-									th:href="@{'../../commodity/info/' + ${commodity.id}}">[[${commodity.name}]]</a>
-							</div>
-							<div style='color: red;height: 40px'>
-								<b>￥[[${commodity.price}]]</b>
-							</div>
-							<div style='height: 30px'>
-								销售量：[[${commodity.number}]]
-							</div>
-							<div>
-								浏览量：[[${commodity.view}]]
-							</div>
-						</div>
-						<div class='layui-col-xs2'>
-							<button type="button" style="margin-top: 40px" class="layui-btn layui-btn-warm" th:onclick="'javascript:info(' + ${commodity.id} + ')'">详情</button><br>
-							<button type="button" style="margin-top: 20px" class="layui-btn layui-btn-danger" th:onclick="'javascript:enableSell(' + ${commodity.id} + ', false)'">下架</button>
-						</div>
+	
+	<div class="layui-col-xs5">
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend>全部上架商品</legend>
+		</fieldset>
+		<div class="all">
+			<div class='layui-card'
+				style='height: 170px; padding: 10px;'
+				th:each="commodity: ${trueCommodities}">
+				<div class='layui-col-xs5'>
+					<img
+						th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
+				</div>
+				<div class='layui-col-xs5'>
+					<div style='height: 40px; margin-top: 20px;'>
+						<a
+							th:href="@{'../../commodity/info/' + ${commodity.id}}">[[${commodity.name}]]</a>
+					</div>
+					<div style='color: red;height: 40px'>
+						<b>￥[[${commodity.price}]]</b>
+					</div>
+					<div style='height: 30px'>
+						销售量：[[${commodity.number}]]
+					</div>
+					<div>
+						浏览量：[[${commodity.view}]]
 					</div>
 				</div>
-			</div>
-			<div class="layui-col-xs5" style="margin-left: 80px">
-				<fieldset class="layui-elem-field layui-field-title">
-					<legend>全部下架商品</legend>
-				</fieldset>
-				<div class="all">
-					<div class='layui-card'
-						style='height: 170px; padding: 10px;'
-						th:each="commodity: ${falseCommodities}">
-						<div class='layui-col-xs5'>
-							<img
-								th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
-						</div>
-						<div class='layui-col-xs4'>
-							<div style='height: 40px; margin-top: 20px;'>
-								<a
-									th:href="@{'../../commodity/info/' + ${commodity.id}}">[[${commodity.name}]]</a>
-							</div>
-							<div style='color: red;height: 40px'>
-								<b>￥[[${commodity.price}]]</b>
-							</div>
-							<div style='height: 30px'>
-								销售量：[[${commodity.number}]]
-							</div>
-							<div>
-								浏览量：[[${commodity.view}]]
-							</div>
-						</div>
-						<div class='layui-col-xs2'>
-							<button type="button" style="margin-top: 40px" class="layui-btn layui-btn-warm" th:onclick="'javascript:info(' + ${commodity.id} + ')'">详情</button><br>
-							<button type="button" style="margin-top: 20px" class="layui-btn" th:onclick="'javascript:enableSell(' + ${commodity.id} + ', true)'">重新上架</button>
-						</div>
-					</div>
+				<div class='layui-col-xs2'>
+					<button type="button" style="margin-top: 40px" class="layui-btn layui-btn-warm" th:onclick="'javascript:info(' + ${commodity.id} + ')'">详情</button><br>
+					<button type="button" style="margin-top: 20px" class="layui-btn layui-btn-danger" th:onclick="'javascript:enableSell(' + ${commodity.id} + ', false)'">下架</button>
 				</div>
 			</div>
-		</div>
-		<div class="layui-footer">
-			版权所有：浅梦凉城
 		</div>
 	</div>
+	<div class="layui-col-xs5" style="margin-left: 80px">
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend>全部下架商品</legend>
+		</fieldset>
+		<div class="all">
+			<div class='layui-card'
+				style='height: 170px; padding: 10px;'
+				th:each="commodity: ${falseCommodities}">
+				<div class='layui-col-xs5'>
+					<img
+						th:src="@{'http://192.168.0.105/image/bookstore/commodity/' + ${commodity.imageName} + '.jpg'}">
+				</div>
+				<div class='layui-col-xs4'>
+					<div style='height: 40px; margin-top: 20px;'>
+						<a
+							th:href="@{'../../commodity/info/' + ${commodity.id}}">[[${commodity.name}]]</a>
+					</div>
+					<div style='color: red;height: 40px'>
+						<b>￥[[${commodity.price}]]</b>
+					</div>
+					<div style='height: 30px'>
+						销售量：[[${commodity.number}]]
+					</div>
+					<div>
+						浏览量：[[${commodity.view}]]
+					</div>
+				</div>
+				<div class='layui-col-xs2'>
+					<button type="button" style="margin-top: 40px" class="layui-btn layui-btn-warm" th:onclick="'javascript:info(' + ${commodity.id} + ')'">详情</button><br>
+					<button type="button" style="margin-top: 20px" class="layui-btn" th:onclick="'javascript:enableSell(' + ${commodity.id} + ', true)'">重新上架</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script>
 		function enableSell(commodityId, status){
 			$.getJSON('opera/enableSell', {commodityId: commodityId, status: status}, function(result){

@@ -53,9 +53,9 @@ public class AdminOperaController {
 		if (result) {
 			HttpSession session = request.getSession();
 			session.setAttribute("admin", admin);
-			modelAndView.setViewName("redirect:/admin/dashboard");
+			modelAndView.setViewName("redirect:/admin/index");
 		}else {
-			modelAndView.setViewName("redirect:/index.html");
+			modelAndView.setViewName("redirect:/login.html");
 		}
 		return modelAndView;
 	}

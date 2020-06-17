@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>后台管理</title>
+<link rel="stylesheet" href="http://192.168.0.105/bookstore/layui/css/layui.css">
+<script src="http://192.168.0.105/bookstore/layui/layui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="http://192.168.0.105/bookstore/layui/jquery-3.5.1.min.js" type="text/javascript"
+	charset="utf-8"></script>
+<style type="text/css">
+.all{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+.a::-webkit-scrollbar{
+    display: none;
+}
+.all::-webkit-scrollbar{
+    display: none;
+}
+.side {
+	margin-top: 10px;
+}
+
+.item-body {
+	text-align: center;
+	height: 50px;
+	font-size: 30px;
+}
+</style>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header layui-row">
+			<div class="layui-logo">
+				<a style="color: white;" href="dashboard">人生艰难书店</a>
+			</div>
+			<ul class="layui-nav layui-col-xs-offset9" id="nav">
+				<li class="layui-nav-item"><a href="javascript:;">首页</a></li>
+				<li class="layui-nav-item"><a href="http://192.168.0.105/bookstore/index.html">商城</a></li>
+				<li class="layui-nav-item"><a href="javascript:;">欢迎您，[[${admin.username}]]</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="javascript:;">上架商品</a>
+						</dd>
+						<dd>
+							<a href="javascript:;">全部商品</a>
+						</dd>
+						<dd>
+							<a href="javascript:;">全局设置</a>
+						</dd>
+						<dd>
+							<a href="javascript:;">退出</a>
+						</dd>
+					</dl></li>
+
+			</ul>
+		</div>
+		<div class="layui-side">
+			<ul class="layui-nav layui-nav-tree layui-inline"
+				style="height: 100%" lay-filter="side">
+				<li class="layui-nav-item layui-this"><a layui-id="1" href="javascript:;">仪表盘</a></li>
+				<li class="layui-nav-item"><a href="javascript:;">商品管理</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a layui-id="2" href="javascript:;">上架商品</a>
+						</dd>
+						<dd>
+							<a layui-id="3" href="javascript:;">全部商品</a>
+						</dd>
+					</dl></li>
+				<li class="layui-nav-item"><a layui-id="4" href="javascript:;">网站统计</a></li>
+				<li class="layui-nav-item"><a layui-id="5" href="javascript:;">用户管理</a></li>
+				<li class="layui-nav-item"><a layui-id="6" href="javascript:;">留言管理</a></li>
+				<li class="layui-nav-item"><a layui-id="7" href="javascript:;">全局设置</a></li>
+			</ul>
+		</div>
+		<div class="layui-body a" style="background-color: #F2F2F2;">
+			<div class="all">
+				<iframe id="body" src="dashboard" height="100%" width="100%"></iframe>
+			</div>
+		</div>
+		<div class="layui-footer">版权所有：浅梦凉城</div>
+	</div>
+	<script>
+		layui.use(['element', 'layer'], function() {
+			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+			var layer = layui.layer;
+			//监听导航点击
+			element.on('nav(side)', function(elem){
+				var id = $(this).attr('layui-id');
+				if(id == '1'){
+					$("#body").attr('src', 'dashboard')
+				}else if(id == '2'){
+					$("#body").attr('src', 'new')
+				}else if(id == '3'){
+					$("#body").attr('src', 'commodity')
+				}else if(id == '4'){
+					$("#body").attr('src', 'statistics')
+				}else if(id == '5'){
+					$("#body").attr('src', 'user')
+				}else if(id == '6'){
+					$("#body").attr('src', 'message')
+				}else if(id == '7'){
+					$("#body").attr('src', 'setting')
+				}
+				
+			});
+		});
+	</script>
+</body>
+</html>
