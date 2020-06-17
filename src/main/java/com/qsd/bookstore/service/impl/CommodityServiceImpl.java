@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.qsd.bookstore.dao.CommodityDao;
 import com.qsd.bookstore.po.Commodity;
+import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.util.JdbcUtil;
 import com.qsd.bookstore.vo.PageVo;
@@ -19,6 +20,8 @@ import com.qsd.bookstore.vo.PageVo;
 @Service
 public class CommodityServiceImpl implements CommodityService {
 	
+	@Autowired
+	private Global global;
 	@Autowired
 	private CommodityDao commodityDao;
 
@@ -42,6 +45,8 @@ public class CommodityServiceImpl implements CommodityService {
 		Commodity commodity = commodityDao.queryCommodityById(id);
 		//2. 浏览量加一
 		commodityDao.addView(id);
+		// 店铺浏览量加一
+		global.addView();
 		return commodity;
 	}
 

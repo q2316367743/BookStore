@@ -34,7 +34,6 @@ public class UserInterceptor implements HandlerInterceptor {
 			}
 			new BaseVo(300, "token information error");
 		}
-		global.addView();
 		result = new BaseVo(404, "no token");
 		response.setContentType("utf-8");
 		response.setCharacterEncoding("utf-8");

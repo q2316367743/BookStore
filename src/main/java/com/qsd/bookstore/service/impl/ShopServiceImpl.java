@@ -101,6 +101,8 @@ public class ShopServiceImpl implements ShopService {
 						commodityDao.addNumber(commodityId);
 						//书籍销售量加一
 						global.addCommoditySellNum();
+						//营业额增加
+						global.addTurnover(price.intValue());
 						return 1;
 					}else {
 						return 2;
