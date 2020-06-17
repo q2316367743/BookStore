@@ -1,29 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<style>
-			.osc_pro_color {
-				color: #393222 !important;
-			}
-			
-			.osc_panel_color {
-				background-color: #ebdfc1 !important;
-			}
-			
-			.osc_background_color {
-				background-color: #fffae5 !important;
-			}
-			
-			.osc_border_color {
-				border-color: #d8ca9f !important;
-			}
-			
-			.osc_desc_color {
-				color: #393222 !important;
-			}
-			
-			.osc_link_color * {
-				color: #a28b40 !important;
-			}
 			.side {
 				margin-top: 10px;
 			}
@@ -40,6 +17,31 @@
 			.a::-webkit-scrollbar{
 			    display: none;
 			}
+			.layuiadmin-card-list{
+				padding: 15px;
+			}
+			.layuiadmin-card-list p.layuiadmin-big-font {
+			    font-size: 36px;
+			    color: #666;
+			    line-height: 36px;
+			    padding: 5px 0 10px;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    word-break: break-all;
+			    white-space: nowrap;
+			}
+			.layuiadmin-badge{
+			    position: absolute;
+			    right: 15px;
+			    display: inline-block;
+			    padding: 0 6px;
+			    font-size: 12px;
+			    text-align: center;
+			    border-radius: 2px;
+			    height: 18px;
+    			line-height: 18px;
+    			top: 25%;
+			}
 		</style>
 		<link rel="stylesheet" href="http://192.168.0.105/bookstore/layui/css/layui.css">
 		<script src="http://192.168.0.105/bookstore/layui/layui.js"></script>
@@ -48,121 +50,81 @@
 			charset="utf-8"></script>
 	</head>
 	<body class="a">
-		<div>
-			<div class="layui-col-xs7">
-				<fieldset class="layui-elem-field layui-field-title"
-					style="margin-top: 20px;">
-					<legend>网站数据</legend>
-				</fieldset>
-				<div class="layui-row layui-col-space15">
-					<div class="layui-col-md4">
-						<div class="layui-card">
-							<div class="layui-card-body item-body" th:text="${global.view}"></div>
-							<div class="layui-card-header" style="text-align: center;">网站访问量</div>
+		<fieldset class="layui-elem-field layui-field-title"
+			style="margin-top: 10px;">
+			<legend>网站数据</legend>
+		</fieldset>
+		<div style="padding: 20px; background-color: #F2F2F2;">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">
+				           	访问量
+				        	<span class="layui-bg-blue layuiadmin-badge">日</span>
 						</div>
-					</div>
-					<div class="layui-col-md4">
-						<div class="layui-card">
-							<div class="layui-card-body item-body"
-								th:text="${global.online}"></div>
-							<div class="layui-card-header" style="text-align: center;">当前在线人数</div>
-						</div>
-					</div>
-					<div class="layui-col-md4">
-						<div class="layui-card">
-							<div class="layui-card-body item-body"
-								th:text="${global.userNum}"></div>
-							<div class="layui-card-header" style="text-align: center;">网站注册人数</div>
-						</div>
-					</div>
-					<div class="layui-col-md4">
-						<div class="layui-card">
-							<div class="layui-card-body item-body"
-								th:text="${global.commodityNum}"></div>
-							<div class="layui-card-header" style="text-align: center;">上架图书数量</div>
-						</div>
-					</div>
-					<div class="layui-col-md4">
-						<div class="layui-card">
-							<div class="layui-card-body item-body"
-								th:text="${global.commoditySellNum}"></div>
-							<div class="layui-card-header" style="text-align: center;">书籍卖出量</div>
-						</div>
-					</div>
-					<div class="layui-col-md4">
-						<div class="layui-card">
-							<div class="layui-card-body item-body"
-								th:text="${global.turnover}"></div>
-							<div class="layui-card-header" style="text-align: center;">营业额</div>
+						<div class="layui-card-body layuiadmin-card-list">
+							<p class="layuiadmin-big-font" th:text="${global.view}"></p>
+							<p>访问商品详情</p>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="layui-col-xs4" style="margin-left: 50px">
-				<fieldset class="layui-elem-field layui-field-title"
-					style="margin-top: 20px;">
-					<legend>关于本网站</legend>
-				</fieldset>
-				<div class="layui-card" style="height: 235px;">
-					<div style="font-size: 16px; margin-left: 20%; padding-top: 20px">
-						<div class="layui-col-xs10" style="margin-top: 15px">
-							<span class="layui-col-xs5">网站名称：</span><span
-								class="layui-col-xs7">人生艰难书店</span>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">
+				           	在线人数
+				        	<span class="layui-bg-blue layuiadmin-badge">日</span>
 						</div>
-						<div class="layui-col-xs10" style="margin-top: 15px">
-							<span class="layui-col-xs5">网站项目名：</span><span
-								class="layui-col-xs7">bookstore</span>
-						</div>
-						<div class="layui-col-xs10" style="margin-top: 15px">
-							<span class="layui-col-xs5">网站开发：</span><span
-								class="layui-col-xs7">浅梦凉城</span>
-						</div>
-						<div class="layui-col-xs10" style="margin-top: 15px">
-							<span class="layui-col-xs5">网站版本：</span><span
-								class="layui-col-xs7">2.4.1</span>
-						</div>
-						<div class="layui-col-xs10" style="margin-top: 15px">
-							<span class="layui-col-xs5">网站源码：</span><span
-								class="layui-col-xs7"><a
-								href="https://gitee.com/qiaoshengda/BookStore">码云</a></span>
+						<div class="layui-card-body layuiadmin-card-list">
+							<p class="layuiadmin-big-font" th:text="${global.online}"></p>
+							<p>登录人数</p>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="layui-col-xs12">
-			
-				<div class="layui-col-xs6">
-					<fieldset class="layui-elem-field layui-field-title"
-						style="margin-top: 20px;">
-						<legend>项目状况</legend>
-					</fieldset>
-					<script src='https://gitee.com/qiaoshengda/BookStore/widget_preview' async defer></script>
-					<div id="osc-gitee-widget-tag"></div>
-					
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">
+				           	当前网站注册人数
+				        	<span class="layui-bg-blue layuiadmin-badge">日</span>
+						</div>
+						<div class="layui-card-body layuiadmin-card-list">
+							<p class="layuiadmin-big-font" th:text="${global.userNum}"></p>
+							<p>注册总人数</p>
+						</div>
+					</div>
 				</div>
-				<div class="layui-col-xs6">
-					<div style="margin-left: 50px;">
-						<fieldset class="layui-elem-field layui-field-title"
-							style="margin-top: 20px;">
-							<legend>网站所使用的技术栈</legend>
-						</fieldset>
-						<div style="height: 235px; font-size: 16px; margin-left: 20%;">
-							<div class="layui-col-xs10" style="margin-top: 15px;">
-								<span class="layui-col-xs5">前端框架：</span><span
-									class="layui-col-xs7"><a href="https://www.layui.com/">layui</a></span>
-							</div>
-							<div class="layui-col-xs10" style="margin-top: 15px;">
-								<span class="layui-col-xs5">后端框架：</span><span
-									class="layui-col-xs7"><a href="https://spring.io/projects/spring-boot">SpringBoot</a></span>
-							</div>
-							<div class="layui-col-xs10" style="margin-top: 15px;">
-								<span class="layui-col-xs5">ORM层框架：</span><span
-									class="layui-col-xs7"><a href="https://mybatis.org/mybatis-3/">MyBatis</a></span>
-							</div>
-							<div class="layui-col-xs10" style="margin-top: 15px;">
-									<span class="layui-col-xs5">PDF阅读插件：</span><span
-										class="layui-col-xs7"><a href="http://mozilla.github.io/pdf.js/">PDF.js</a></span>
-							</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">
+				           	上架图书数量
+				        	<span class="layui-bg-blue layuiadmin-badge">日</span>
+						</div>
+						<div class="layui-card-body layuiadmin-card-list">
+							<p class="layuiadmin-big-font" th:text="${global.commodityNum}"></p>
+							<p>上架图书数量</p>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">
+				           	书籍卖出量
+				        	<span class="layui-bg-blue layuiadmin-badge">日</span>
+						</div>
+						<div class="layui-card-body layuiadmin-card-list">
+							<p class="layuiadmin-big-font" th:text="${global.commoditySellNum}"></p>
+							<p>卖出书籍数量</p>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">
+				           	营业额
+				        	<span class="layui-bg-blue layuiadmin-badge">日</span>
+						</div>
+						<div class="layui-card-body layuiadmin-card-list">
+							<p class="layuiadmin-big-font" th:text="${global.turnover}"></p>
+							<p>每日</p>
 						</div>
 					</div>
 				</div>

@@ -63,19 +63,22 @@
 					全部图书 > {{category}}
 				</div>
 				<div class="layui-col-xs11" style="margin: 5%;margin-top: 30px;padding: 10px;">
-
-					<div class='layui-card layui-col-xs4' style='margin-left: 10px;height: 170px;padding: 10px;background-color: #F2F2F2;' v-for="commodity in commoditys">
-						<div class='layui-col-xs8'>
-							<img v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
+					<div class="layui-row layui-col-space15">
+						<div class="layui-col-xs4" v-for="commodity in commoditys">
+						<div class='layui-card' style='height: 170px;padding: 10px;background-color: #F2F2F2;'>
+							<div class='layui-col-xs8'>
+								<img v-bind:src="'http://192.168.0.105/image/bookstore/commodity/' + commodity.imageName + '.jpg'">
+							</div>
+							<div class='layui-col-xs4'>
+								<div style='height: 40px;margin-top: 20px;'>
+									<a v-bind:href="'commodity.html?commodityId=' + commodity.id">{{commodity.name}}</a>
+								</div>
+								<div style='height: 50px;color: red;'>
+									<b>￥{{commodity.price}}</b>
+								</div>
+								<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity.html?commodityId=' + commodity.id">详情</button>
+							</div>
 						</div>
-						<div class='layui-col-xs4'>
-							<div style='height: 40px;margin-top: 20px;'>
-								<a v-bind:href="'commodity.html?commodityId=' + commodity.id">{{commodity.name}}</a>
-							</div>
-							<div style='height: 50px;color: red;'>
-								<b>￥{{commodity.price}}</b>
-							</div>
-							<button type="button" class="layui-btn layui-bg-red" v-on:click="window.location.href = 'commodity.html?commodityId=' + commodity.id">详情</button>
 						</div>
 					</div>
 					<div align="center" v-if="commoditys.length == 0" style="font-size: 30px">

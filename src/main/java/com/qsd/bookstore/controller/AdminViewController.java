@@ -96,4 +96,9 @@ public class AdminViewController {
 		return "admin/user";
 	}
 	
+	@GetMapping("about")
+	public String about() {
+		return "admin/about";
+	}
+	
 }
