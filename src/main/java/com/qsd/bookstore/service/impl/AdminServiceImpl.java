@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
 	/**
 	 * 查询全部商品信息
 	 * */
-	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY)
+	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY_LIST)
 	private List<Commodity> getAllCommodity(){
 		return commodityDao.queryAllCommodity();
 	}

@@ -32,7 +32,7 @@ public class CommodityServiceImpl implements CommodityService {
 	/**
 	 * 根据销售量查询商品
 	 * */
-	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY + "_num")
+	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY_NUM)
 	private List<Commodity> queryAllByNum(){
 		return commodityDao.queryAllByNum();
 	}
@@ -50,7 +50,7 @@ public class CommodityServiceImpl implements CommodityService {
 	/**
 	 * 根据浏览量查询商品
 	 * */
-	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY + "_view")
+	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY_VIEW)
 	private List<Commodity> queryAllByView(){
 		return commodityDao.queryAllByView();
 	}
@@ -69,7 +69,7 @@ public class CommodityServiceImpl implements CommodityService {
 	 * 查询商品信息根据ID
 	 * */
 	@Override
-	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY + "_#id")
+	@Cacheable(value = Cache.NAME, key = Cache.COMMODITY_INFO)
 	public Commodity queryCommodityById(Integer id) {
 		//1. 查询商品信息
 		Commodity commodity = commodityDao.queryCommodityById(id);
@@ -85,9 +85,9 @@ public class CommodityServiceImpl implements CommodityService {
 	 * */
 	@Override
 	@Caching(evict = {
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY),
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY + "_num"),
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY + "_view")
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_LIST),
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_NUM),
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_VIEW)
 	})
 	public int newCommodity(Commodity commodity) {
 		return commodityDao.newCommodity(commodity);
@@ -98,10 +98,10 @@ public class CommodityServiceImpl implements CommodityService {
 	 * */
 	@Override
 	@Caching(evict = {
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY),
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY + "_num"),
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY + "_view"),
-			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY + "_#id")
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_LIST),
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_NUM),
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_VIEW),
+			@CacheEvict(value = Cache.NAME, key = Cache.COMMODITY_INFO)
 	})
 	public Integer setSellStatus(int id, boolean status) {
 		Integer exist = commodityDao.commodityExist(id);
