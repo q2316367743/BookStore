@@ -8,49 +8,24 @@ import com.qsd.bookstore.po.Safe;
  * @Data 2020年6月6日
  */
 
-public class SafeVo {
+public class SafeVo extends BaseVo {
 
-	private Integer code;
-	private String message;
 	private SafeQuestion question;
 	
 	public SafeVo() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public SafeVo(Integer code, String message) {
-		super();
-		this.code = code;
-		this.message = message;
+		super(code, message);
 	}
 
 	public SafeVo(Integer code, String message, Safe safe) {
-		super();
-		this.code = code;
-		this.message = message;
+		super(code, message);
 		this.question = new SafeQuestion();
 		this.question.setQuestion1(safe.getQuestion1());
 		this.question.setQuestion2(safe.getQuestion2());
 		this.question.setQuestion3(safe.getQuestion3());
 	}
-
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
 
 	public SafeQuestion getQuestion() {
 		return question;
@@ -59,7 +34,6 @@ public class SafeVo {
 	public void setQuestion(SafeQuestion question) {
 		this.question = question;
 	}
-
 
 	class SafeQuestion{
 		private String question1;

@@ -1,13 +1,16 @@
 package com.qsd.bookstore.po;
 
+import java.io.Serializable;
+
 /**
- * @Description 
+ * @Description 商品详情
  * @Author Esion
  * @Data 2020年6月2日
  */
 
-public class Commodity {
+public class Commodity implements Serializable {
 
+	private static final long serialVersionUID = -6512576262267258754L;
 	private Integer id;
     private String name;
     private String imageName;

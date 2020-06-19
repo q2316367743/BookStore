@@ -20,6 +20,12 @@
 服务端框架：SpringBoot
 持久层框架：mybatis
 
+## 软件获取
+
+github：<https://github.com/q2316367743/BookStore>
+
+码云：<https://gitee.com/qiaoshengda/BookStore>
+
 ## 软件安装
 
 ### 后台服务器部署
@@ -97,6 +103,8 @@ nginx说明：
 2.4.2 修复BUG
 
 2.4.3 修复BUG
+
+2.5.0 加入缓存
 
 ## 计划加入
 

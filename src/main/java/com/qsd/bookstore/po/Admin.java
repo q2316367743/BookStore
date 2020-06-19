@@ -1,15 +1,18 @@
 package com.qsd.bookstore.po;
 
+import java.io.Serializable;
+
 import com.qsd.bookstore.dto.UserByLogin;
 
 /**
- * @Description 
+ * @Description 管理员账户
  * @Author Esion
  * @Data 2020年6月6日
  */
 
-public class Admin {
-	
+public class Admin implements Serializable {
+
+	private static final long serialVersionUID = 7515704976911030823L;
 	private String username;
 	private String password;
 	public Admin() {

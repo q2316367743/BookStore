@@ -1,13 +1,16 @@
 package com.qsd.bookstore.po;
 
+import java.io.Serializable;
+
 /**
  * @Description 
  * @Author Esion
  * @Data 2020年6月1日
  */
 
-public class User {
+public class User implements Serializable {
 	
+	private static final long serialVersionUID = 5983933459162029811L;
 	private String username;
 	private String password;
 	private String nickname;

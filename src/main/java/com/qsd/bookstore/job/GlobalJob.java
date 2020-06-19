@@ -1,9 +1,5 @@
 package com.qsd.bookstore.job;
 
-import java.time.LocalDate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,7 +15,6 @@ import com.qsd.bookstore.po.Global;
 @Component
 public class GlobalJob {
 	
-	private Logger logger = LoggerFactory.getLogger(GlobalJob.class);
 	@Autowired
 	private Global global;
 	@Autowired
@@ -27,9 +22,10 @@ public class GlobalJob {
 	
 	@Scheduled(cron = "59 59 23 * * *")
 	public void saveGlobal() {
+		//网站数据实例化
 		globalDao.saveGlobal(global);
-		LocalDate now = LocalDate.now();
-		logger.info("时间：{}，网站数据实例化", now.toString());
+		//数据更新
+		global.update();
 	}
 	
 }

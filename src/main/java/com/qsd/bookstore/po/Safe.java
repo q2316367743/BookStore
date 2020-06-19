@@ -1,13 +1,16 @@
 package com.qsd.bookstore.po;
 
+import java.io.Serializable;
+
 /**
- * @Description 
+ * @Description 密保信息表
  * @Author Esion
  * @Data 2020年6月6日
  */
 
-public class Safe {
+public class Safe implements Serializable {
 	
+	private static final long serialVersionUID = -8608900020639304593L;
 	private String token;
 	private String question1;
 	private String answer1;

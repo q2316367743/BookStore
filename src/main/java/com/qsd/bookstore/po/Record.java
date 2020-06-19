@@ -1,5 +1,6 @@
 package com.qsd.bookstore.po;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -8,8 +9,9 @@ import java.sql.Timestamp;
  * @Data 2020年6月3日
  */
 
-public class Record {
+public class Record implements Serializable {
 	
+	private static final long serialVersionUID = -6430598767349314584L;
 	private String RecordName;
 	private Integer id;
 	private Integer commodityId;

@@ -30,19 +30,27 @@ spring:
         stat:
           log-slow-sql: true
           slow-sql-millis: 2000
+  # thymeleaf模板引擎配置
   thymeleaf:
     cache: false
     encoding: UTF-8
+  # 上传文件设置
   servlet:
     multipart:
       max-file-size: 20MB
       max-request-size: 100MB
+  # 缓存配置
+  cache:
+    type: ehcache
+    ehcache:
+      config: ehcache.xml
       
 # MyBatis配置
 mybatis:
   type-aliases-package: com.qsd.bookstore.po
   mapper-locations: classpath:mapper/*.xml
   
+# 日志配置
 logging:
   level:
     com:

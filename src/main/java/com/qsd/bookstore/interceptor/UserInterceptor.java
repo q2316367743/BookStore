@@ -3,11 +3,9 @@ package com.qsd.bookstore.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.util.JwtUtil;
 import com.qsd.bookstore.vo.BaseVo;
 
@@ -19,9 +17,6 @@ import com.qsd.bookstore.vo.BaseVo;
 @Component
 public class UserInterceptor implements HandlerInterceptor {
 	
-	@Autowired
-	private Global global;
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

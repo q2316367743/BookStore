@@ -14,6 +14,7 @@ import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.Category;
 import com.qsd.bookstore.po.User;
 import com.qsd.bookstore.service.AdminService;
+import com.qsd.bookstore.service.CategoryService;
 
 /**
  * @Description 管理员页面映射
@@ -26,6 +27,8 @@ public class AdminViewController {
 
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	@GetMapping("index")
 	public String index(HttpServletRequest request, Model model) {
@@ -55,7 +58,7 @@ public class AdminViewController {
 	public String operation(HttpServletRequest request, Model model) {
 		Admin admin = (Admin) request.getSession().getAttribute("admin");
 		model.addAttribute("admin", admin);
-		List<Category> categories = adminService.getAllCategories();
+		List<Category> categories = categoryService.getAllCategories();
 		model.addAttribute("categories", categories);
 		return "admin/new";
 	}

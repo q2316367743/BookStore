@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.qsd</groupId>
 	<artifactId>bookstore</artifactId>
-	<version>2.4.3</version>
+	<version>2.5.0</version>
 	<name>bookstore</name>
 	<description>SpringBoot网上商城</description>
 
@@ -69,11 +69,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+		<!-- token -->
 		<dependency>
 		    <groupId>com.auth0</groupId>
 		    <artifactId>java-jwt</artifactId>
 		    <version>3.4.0</version>
+		</dependency>
+		<!-- Spring Boot 缓存支持启动器 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<!-- Ehcache 坐标 -->
+		<dependency>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache</artifactId>
 		</dependency>
 	</dependencies>
 

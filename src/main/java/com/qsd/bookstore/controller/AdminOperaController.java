@@ -17,6 +17,7 @@ import com.qsd.bookstore.po.Category;
 import com.qsd.bookstore.po.Commodity;
 import com.qsd.bookstore.po.Global;
 import com.qsd.bookstore.service.AdminService;
+import com.qsd.bookstore.service.CategoryService;
 import com.qsd.bookstore.service.CommodityService;
 import com.qsd.bookstore.service.ResourceService;
 import com.qsd.bookstore.vo.BaseVo;
@@ -40,6 +41,8 @@ public class AdminOperaController {
 	private CommodityService commodityService;
 	@Autowired
 	private ResourceService resourceService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping("login")
 	public ModelAndView login(Admin admin, HttpServletRequest request) {
@@ -82,7 +85,7 @@ public class AdminOperaController {
 	
 	@GetMapping("enableSell")
 	public BaseVo enableSell(int commodityId, boolean status) {
-		Integer result = adminService.setSellStatus(commodityId, status);
+		Integer result = commodityService.setSellStatus(commodityId, status);
 		if (result == -1) {
 			return new BaseVo(404, "商品不存在");
 		}else if (result == 0) {
@@ -126,13 +129,13 @@ public class AdminOperaController {
 	
 	@GetMapping("newCategory")
 	public BaseVo newCategory(Category category) {
-		adminService.addCategory(category);
+		categoryService.addCategory(category);
 		return new BaseVo(200, "success");
 	}
 	
 	@GetMapping("deleteCategory")
 	public BaseVo deleteCategory(String name) {
-		adminService.deleteCategory(name);
+		categoryService.deleteCategory(name);
 		return new BaseVo(200, "success");
 	}
 

@@ -27,5 +27,9 @@ public interface CommodityService {
 	 * 上架商品
 	 * */
 	int newCommodity(Commodity commodity);
+	/**
+	 * 设置商品是否上架状态
+	 * */
+	Integer setSellStatus(int id, boolean status);
 	
 }

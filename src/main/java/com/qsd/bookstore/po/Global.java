@@ -1,5 +1,7 @@
 package com.qsd.bookstore.po;
 
+import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,9 @@ import com.qsd.bookstore.dao.UserDao;
  */
 @Component
 @Scope("singleton")
-public class Global {
+public class Global implements Serializable {
 	
+	private static final long serialVersionUID = 4863051356636596454L;
 	@Autowired
 	private UserDao userDao;
 	@Autowired
@@ -25,7 +28,7 @@ public class Global {
 	
 	private Integer id;
 	//网站的公告栏
-	private String notice = "尊敬的用户，您好<br />&nbsp;&nbsp;&nbsp;&nbsp;从6月15日起，本书店盛大开业，欢迎您的光临。";
+	private String notice = "尊敬的用户，您好\n    从6月15日起，本书店盛大开业，欢迎您的光临。";
 	//网站访问量
 	private int view = 0;
 	//网站在线人数
@@ -40,8 +43,12 @@ public class Global {
 	private int commodityNum;
 	@PostConstruct
 	public void update() {
-		this.commodityNum = commodityDao.getCommodityNum();
+		this.view = 0;
+		this.online = 0;
+		this.commoditySellNum = 0;
+		this.turnover = 0;
 		this.userNum = userDao.getUserNum();
+		this.commodityNum = commodityDao.getCommodityNum();
 	}
 	public Integer getId() {
 		return id;
