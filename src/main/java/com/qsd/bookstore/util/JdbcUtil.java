@@ -12,7 +12,13 @@ import com.qsd.bookstore.vo.PageVo;
 
 public class JdbcUtil {
 
-	//分页插件实现
+	/**
+	 * 分页插件实现
+	 * @param page 页数，从1开始
+	 * @param limit 每页数量
+	 * @param data 全部信息
+	 * @return 分页后的数据
+	 * */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static PageVo PageUtil(int page, int limit, List data){
 		//结果集的容量

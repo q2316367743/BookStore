@@ -38,14 +38,19 @@ public interface UserService {
 	/**
 	 * 修改密码
 	 * @param user 用户名，旧密码，新密码
+	 * @return 修改用户的数量
 	 * */
 	Integer alterpwd(UserByPwd user);
 	/**
 	 * 根据token获取用户信息
+	 * @param token token
+	 * @return 用户信息
 	 * */
 	User info(String token);
 	/**
 	 * 根据token信息获取用户余额
+	 * @param token 用户信息
+	 * @return 返回用户余额
 	 * */
 	Double balance(String token);
 	

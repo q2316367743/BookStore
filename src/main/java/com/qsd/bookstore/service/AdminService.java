@@ -8,7 +8,7 @@ import com.qsd.bookstore.po.Admin;
 import com.qsd.bookstore.po.User;
 
 /**
- * @Description 
+ * @Description 管理员业务
  * @Author Esion
  * @Data 2020年6月7日
  */
