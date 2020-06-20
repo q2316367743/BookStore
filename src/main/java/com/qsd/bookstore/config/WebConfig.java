@@ -16,7 +16,7 @@ import com.qsd.bookstore.interceptor.UserInterceptor;
 
 
 /**
- * @Description 
+ * @Description WebMVC配置类
  * @Author Esion
  * @Data 2020年6月1日
  */
@@ -28,11 +28,17 @@ public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	private UserInterceptor userInterceptor;
 	
+	/**
+	 * 增加视图控制器
+	 * */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController("", "login.html");
 	}
 
+	/**
+	 * 增加拦截器
+	 * */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//管理员登录
@@ -52,6 +58,9 @@ public class WebConfig implements WebMvcConfigurer {
 				.excludePathPatterns(dis);
 	}
 
+	/**
+	 * 增加跨域访问功能
+	 * */
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")

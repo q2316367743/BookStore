@@ -11,20 +11,26 @@ import java.io.Serializable;
 public class Comment implements Serializable {
 
 	private static final long serialVersionUID = 4666827094944775297L;
-	//评论表的表名
+	/**
+	 * 评论表的表名
+	 * */
 	private String commentName;
-	//ID
+	/**
+	 * ID
+	 * */
 	private Integer id;
-	//评论的用户名
+	/**
+	 * 评论的用户名
+	 * */
 	private String username;
-	//评论的内容
+	/**
+	 * 评论的内容
+	 * */
 	private String content;
 	public Comment() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Comment(String username, String content) {
-		super();
+	public Comment(String commentName, String username, String content) {
+		this.commentName = commentName;
 		this.username = username;
 		this.content = content;
 	}

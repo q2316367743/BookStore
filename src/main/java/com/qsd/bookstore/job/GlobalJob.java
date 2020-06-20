@@ -8,7 +8,7 @@ import com.qsd.bookstore.dao.GlobalDao;
 import com.qsd.bookstore.po.Global;
 
 /**
- * @Description 
+ * @Description 网站信息实例化任务
  * @Author Esion
  * @Data 2020年6月8日
  */

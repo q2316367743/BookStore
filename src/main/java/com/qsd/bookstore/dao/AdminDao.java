@@ -10,6 +10,9 @@ import com.qsd.bookstore.po.Admin;
 
 public interface AdminDao {
 
+	/**
+	 * 管理员登录
+	 * */
 	Integer login(Admin admin);
 	
 }

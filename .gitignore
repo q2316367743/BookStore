@@ -32,3 +32,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### self ###
+BookStore.srctrlbm
+BookStore.srctrldb
+BookStore.srctrlprj
+sourcetrail_dependencies
