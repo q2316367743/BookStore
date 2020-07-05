@@ -28,14 +28,39 @@ github：<https://github.com/q2316367743/BookStore>
 
 ## 软件安装
 
-### 后台服务器部署
+### Linux服务器安装方法
 
-1. git clone https://gitee.com/qiaoshengda/BookStore.git
-2. cd BookStore
-3. mvn clean
-4. mvn package
-5. cd target
-6. java -jar bookstore-1.0.0.jar
+> 有第二台服务器，本地或者阿里云
+> 服务器端口8055，注意打开
+
+```shell
+git clone https://gitee.com/qiaoshengda/BookStore.git
+cd BookStore
+mvn clean
+mvn package
+cd target
+sudo java -jar bookstore-1.0.0.jar
+sudo apt install -f nginx
+cd ../
+sudo cp html /usr/share/nginx
+```
+
+将html文件夹下所有html文件中192.168.0.105换成你的服务器地址
+
+### 本地安装
+
+> 只有一台自己的Windows电脑
+
+```shell
+git clone https://gitee.com/qiaoshengda/BookStore.git
+cd BookStore
+mvn clean
+mvn package
+cd target
+java -jar bookstore-1.0.0.jar
+```
+
+将html文件夹下所有html文件中192.168.0.105换成127.0.0.1
 
 ### 数据库部署
 
